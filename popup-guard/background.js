@@ -1,6 +1,6 @@
-const localOrigins = new Set(['http://127.0.0.1:4173','http://localhost:4173']);
+const appOrigins = new Set(['https://clbwemov.vercel.app','http://127.0.0.1:4173','http://localhost:4173']);
 function isApp(url) {
-  try { return localOrigins.has(new URL(url).origin); } catch { return false; }
+  try { return appOrigins.has(new URL(url).origin); } catch { return false; }
 }
 async function enabled() {
   const settings=await chrome.storage.local.get('enabled');
@@ -9,7 +9,7 @@ async function enabled() {
 async function badge(on) {
   await chrome.action.setBadgeText({text:on?'ON':'OFF'});
   await chrome.action.setBadgeBackgroundColor({color:on?'#376129':'#555555'});
-  await chrome.action.setTitle({title:on?'Cine local: cierre de pestañas activo. Clic para desactivar.':'Cine local: cierre de pestañas desactivado. Clic para activar.'});
+  await chrome.action.setTitle({title:on?'CLB: cierre de pestañas activo. Clic para desactivar.':'CLB: cierre de pestañas desactivado. Clic para activar.'});
 }
 chrome.tabs.onCreated.addListener(async tab=> {
   if(!Number.isInteger(tab.id) || !Number.isInteger(tab.openerTabId)) return;
@@ -21,7 +21,7 @@ chrome.tabs.onCreated.addListener(async tab=> {
     await chrome.tabs.remove(tab.id);
   } catch(error) {
     // La pestaña pudo cerrarse antes de recibir el evento.
-    console.warn('Cine local: no se pudo comprobar o cerrar la pestaña.',error.message);
+    console.warn('CLB: no se pudo comprobar o cerrar la pestaña.',error.message);
   }
 });
 chrome.action.onClicked.addListener(async()=> {

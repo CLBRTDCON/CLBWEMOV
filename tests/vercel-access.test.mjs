@@ -33,6 +33,10 @@ test('deployed handler protects HTML, API and vendor resources; serves wasm MIME
   for(const path of ['/','/api/catalog?q=test','/vendor/libmedia/decode/ac3.wasm']){
    const r=await fetch(base+path,{headers:{Host:env.VERCEL_URL}});assert.equal(r.status,401);
   }
+  for(const route of ['/','/series','/ficha','/biblioteca']){
+   const notice=await request(route);assert.equal(notice.status,200);const html=await notice.text();assert.match(html,/class="clb-extension-notice"/);assert.match(html,/href="\/popup-guard.zip" download="CLB-Popup-Guard-1.1.0.zip"/);
+  }
+  const zip=await request('/popup-guard.zip');assert.equal(zip.status,200);assert.match(zip.headers.get('content-disposition'),/^attachment;/);const bytes=Buffer.from(await zip.arrayBuffer());assert.equal(bytes.readUInt32LE(0),0x04034b50);
   const page=await request('/reproductor');assert.equal(page.status,200);assert.equal(page.headers.get('cross-origin-embedder-policy'),'require-corp');assert.equal(page.headers.get('cross-origin-opener-policy'),'same-origin');assert.match(await page.text(),/av-screen/);
   const wasm=await request('/vendor/libmedia/decode/ac3.wasm');assert.equal(wasm.status,200);assert.match(wasm.headers.get('content-type'),/^application\/wasm/);assert.equal(wasm.headers.get('cache-control'),'private, no-store');await wasm.arrayBuffer();
   const post=await fetch(base+'/',{method:'POST',headers:{Host:env.VERCEL_URL,Authorization:auth('viewer',env.CLB_ACCESS_PASSWORD)}});assert.equal(post.status,405);

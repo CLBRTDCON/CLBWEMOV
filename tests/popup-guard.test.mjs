@@ -16,9 +16,13 @@ test('cierra pestañas de la app y deja intactas pestañas ajenas o sin abridor'
   g.parents.set(3,{url:'https://example.com/'});
   g.parents.set(4,{url:'http://127.0.0.1:9999/'});
   g.parents.set(5,{url:'http://localhost.evil.example:4173/'});
-  for(let i=1;i<=6;i++)await g.listeners.created({id:100+i,openerTabId:i});
+  g.parents.set(6,{url:'https://clbwemov.vercel.app/ficha?id=1'});
+  g.parents.set(7,{url:'https://clbwemov.vercel.app.evil.example/'});
+  g.parents.set(8,{url:'http://clbwemov.vercel.app/'});
+  g.parents.set(9,{url:'https://other.vercel.app/'});
+  for(let i=1;i<=10;i++)await g.listeners.created({id:100+i,openerTabId:i});
   await g.listeners.created({id:200});
-  assert.deepEqual(g.removed,[101,102]);
+  assert.deepEqual(g.removed,[101,102,106]);
 });
 test('OFF persiste al reiniciar y el botón vuelve a activar el cierre',async()=> {
   const g=guard(false);g.parents.set(1,{url:'http://127.0.0.1:4173/'});
@@ -31,5 +35,5 @@ test('manifiesto no pide permisos globales de pestañas ni sitios externos',asyn
   const manifest=JSON.parse(await readFile(new URL('../popup-guard/manifest.json',import.meta.url),'utf8'));
   assert.equal(manifest.manifest_version,3);
   assert.deepEqual(manifest.permissions,['storage']);
-  assert.deepEqual(manifest.host_permissions,['http://127.0.0.1:4173/*','http://localhost:4173/*']);
+  assert.deepEqual(manifest.host_permissions,['https://clbwemov.vercel.app/*','http://127.0.0.1:4173/*','http://localhost:4173/*']);
 });

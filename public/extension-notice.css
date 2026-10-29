@@ -1,0 +1,5 @@
+.clb-extension-notice{box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 12px;width:100%;margin:0;padding:6px 16px;background:#25212b;color:#e3dce9;border-bottom:1px solid #403747;font:12px/1.4 system-ui,sans-serif;text-align:center}
+.clb-extension-notice a{color:#f0c59c;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;font-weight:600}
+.clb-extension-notice a:focus-visible{outline:2px solid #f0c59c;outline-offset:3px}
+.clb-extension-notice small{font:inherit;color:#bdb5c6}
+@media(max-width:600px){.clb-extension-notice{padding:5px 10px;gap:3px 8px;font-size:11px}.clb-extension-notice small{width:100%}}
