@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Cine local · Cerrar pestañas emergentes",
+  "version": "1.0.0",
+  "description": "Cierra pestañas nuevas cuyo abridor sea la app local en el puerto 4173. Pulsa el icono para activar o desactivar.",
+  "permissions": ["storage"],
+  "host_permissions": ["http://127.0.0.1:4173/*", "http://localhost:4173/*"],
+  "background": {"service_worker": "background.js"},
+  "action": {"default_title": "Cine local: cerrar pestañas emergentes"}
+}

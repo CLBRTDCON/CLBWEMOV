@@ -1,0 +1,9 @@
+// CLB translations for the libmedia UI dictionary. Audio track metadata stays unchanged.
+export const playerSpanish=Object.freeze({
+ TIP_PLAY:'Reproducir',TIP_PAUSE:'Pausar',TIP_SETTING:'Ajustes',TIP_FULLSCREEN:'Pantalla completa',TIP_LOOP_START:'Activar repetición',TIP_LOOP_STOP:'Desactivar repetición',TIP_PIP:'Ventana flotante',TIP_FOLD:'Contraer',TIP_UNFOLD:'Expandir',TIP_DELETE:'Eliminar',
+ CONTROL_PLAYRATE:'Velocidad',CONTROL_AUDIO_TRACK:'Audio',CONTROL_VIDEO_TRACK:'Vídeo',CONTROL_SUBTITLE_TRACK:'Subtítulos',CONTROL_SUBTITLE_TRACK_ADD:'Añadir',FOLDER_OPEN_DIR:'Abrir carpeta',FOLDER_OPEN_FILE:'Abrir archivo',FOLDER_OPEN_URL_PLACEHOLDER:'Dirección del archivo',BUTTON_ADD:'Añadir',CHECKBOX_LIVE:'En vivo',
+ LOADING_MESSAGE_OPEN_FILE:'Abriendo vídeo…',LOADING_MESSAGE_ANALYZE_FILE:'Analizando archivo (${mux})…',LOADING_MESSAGE_LOAD_AUDIO_DECODER:'Preparando audio (${decoder})…',LOADING_MESSAGE_LOAD_VIDEO_DECODER:'Preparando vídeo (${decoder})…',LOADING_MESSAGE_LOAD_END:'Listo',LOADING_MESSAGE_LOAD_FAILED:'No se pudo cargar',LOADING_MESSAGE_RESUME:'Toca el vídeo o el botón de volumen para activar el sonido',
+ INFO_TITLE:'Información de reproducción',MENU_STATS:'Información de reproducción',SETTINGS_TITLE:'Ajustes',SETTING_TAB_DECODER:'Decodificador',SETTING_TAB_PLAY:'Reproducción',SETTING_TAB_SUBTITLE:'Subtítulos',SETTING_TAB_VIDEO:'Imagen',SETTING_TAB_AUDIO:'Sonido',SETTING_TAB_FILTER:'Filtros',SETTING_TAB_KEYBOARD:'Atajos',SETTING_TAB_LANGUAGE:'Idioma',SETTING_TAB_SKIN:'Apariencia'
+});
+export function preparePlayerLanguage(storage=globalThis.localStorage){try{storage?.setItem('libmedia_system_language','english');}catch{}}
+export function localizePlayer(player){if(!player.ui?.set)return;player.ui.set('language',playerSpanish);const menu=player.ui.get?.('menu');if(Array.isArray(menu))player.ui.set('menu',menu.map(entry=>({...entry,name:playerSpanish.MENU_STATS})));}

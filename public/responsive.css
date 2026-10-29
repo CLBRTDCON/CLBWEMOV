@@ -1,0 +1,32 @@
+/* Distribución web compartida: cargar después de los estilos de cada sección. */
+main,header,footer,section,form,.section-title,.player-actions,.episode-actions{min-width:0}
+main{width:100%}img,video{max-width:100%}button,input,select,textarea{max-width:100%}
+h1,h2,h3,.hint,.muted,.attribution{overflow-wrap:anywhere}
+.player-actions{flex-wrap:wrap;justify-content:flex-end}.player-actions>button{min-height:44px}
+.series-detail .series-filters,.movie-preferences,.watch-controls{align-items:start}
+header .data-settings{flex-shrink:0}.data-settings[open]{max-width:100%}
+@media(max-width:1100px){
+ header{gap:14px;flex-wrap:wrap}header .brand{order:0}header .data-settings{order:1;margin-left:auto}header nav{order:2;flex-basis:100%;margin-left:0;justify-content:flex-start}
+ .movie-watch .section-title{align-items:flex-start;flex-direction:column}.player-actions{width:100%;justify-content:flex-start}
+ .catalog-heading{flex-wrap:wrap}.catalog-heading>*{min-width:0}.search-label{flex:1 1 260px;max-width:100%}
+}
+@media(max-width:760px){
+ header{padding:16px 20px;gap:12px}header nav,body header nav{display:flex;flex-basis:100%;width:100%;min-width:0;max-width:100%;flex-wrap:nowrap;justify-content:flex-start;gap:5px;overflow-x:auto;padding:4px 2px 10px;scrollbar-width:thin;overscroll-behavior-x:contain}
+ header nav a{flex:0 0 auto;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;padding:10px 12px;font-size:13px}.web-nav-search{border-left:0;padding-left:12px}
+ main{padding:22px 20px 40px}.panel,.movie-watch .player-panel{padding:16px;border-radius:16px}.catalog-heading h1,.catalog-heading h2{font-size:clamp(26px,5vw,32px)}
+ .catalog-heading .search-label{display:block;width:100%;margin-top:8px}.catalog-views{align-items:stretch}.catalog-views label{margin:0;flex:1 1 140px}.catalog-views select{width:100%;min-width:0}.catalog-tools{align-items:stretch}
+ input,select,textarea{font-size:16px;min-width:0;min-height:44px}button{min-height:44px}label{min-width:0}button{white-space:normal;line-height:1.35}
+ .movie-preferences,.series-detail .series-filters,.watch-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.series-detail .series-filters label{min-width:0}.series-detail .series-filters select{min-width:0}
+ .player-actions,.episode-actions,.watch-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%}.player-actions>button,.episode-actions>button,.watch-actions>button{width:100%;margin:0;padding:12px 10px}.player-actions .primary,.episode-actions .primary{grid-column:1/-1}
+ .series-detail{margin-top:16px}.series-detail .section-title{align-items:flex-start;flex-wrap:wrap}.series-detail .section-title h2{font-size:26px}.season-group .episode-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.season-group summary{min-height:48px;line-height:1.5}.season-group button{overflow-wrap:anywhere}
+ .web-hub-heading{align-items:stretch}.web-hub-heading form{max-width:none}.web-hub-heading input{width:0;min-width:0}.web-hub-heading form label{margin:0}.web-tabs{gap:8px}.web-tabs button{flex:1 1 130px}.web-library-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 12px}.web-shelf .web-entry{flex-basis:145px}
+ .tv-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.tv-controls{gap:12px}.tv-controls label{min-width:0;flex:1 1 170px}.tv-controls button,.tv-controls .official{margin-top:0}.tv-hero,.family-note{padding:20px}.channel-card{min-width:0}
+ .genre-heading{flex-wrap:wrap;gap:8px}.genre-heading h3{flex:1 1 180px}.shelf-actions{margin-left:auto}.genre-row>.hint{min-width:0;flex:0 0 100%}
+ .kids-filters{flex-wrap:wrap}.kids-filters label{min-width:0;flex:1 1 130px}.kids-hero{overflow:hidden}
+ footer{flex-wrap:wrap;line-height:1.7;padding:20px}
+}
+@media(max-width:480px){
+ main{padding-inline:14px}header{padding-inline:14px}.brand .brand-section{font-size:12px}.panel,.movie-watch .player-panel{padding:12px}.movie-preferences{grid-template-columns:1fr}.series-detail .series-filters{grid-template-columns:1fr}.season-group .episode-grid{grid-template-columns:1fr}.series-detail .section-title h2{font-size:24px}.web-library-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.web-hub-heading form{flex-wrap:wrap}.web-hub-heading form input{flex:1 1 180px}.web-hub-heading form button{flex:1 1 90px}
+ .tv-filters{grid-template-columns:1fr}.tv-controls label{flex-basis:100%}.watch-controls{grid-template-columns:1fr}.shelf-actions button{width:44px;height:44px}.shelf-count{flex:none}.genre-heading h3{font-size:19px}.platforms{grid-template-columns:repeat(2,minmax(0,1fr))}.platform b{font-size:14px}.platform small{overflow-wrap:anywhere}.series-detail .web-options{padding:12px}.channel-card{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.poster,.card-play{transition:none}}

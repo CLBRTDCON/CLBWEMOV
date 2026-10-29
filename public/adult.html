@@ -1,0 +1,99 @@
+
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Adult · CLB</title>
+  <link rel="stylesheet" href="/adult.css">
+  <script src="/adult.js" defer></script>
+</head>
+<body>
+
+<div id="gate" class="a-gate">
+  <form id="gateForm" class="a-gate__card" autocomplete="off" novalidate>
+    <span class="a-gate__badge">+18</span>
+    <h1 class="a-gate__title" id="gateTitle">Contenido para adultos</h1>
+    <p class="a-gate__sub" id="gateSub">Crea un PIN de 4 dígitos. Se guarda solo en este dispositivo.</p>
+
+    <div class="a-pin" id="pinWrap">
+      <input class="a-pin__box" type="tel" inputmode="numeric" maxlength="1" aria-label="Dígito 1">
+      <input class="a-pin__box" type="tel" inputmode="numeric" maxlength="1" aria-label="Dígito 2">
+      <input class="a-pin__box" type="tel" inputmode="numeric" maxlength="1" aria-label="Dígito 3">
+      <input class="a-pin__box" type="tel" inputmode="numeric" maxlength="1" aria-label="Dígito 4">
+    </div>
+
+    <p class="a-gate__err" id="gateErr" role="alert"></p>
+
+    <button type="submit" class="a-gate__go" id="gateGo">Guardar PIN</button>
+
+    <label class="a-gate__remember" id="rememberWrap" hidden>
+      <input type="checkbox" id="remember"> No volver a pedirlo en este dispositivo
+    </label>
+
+    <button type="button" class="a-gate__reset" id="gateReset" hidden>
+      ¿Olvidaste el PIN? Volver a crearlo
+    </button>
+  </form>
+</div>
+
+
+<div id="app" class="a-app" hidden="">
+
+  <header class="a-top">
+    <a class="a-top__back" href="">CLB</a>
+    <h1 class="a-top__title">Adult</h1>
+    <button class="a-icon" id="lockBtn" title="Bloquear">Bloquear</button>
+  </header>
+
+  <div class="a-bar">
+    <input id="q" class="a-search" type="search" placeholder="Buscar en el catálogo…" autocomplete="off">
+    <select id="order" class="a-select" title="Ordenar">
+      <option value="top-weekly">Top semanal</option>
+      <option value="top-monthly">Top mensual</option>
+      <option value="top-rated">Mejor valorados</option>
+      <option value="latest">Recientes</option>
+      <option value="most-viewed">Más vistos</option>
+      <option value="longest">Más largos</option>
+      <option value="random">Aleatorio</option>
+    </select>
+    <button id="gayBtn" class="a-chip" aria-pressed="false">Gay</button>
+    <button id="listBtn" class="a-chip" aria-pressed="false">Mi lista</button>
+  </div>
+
+  <nav class="a-chips" id="chips"></nav>
+
+  <main class="a-main">
+    <div id="grid" class="a-grid"></div>
+    <div id="sentinel" class="a-sentinel"></div>
+    <p id="status" class="a-status"></p>
+  </main>
+
+  <footer class="a-foot">
+    Catálogo vía <a href="https://www.eporner.com/" rel="noopener noreferrer">Eporner</a>
+  </footer>
+</div>
+
+
+<div id="detail" class="a-detail" hidden="">
+  <button class="a-detail__close" id="detailClose" aria-label="Cerrar">Cerrar</button>
+  <div class="a-detail__player" id="player"></div>
+  <div class="a-detail__info">
+    <h2 id="dTitle"></h2>
+    <p class="a-detail__meta" id="dMeta"></p>
+    <div class="a-detail__tags" id="dTags"></div>
+    <div class="a-detail__actions">
+      <button class="a-btn" id="dList">Añadir a Mi lista</button>
+      <a class="a-btn a-btn--ghost" id="dPage" rel="noopener noreferrer">Abrir en el sitio</a>
+      <button class="a-btn a-btn--ghost" id="dCopy">Copiar enlace</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="a-toast" role="status"></div>
+
+</body>
+</html>
+
+

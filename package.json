@@ -1,0 +1,14 @@
+{
+  "name": "clb-web-vercel",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node local-server.mjs",
+    "check": "node --check server.mjs && node --check catalog-api.mjs && node --check public/source-config.js && node --check series-api.mjs && node --check anime-api.mjs && node --check public/web-library.js && node --check public/web-library-core.mjs && node --check public/app.js && node --check public/series.js && node --check public/playback.js && node --check popup-guard/background.js && node --check mobile/api.mjs && node --check mobile/player-policy.mjs && node --check mobile/app.mjs && node --check mobile/live-player.mjs && node --check mobile/posters.mjs && node --check mobile/library.mjs && node --check mobile/global-search.mjs && node --check tv-api.mjs && node --check public/tv.js && node --check kids-api.mjs && node --check public/kids.js && node --check public/genre-shelves.js && node --check releases-api.mjs && node --check documentaries-api.mjs && node --check dramas-api.mjs && node --check mobile/drama-tests.mjs && node --check mobile/tv-navigation.mjs && node --check mobile/tv-watch.mjs && node --check mobile/tv-remote-player.mjs && node --check mobile/mobile-playback.mjs && node --check mobile/playback-capabilities.mjs && node --check static-response.mjs && node --check catalognet-api.mjs && node --check ficha-api.mjs && node --check public/ficha.mjs && node --check public/ficha-core.mjs && node --check public/audio-1080.mjs && node --check public/audio-1080-core.mjs && node --check public/catalognet-browse.mjs && node --check public/web-sources.mjs && node --check public/player-es.mjs && node --check public/web-player-controls.mjs && node --check api/index.mjs && node --check local-server.mjs && node --check web-access.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "type": "module"
+}

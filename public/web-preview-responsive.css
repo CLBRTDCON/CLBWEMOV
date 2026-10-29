@@ -1,0 +1,4 @@
+/* Solo Documentales/Dramas en la web: la APK no carga este archivo. */
+body.web-preview .desktop-nav{min-width:0;flex-wrap:wrap;gap:12px}body.web-preview header{flex-wrap:wrap;gap:14px}body.web-preview main{min-width:0}body.web-preview .actions{flex-wrap:wrap}body.web-preview .controls>*{min-width:0}
+@media(min-width:800px){body.web-preview .desktop-nav{flex-basis:100%;justify-content:flex-start}}
+@media(max-width:600px){body.web-preview input,body.web-preview select{font-size:16px}body.web-preview .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}body.web-preview .actions button{min-width:0;width:100%;padding:12px 8px}body.web-preview #title{font-size:clamp(26px,7vw,36px);overflow-wrap:anywhere}body.web-preview .controls{grid-template-columns:1fr}body.web-preview .season-group button{overflow-wrap:anywhere}}
