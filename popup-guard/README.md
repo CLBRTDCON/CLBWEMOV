@@ -5,7 +5,7 @@ Extensión opcional para Chrome, Edge y Brave de escritorio. Descargar el ZIP no
 1. Descomprime el ZIP en una carpeta permanente.
 2. Abre chrome://extensions, edge://extensions o brave://extensions.
 3. Activa Modo de desarrollador y pulsa Cargar descomprimida.
-4. Selecciona la carpeta popup-guard que contiene manifest.json.
+4. Selecciona la carpeta donde descomprimiste el ZIP: manifest.json debe estar directamente dentro de ella.
 5. Abre https://clbwemov.vercel.app/ en ese navegador. El icono ON indica que está activada; pulsarlo alterna ON/OFF.
 
 Funciona solo para los orígenes exactos https://clbwemov.vercel.app, http://127.0.0.1:4173 y http://localhost:4173. Usa tabs.onCreated y cierra pestañas cuyo openerTabId corresponda a CLB. No pide acceso general al historial, no inyecta scripts ni envía datos. Solo guarda ON/OFF localmente.
