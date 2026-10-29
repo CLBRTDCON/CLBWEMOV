@@ -9,12 +9,14 @@ export function serveAccess(req,res,env=process.env){
  }
  res.setHeader('Cache-Control','private, no-store');res.setHeader('X-Content-Type-Options','nosniff');
  if(!hosts.has(String(req.headers.host||'').toLowerCase())){res.writeHead(403);res.end('Host no permitido');return false;}
+ // Temporarily public at the owner's request. Set CLB_REQUIRE_AUTH=true to restore access protection.
+ const requireAuth=env.CLB_REQUIRE_AUTH!==undefined&&env.CLB_REQUIRE_AUTH!=='false';
  const user=env.CLB_ACCESS_USER,password=env.CLB_ACCESS_PASSWORD;
- if(deployed&&(!user||!password)){
+ if(requireAuth&&(!user||!password)){
   res.writeHead(503,{'Content-Type':'text/plain; charset=utf-8'});
   res.end('Falta configurar el acceso privado de CLB en Vercel.');return false;
  }
- if(user||password){
+ if(requireAuth){
   const auth=req.headers.authorization;let valid=false;
   if(typeof auth==='string'&&auth.length<4096&&/^Basic [A-Za-z0-9+/]+=*$/i.test(auth)){
    const text=Buffer.from(auth.slice(6),'base64').toString('utf8'),colon=text.indexOf(':');

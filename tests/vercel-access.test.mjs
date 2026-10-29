@@ -5,7 +5,15 @@ import {serveAccess} from '../web-access.mjs';
 import handler from '../api/index.mjs';
 const auth=(u,p)=>'Basic '+Buffer.from(u+':'+p).toString('base64');
 function response(){return {headers:{},setHeader(k,v){this.headers[k.toLowerCase()]=v;},writeHead(s,h={}){this.status=s;for(const[k,v]of Object.entries(h))this.setHeader(k,v);},end(v){this.body=v;}};}
-const env={VERCEL:'1',VERCEL_URL:'clb-test.vercel.app',CLB_ACCESS_USER:'viewer',CLB_ACCESS_PASSWORD:'test-password-not-a-secret'};
+const env={VERCEL:'1',VERCEL_URL:'clb-test.vercel.app',CLB_REQUIRE_AUTH:'true',CLB_ACCESS_USER:'viewer',CLB_ACCESS_PASSWORD:'test-password-not-a-secret'};
+test('temporary public access bypasses saved credentials but retains host validation',()=>{
+ for(const value of [undefined,'false']){
+  const config={...env,CLB_REQUIRE_AUTH:value};const r=response();
+  assert.equal(serveAccess({headers:{host:env.VERCEL_URL}},r,config),true);
+  assert.equal(r.headers['www-authenticate'],undefined);
+  const rejected=response();assert.equal(serveAccess({headers:{host:'evil.example'}},rejected,config),false);assert.equal(rejected.status,403);
+ }
+});
 test('Vercel requires credentials, validates exact host and never trusts arbitrary forwarded hosts',()=>{
  let r=response();assert.equal(serveAccess({headers:{host:env.VERCEL_URL}},r,env),false);assert.equal(r.status,401);
  r=response();assert.equal(serveAccess({headers:{host:'evil.example','x-forwarded-host':env.VERCEL_URL,authorization:auth('viewer',env.CLB_ACCESS_PASSWORD)}},r,env),false);assert.equal(r.status,403);
