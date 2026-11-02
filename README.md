@@ -62,3 +62,14 @@ Prueba después de desplegar: temporalmente sin credenciales → catálogo (200)
 AVPlayer / libmedia 1.3.1, LGPLv3: licencias, procedencia y manifiesto en `public/vendor/libmedia/`. HLS.js 1.7.3, Apache-2.0: licencia y procedencia junto a su distribución. Los módulos de terceros se conservan sin modificaciones. Los proveedores determinan disponibilidad e idiomas.
 
 No se incluyen APK, claves de firma, contraseñas, respaldos ni contenido audiovisual de películas o series.
+
+
+## Internet Archive experimental (02/11/2026)
+
+En la ficha aparece una consulta opcional a Archive, independiente de CATALOG//NET. El backend consulta archive-addon.onrender.com y contrasta los resultados con metadatos de archive.org. Películas: coincidencia IMDb explícita o título y año. Series: IMDb explícito y SxxExx exacto en el nombre del archivo. Solo MP4/WebM; archivos con altura declarada superior a1080 se excluyen. No convierte audio ni actúa como proxy de vídeo; los controles son los nativos del navegador. Se descartan resultados ambiguos, restringidos o sin un archivo correspondiente. Estas comprobaciones no certifican identidad audiovisual, totalidad, idioma ni disponibilidad.
+
+CATALOG//NET conserva su integración por si vuelve; los errores de conexión ahora indican indisponibilidad del servicio (503) en vez de confundirse con ausencia de archivos. No se cambió su URL por una dirección no verificada. Los reproductores anteriores y AVPlayer permanecen.
+
+Archive solo se consulta al pulsar el botón. Límite2consultas concurrentes, cuatro elementos de Archive contrastados por búsqueda, respuestasJSON2MB, tiempo35s, caché120s y fallo30s. Orígenes de consulta fijos; no se aceptan URLs externas desde el cliente. No se ejecuta código del complemento. Cerrar/cambiar episodio elimina el vídeo y cancela la consulta. Kids no muestra esta opción. Probar desde el despliegue real: el acceso desde una computadora no demuestra acceso desde Vercel.
+
+Respaldo local anterior work/before-archive-20261102-133635.zip (184archivos cotejados). El commit previo de rollback es4eaf560f43d6ef6d1d25b3cda8a9e61a55de47e3. Sin cambios en APKs ni servidor local4173.

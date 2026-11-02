@@ -42,7 +42,7 @@ export function createCatalognetApi({fetcher=(...args)=>fetch(...args),now=Date.
  const cache=new Map(),pending=new Map();let resolving=0;
  async function json(url){
   const u=new URL(url);if(![CATALOGNET_ORIGIN,YANDEX_ORIGIN].includes(u.origin))throw new UpstreamError('Destino no permitido.');
-  let response;try{response=await fetcher(u,{signal:AbortSignal.timeout(15000),redirect:'manual',headers:{Accept:'application/json'}});}catch{throw new UpstreamError('No se pudo conectar con el catálogo o Yandex. El túnel puede haber dejado de estar disponible.');}
+  let response;try{response=await fetcher(u,{signal:AbortSignal.timeout(15000),redirect:'manual',headers:{Accept:'application/json'}});}catch{throw new UpstreamError(u.origin===CATALOGNET_ORIGIN?'CATALOG//NET no está disponible: no se pudo conectar con su servicio. Esto no indica que el título carezca de archivos.':'No se pudo conectar con Yandex para obtener el archivo.',503);}
   if(response.status===429)throw new UpstreamError('Yandex o el catálogo limitaron las consultas. Espera antes de reintentar.',429);
   if(!response.ok)throw new UpstreamError(response.status===404?'La fuente no tiene ese recurso.':`El servicio respondió HTTP ${response.status}.`,response.status===404?404:502);
   if(!response.body)throw new UpstreamError('La fuente devolvió una respuesta vacía.');

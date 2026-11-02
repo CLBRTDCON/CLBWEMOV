@@ -1,3 +1,5 @@
+import {createArchiveApi} from './archive-api.mjs';
+const archiveApi=createArchiveApi({metadataLookup:path=>cinemeta(path)});
 import {createCatalognetApi} from './catalognet-api.mjs';
 import {createFichaApi} from './ficha-api.mjs';
 const catalognetApi=createCatalognetApi(),fichaApi=createFichaApi();
@@ -23,6 +25,7 @@ const files = new Map([['/', ['index.html', 'text/html']], ['/app.js', ['app.js'
 for(const [path,file,type] of [['/tv','tv.html','text/html'],['/tv.js','tv.js','text/javascript'],['/tv.css','tv.css','text/css'],['/vendor/hls-1.7.3.min.js','vendor/hls-1.7.3.min.js','text/javascript']])files.set(path,[file,type]);
 for(const [path,file,type] of [['/kids','kids.html','text/html'],['/kids.js','kids.js','text/javascript'],['/kids.css','kids.css','text/css'],['/player-policy.mjs','../mobile/player-policy.mjs','text/javascript']])files.set(path,[file,type]);
 for(const [route,file,type] of [['/adult','adult.html','text/html'],['/adult.js','adult.js','text/javascript'],['/adult.css','adult.css','text/css'],['/index.html',['index.html','text/html'][0],'text/html']])files.set(route,[file,type]);
+files.set('/archive-options.mjs',['archive-options.mjs','text/javascript']);
 files.set('/genre-shelves.js',['genre-shelves.js','text/javascript']);
 for(const [route,file,type] of [['/biblioteca','biblioteca.html','text/html'],['/web-library.js','web-library.js','text/javascript'],['/web-library-core.mjs','web-library-core.mjs','text/javascript'],['/web-library.css','web-library.css','text/css']])files.set(route,[file,type]);
 files.set('/documentales',['../mobile/index.html','text/html']);
@@ -46,6 +49,7 @@ for(const name of avAssets)files.set('/vendor/libmedia/'+name,['vendor/libmedia/
 export const requestHandler = async (req, res) => {
   if(!serveAccess(req,res))return;
   if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); res.end(); return; }
+  if(req.url.startsWith('/api/archive/links?')){await archiveApi(req,res);return;}
   if(req.url.startsWith('/api/ficha/')){await fichaApi(req,res);return;}
   if(req.url.startsWith('/api/catalognet/')){await catalognetApi(req,res);return;}
   if (req.url.startsWith('/api/dramas/')) { await dramasApi(req,res); return; }
