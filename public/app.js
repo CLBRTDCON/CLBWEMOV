@@ -55,7 +55,7 @@ async function loadCatalog(append = false) {
     catalogSkip = data.nextSkip;
     $('load-more').hidden = !data.hasMore || (incoming.length > 0 && movies.length === previousCount);
     $('load-more').textContent = 'Cargar más películas';
-    $('catalog-source').textContent = `Cinemeta · ${query ? `Resultados de «${query}»${year === 'all' ? ' · todos los años' : ` · ${year}`}` : kind === 'recent' ? `Películas de ${year}, por fecha más reciente` : kind==='featured' ? 'Mejor valoradas' : 'Catálogo popular'} · ${movies.length} títulos cargados. Audio y vídeo no verificados.`;
+    $('catalog-source').textContent = '';
     renderMovies();
     if ($('load-more').hidden) break;
     }
@@ -80,8 +80,8 @@ $('release-year').addEventListener('change', () => {
 });
 $('load-more').addEventListener('click', () => loadCatalog(catalogSkip > 0));
 function renderMovies() {
-  const visible = movies;
-  $('catalog-count').textContent = movies.length+' películas cargadas · Explora por género';
+  const visible = !searchText()&&$('release-year').value==='all'?CLBShelves.recent(movies):movies;
+  $('catalog-count').textContent = '';
   CLBShelves.render($('movie-grid'),visible,movie=>{
 
     const card = document.createElement('button'); card.type = 'button'; card.className = 'movie-card'; card.setAttribute('aria-label', `Ver ficha de ${movie.name}`);
@@ -100,7 +100,7 @@ function renderMovies() {
       if(!globalThis.CineDataSaver.enabled)$('player-form').requestSubmit();else {$('watch').hidden=false;$('now-playing').textContent=movie.name;$('player').replaceChildren();active=null;$('save').disabled=true;$('retry-provider').disabled=true;$('status').textContent='Ahorro de datos · Pulsa Reproducir película para cargar el vídeo.';} $('watch').scrollIntoView({behavior:'smooth',block:'start'});
     });
     return card;
-  },{search:!!searchText(),leading:searchText()?null:releases,emptyText:'No hay coincidencias. Prueba otro título o año; también puedes usar las opciones avanzadas.'});
+  },{notes:false,search:!!searchText(),featured:searchText()?null:{name:'Recomendadas para explorar',items:visible.slice(0,24)},leading:searchText()?null:releases,emptyText:'No hay coincidencias. Prueba otro título o año; también puedes usar las opciones avanzadas.'});
 }
 
 $('search').addEventListener('input', () => {

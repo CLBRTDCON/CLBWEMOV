@@ -45,7 +45,7 @@ function render() {
     card.append(art,element('b','',show.name),element('small','',`${show.year || 'Año no informado'}${show.format ? ` · ${show.format}` : ''} · ${genreLabels[show.genres[0]] || show.genres[0] || 'Serie'}`),badges);
     card.addEventListener('click',()=>{if(!window.CLBDetails?.open({...show,kind:animePage?'anime':'series',section:animePage?'anime':'series'}))openShow(show);});return card;
   };
-  CLBShelves.render($('series-grid'),shows,createCard,{labels:genreLabels,search:!!$('series-search').value.trim(),leading:$('series-search').value.trim()?null:releases,emptyText:'No hay series con estos filtros. Prueba otro año o plataforma.'});
+  CLBShelves.render($('series-grid'),!$('series-search').value.trim()&&$('series-year').value==='all'?CLBShelves.recent(shows):shows,createCard,{notes:false,labels:genreLabels,search:!!$('series-search').value.trim(),leading:$('series-search').value.trim()?null:releases,emptyText:'No hay series con estos filtros. Prueba otro año o plataforma.'});
 }
 async function load(append=false) {
   const id=++requestId; controller?.abort(); controller=new AbortController();
@@ -75,7 +75,7 @@ async function load(append=false) {
       for(const value of new Set([...data.genres,...(genre==='all'?[]:[genre])])){const o=element('option','',genreLabels[value]||value);o.value=value;$('series-genre').append(o);}
       $('series-genre').value=genre;platformButtons(data.platforms);
       const note=platform==='internet'?' Más recientes sin año consulta el año actual; los filtros secundarios y la ordenación se aplican por página.':platform==='kitsu'?' El año se filtra por página; «En emisión» usa la selección de Kitsu. El filtro de formato está disponible en AniList.':'';
-      $('series-status').textContent=`${shows.length}${data.total===null?'':` de ${data.total}`} ${animePage?'títulos cargados':'series cargadas'} · ${names[platform]} · Región no verificada.${note}${data.warnings.length?` ${data.warnings.join(' ')}`:''}`;
+      $('series-status').textContent=data.warnings.join(' ');
       render();if($('series-more').hidden)break;
     }
   }catch(error){if(id!==requestId)return;$('series-status').textContent=error.message;$('series-more').hidden=false;$('series-more').textContent='Reintentar';}

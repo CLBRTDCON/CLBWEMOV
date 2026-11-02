@@ -48,7 +48,7 @@ const show={id:'tt0903747',name:'Breaking Bad',year:2008,genres:['Drama'],platfo
 function result(path){if(path.startsWith('/api/releases?'))return {items:[],source:'AniList'};return path.startsWith('/api/catalog')?{movies:[movie],nextSkip:48,hasMore:false}:{series:[show],nextSkip:50,hasMore:false,total:null,genres:['Drama'],platforms:[],warnings:[]};}
 async function desktop(page){
   const {ids,document}=dom(await read(`public/${page==='movie'?'index':'series'}.html`)),requests=[];
-  const ctx={document,URL,URLSearchParams,AbortController,AbortSignal,Intl,Date,Event,setTimeout,clearTimeout,location:{pathname:page==='movie'?'/':page==='anime'?'/anime':'/series'},localStorage:{getItem:()=>null},fetch:async path=>{requests.push(path);return {ok:true,json:async()=>result(path)};}};
+  const ctx={document,URL,URLSearchParams,AbortController,AbortSignal,Intl,Date,Event,setTimeout,clearTimeout,location:{pathname:page==='movie'?'/':page==='anime'?'/anime':'/series'},localStorage:{getItem:()=>null},fetch:async path=>{requests.push(path);return {ok:true,json:async()=>{const data=result(path),year=new Date().getFullYear();return {...data,...(data.movies?{movies:data.movies.map(m=>({...m,year}))}:{}),...(data.series?{series:data.series.map(m=>({...m,year}))}:{})};}};}};
   ctx.window=ctx;vm.createContext(ctx);
   for(const file of ['public/source-config.js','public/playback.js','public/genre-shelves.js',page==='movie'?'public/app.js':'public/series.js'])vm.runInContext(await read(file),ctx,{filename:file});
   await new Promise(setImmediate);return {ids,requests,ctx};
@@ -58,7 +58,7 @@ test('PC: películas inicia populares y habilita año sin pulsar Enter',async()=
   assert.ok(requests.some(p=>p.includes('kind=popular&year=all')));
   assert.ok(ids.get('release-year').options.length>100);
   assert.equal(firstCard(ids.get('movie-grid')).attributes['aria-label'],'Ver ficha de Fight Club');
-  assert.match(ids.get('catalog-source').textContent,/Catálogo popular/);
+  assert.equal(ids.get('catalog-source').textContent,'');
 });
 test('PC: catálogo limpio, portada abre solo vídeo y controles; carga manual permanece opcional',async()=>{
   const html=await read('public/index.html');
@@ -83,7 +83,7 @@ test('PC: series inicia catálogo y plataformas sin pulsar Enter',async()=>{
 });
 test('CLB: películas y series muestran estantes; la búsqueda usa resultados sin repetición',async()=>{
   const movies=await desktop('movie');assert.equal(movies.ids.get('movie-grid').children[0].className,'genre-shelf');
-  assert.equal(movies.ids.get('movie-grid').children[0].children[0].children[0].textContent,'Últimos lanzamientos');
+  assert.equal(movies.ids.get('movie-grid').children[0].children[0].children[0].textContent,'Recomendadas para explorar');
   movies.ids.get('search').value='Fight Club';await vm.runInContext('loadCatalog()',movies.ctx);
   const shelf=movies.ids.get('movie-grid').children[0];assert.equal(shelf.children[0].children[0].textContent,'Resultados de búsqueda');assert.equal(shelf.children[1].className,'search-results-grid');assert.equal(shelf.children[1].children.length,1);
   const series=await desktop('series');assert.equal(series.ids.get('series-grid').children[0].className,'genre-shelf');assert.equal(series.ids.get('active-platform').textContent,'Explorar todas · Internet');

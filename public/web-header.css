@@ -1,0 +1,18 @@
+.clb-web-header{position:sticky;top:0;z-index:50;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:25px;max-width:1440px;width:100%;min-height:88px;margin:0 auto;padding:22px 5%;box-sizing:border-box;border:0;border-bottom:1px solid #3b393f;background:#19191ef7;color:#f5eee5;font:13px Segoe UI,Arial,sans-serif}
+.clb-web-header .brand{display:flex;align-items:center;gap:10px;white-space:nowrap;text-decoration:none;letter-spacing:0;color:inherit;font-weight:800}
+.clb-web-header .brand-mark{display:grid;place-items:center;width:37px;height:37px;padding:0;border:0;border-radius:13px;background:#e4bd9c;color:#29242d;font-size:24px;transform:rotate(-8deg)}
+.clb-web-header .brand-word{color:#f6eee6;font-size:26px;letter-spacing:2px}.clb-web-header .brand-section{color:#e4bd9c;font-size:13px;font-weight:600;padding-left:4px}
+.clb-web-header nav{display:flex;justify-content:flex-end;align-items:center;gap:7px;flex-wrap:wrap;margin-left:auto}
+.clb-web-header nav a{display:inline-block;padding:10px 13px;border-radius:20px;text-decoration:none;font-size:13px;line-height:1.4;color:#bcb6bf;white-space:nowrap;background:transparent;border:0;min-height:0}
+.clb-web-header nav a:hover,.clb-web-header nav a[aria-current=page]{background:#3a303d;color:#e4bd9c}.clb-web-header a:focus-visible{outline:2px solid #e4bd9c;outline-offset:3px}
+body>.clb-web-header~main{min-width:0}.player-return{display:flex;margin-bottom:24px}.detail-nav{padding-top:18px}html{scroll-padding-top:120px}
+body.web-preview .web-legacy-header,body.web-preview .filter-bar,body.web-preview #source-label,body.web-preview #sort-label,body.web-preview #genre-label,body.web-preview #format-label{display:none!important}
+body.web-preview #filter-panels{display:flex;gap:14px;align-items:end;flex-wrap:wrap;margin:20px 0}
+body.web-preview #search-form,body.web-preview #year-label{display:flex!important;position:static;inset:auto;width:auto;background:transparent;border:0;padding:0;margin:0;box-shadow:none}
+body.web-preview #search-form{flex:1;min-width:220px;gap:10px}body.web-preview #search-form input{width:100%;margin:0}body.web-preview #year-label{flex-direction:column;gap:7px;min-width:160px}body.web-preview #year-label select{margin:0}
+.series-page #platform-picker,.series-page #series-sort-label,.series-page #anime-format-label,.series-page #series-reset{display:none!important}
+.series-page .catalog-heading,.movies-page .catalog-heading{flex-wrap:wrap}.series-page .series-filters:has(#series-year){margin:12px 0 18px}
+.web-catalog-filters{display:flex;align-items:end;gap:14px;flex-wrap:wrap;margin:18px 0}.web-catalog-filters .search-label{flex:1;min-width:220px;width:auto;margin:0}.web-catalog-filters>label{margin:0;min-width:160px}.web-catalog-filters input,.web-catalog-filters select{min-height:46px;margin-top:7px}.series-page .series-filters:has(#series-sort){display:none}
+body:has(:fullscreen)>.clb-web-header,body:has(.clb-player-fullscreen)>.clb-web-header{display:none}
+@media(max-width:1100px){.clb-web-header{flex-wrap:wrap;gap:14px}.clb-web-header nav{gap:3px}.clb-web-header nav a{padding:9px 10px}}
+@media(max-width:700px){.clb-web-header{padding:14px 20px;gap:10px}.clb-web-header nav{width:100%;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:thin}.clb-web-header nav a{font-size:12px;flex:none}.clb-web-header .brand-word{font-size:24px}html{scroll-padding-top:140px}}

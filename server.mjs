@@ -1,3 +1,4 @@
+import {withWebHeader} from './web-header.mjs';
 import {createArchiveApi} from './archive-api.mjs';
 const archiveApi=createArchiveApi({metadataLookup:path=>cinemeta(path)});
 import {createCatalognetApi} from './catalognet-api.mjs';
@@ -44,6 +45,7 @@ for(const name of ['source-config.js','genre-shelves.js','vendor/hls-1.7.3.min.j
 
 for(const [route,file,type] of [['/ficha','ficha.html','text/html'],['/catalognet','catalognet.html','text/html'],['/reproductor','audio-1080.html','text/html']])files.set(route,[file,type]);
 for(const name of ['player-es.mjs','web-player-controls.mjs','ficha.mjs','ficha-core.mjs','ficha.css','audio-1080.mjs','audio-1080-core.mjs','audio-1080.css','catalognet-browse.mjs','player-page.css','web-sources.mjs','web-sources.css'])files.set('/'+name,[name,name.endsWith('.css')?'text/css':'text/javascript']);
+files.set('/web-header.css',['web-header.css','text/css']);
 const avAssets=JSON.parse(await readFile(new URL('./public/vendor/libmedia/MANIFEST.json',import.meta.url),'utf8')).files.map(f=>f.file);
 for(const name of avAssets)files.set('/vendor/libmedia/'+name,['vendor/libmedia/'+name,name.endsWith('.wasm')?'application/wasm':name.endsWith('.js')?'text/javascript':name.endsWith('.svg')?'image/svg+xml':name.endsWith('.mkv')?'video/x-matroska':'text/plain']);
 export const requestHandler = async (req, res) => {
@@ -62,11 +64,13 @@ export const requestHandler = async (req, res) => {
   if (req.url.startsWith('/api/series/')) { await seriesApi(req,res,cinemeta); return; }
   if (req.url.startsWith('/api/catalog?')) { await catalog(req,res); return; }
   if (req.url.startsWith('/api/movie?')) { await movieLookup(req,res); return; }
-  const file = files.get(new URL(req.url,'http://app.invalid').pathname);
+  const path = new URL(req.url,'http://app.invalid').pathname;
+  const file = files.get(path);
   if (!file) { res.writeHead(404); res.end('No encontrado'); return; }
   try {
     let content = await readFile(new URL(`./public/${file[0]}`, import.meta.url));
     if(file[0]==='../mobile/index.html')content=Buffer.from(content.toString('utf8').replace('href="mobile.css"','href="/mobile/mobile.css"').replace('href="tv.css"','href="/mobile/tv.css"').replace('src="app.mjs"','src="/mobile/app.mjs"').replace('src="../public/','src="/public/').replace('src="../public/','src="/public/').replace('src="../public/','src="/public/').replace('</head>','<link rel="stylesheet" href="/web-preview-responsive.css"></head>').replace('<body>','<body class="web-preview">').replace('<button id="menu-toggle"','<nav class="desktop-nav" aria-label="Secciones"><a href="/">Películas</a><a href="/series">Series</a><a href="/anime">Anime</a><a href="/documentales">Documentales</a><a href="/dramas">Dramas</a><a href="/biblioteca?view=search">Buscar en todo</a><a href="/biblioteca">Mi lista</a><a href="/kids">Kids</a><a href="/tv">TV en vivo</a></nav><button id="menu-toggle"').replace('class="tv-connect subtle"','class="tv-connect subtle" hidden'));
+    if(file[1]==='text/html'&&['/','/series','/anime','/documentales','/dramas','/ficha','/reproductor','/biblioteca','/kids','/tv'].includes(path))content=Buffer.from(withWebHeader(content.toString('utf8'),path));
     if(file[1]==='text/html'&&file[0]!=='adult.html')content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/web-sources.css"><script src="/web-sources.mjs" type="module"></script></head>'));
     if(file[1]==='text/html'&&!['adult.html','audio-1080.html'].includes(file[0]))content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/extension-notice.css"></head>').replace(/<body([^>]*)>/,'<body$1><aside class="clb-extension-notice" aria-label="Extensión opcional"><span>Mejora tu experiencia: bloquea pestañas emergentes de los proveedores.</span> <a href="/popup-guard.zip" download="CLB-Popup-Guard-1.1.0.zip">Descargar extensión</a> <small>Chrome, Edge y Brave · PC · instalación manual</small></aside>'));
     if(file[0]==='popup-guard.zip')res.setHeader('Content-Disposition','attachment; filename="CLB-Popup-Guard-1.1.0.zip"');
