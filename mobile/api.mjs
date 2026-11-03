@@ -14,10 +14,10 @@ const tv=createTvApi();
 const kids=createKidsApi({series:mobileHandler(seriesApi),tv});
 const releases=createReleasesApi({series:mobileHandler(seriesApi),kids});
 
-// Los mismos adaptadores de la web, ejecutados en el teléfono. Sin Node ni servidor.
+// Web HTTP(S): usa su API del mismo origen. APK empaquetada: conserva los adaptadores locales.
 export async function api(path) {
   const url=new URL(path,'https://app.invalid');
-  if(/^http:\/\/(?:localhost|127\.0\.0\.1):4173$/.test(globalThis.location?.origin||'')){
+  if(/^https?:\/\//.test(globalThis.location?.origin||'')&&globalThis.location.origin!=='https://appassets.androidplatform.net'){
     const response=await fetch(url.pathname+url.search,{signal:AbortSignal.timeout(25000)});
     const data=await response.json();if(!response.ok)throw Error(data.error||`Error HTTP ${response.status}`);return data;
   }

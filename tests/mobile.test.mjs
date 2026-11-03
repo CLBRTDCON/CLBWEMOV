@@ -104,3 +104,17 @@ test.skip('Solo APK: comprobación de empaquetado Android fuera del alcance de e
   }
   assert.match(main,/media-src https: blob:/);assert.match(main,/worker-src blob:/);
 });
+
+test('documentales web usa la API del mismo origen en Vercel y LAN; APK mantiene sus adaptadores',async()=>{
+ const {api}=await import('../mobile/api.mjs');const originalFetch=globalThis.fetch,originalLocation=globalThis.location;const requests=[];
+ try{
+  globalThis.fetch=async url=>{requests.push(String(url));return new Response(JSON.stringify({items:[{id:'tt8488126',kind:'movie',name:'Documentary'}]}));};
+  for(const origin of ['https://clbwemov.vercel.app','https://preview.vercel.app','http://192.168.1.20:4173','http://127.0.0.1:4173']){
+   globalThis.location={origin};const result=await api('/api/documentaries/catalog?source=movie&year=all&skip=0');assert.equal(result.items.length,1);assert.equal(requests.at(-1),'/api/documentaries/catalog?source=movie&year=all&skip=0');
+  }
+  globalThis.fetch=async()=>new Response(JSON.stringify({error:'Fuente temporalmente no disponible'}),{status:502});await assert.rejects(api('/api/documentaries/catalog?source=movie'),/Fuente temporalmente/);
+  requests.length=0;globalThis.location={origin:'https://appassets.androidplatform.net'};
+  globalThis.fetch=async url=>{requests.push(String(url));return new Response(JSON.stringify({metas:[{id:'tt8488126',name:'Documentary',genres:['Documentary'],releaseInfo:'2019'}]}));};
+  const native=await api('/api/documentaries/catalog?source=movie&year=all&skip=0');assert.equal(native.items.length,1);assert.match(requests[0],/^https:\/\/v3-cinemeta.strem.io\/catalog\/movie/);
+ }finally{globalThis.fetch=originalFetch;if(originalLocation===undefined)delete globalThis.location;else globalThis.location=originalLocation;}
+});
