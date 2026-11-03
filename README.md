@@ -109,3 +109,5 @@ Anime muestra Crunchyroll, Netflix · Anime, AniList y Kitsu. En Netflix se admi
 Las plataformas describen la clasificación del catálogo externo; no se reproducen desde cuentas de Netflix/Apple. La disponibilidad de vídeo sigue dependiendo de los archivos/proveedores de CLB. Las filas recorren el catálogo que expone la fuente, no prometen un inventario completo mundial ni regional.
 
 Se retiraron de la ficha el botón de comprobación manual y el panel experimental de Internet Archive. La comprobación de proveedores continúa automáticamente. Esto no retira los documentales que ya utilizan Archive por una integración independiente.
+
+Las filas intentan reunir 24 opciones comprobadas de manera progresiva, recorriendo hasta tres páginas de la fuente automáticamente. Si hay fallos de verificación se detiene el llenado automático; el botón Cargar más permite continuar. Este límite evita consultas sin fin y no garantiza un mínimo cuando no hay archivos. Las recomendaciones de series también se limitan al año actual y el anterior.
