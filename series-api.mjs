@@ -1,3 +1,4 @@
+import {episodePreview} from './episode-preview.mjs';
 import {catalogEligible} from './catalog-api.mjs';
 const base = 'https://7a82163c306e-stremio-netflix-catalog-addon.baby-beamup.club';
 const platforms = {nfx:'Netflix',hbm:'HBO Max',dnp:'Disney+',amp:'Prime Video',atp:'Apple TV+',pmp:'Paramount+',hlu:'Hulu',pcp:'Peacock',stz:'Starz',bbc:'BBC iPlayer',vik:'Rakuten Viki',shd:'Shudder',mp9:'Movistar+',dpe:'Discovery+',cts:'Curiosity Stream',bbo:'BritBox',act:'Acorn TV',iqi:'iQIYI',cru:'Crunchyroll'};
@@ -80,7 +81,7 @@ export async function seriesApi(req,res,cinemeta) {
         if (!Number.isInteger(season) || season < 0 || season > 1000 || !Number.isInteger(episode) || episode < 1 || episode > 10000 || seen.has(key)) return [];
         seen.add(key);
         const date = Date.parse(v.released || v.firstAired);
-        return [{season,episode,name:String(v.name || `Episodio ${episode}`).slice(0,200),released:Number.isFinite(date) ? new Date(date).toISOString() : null,upcoming:Number.isFinite(date) && date > Date.now()}];
+        return [{...episodePreview(v),season,episode,name:String(v.name || `Episodio ${episode}`).slice(0,200),released:Number.isFinite(date) ? new Date(date).toISOString() : null,upcoming:Number.isFinite(date) && date > Date.now()}];
       }).sort((a,b)=>a.season-b.season || a.episode-b.episode);
       send(res,200,{id,tmdbId:Number.isSafeInteger(tmdb) && tmdb>0 ? String(tmdb) : null,name:String(meta.name || id).slice(0,200),description:String(meta.description || '').slice(0,4000),posterUrl:poster(meta.poster),background:poster(meta.background),episodes,episodeSource,episodeWarning});
     } catch { send(res,502,{error:'No se pudieron consultar temporadas y episodios. Reintenta.'}); }

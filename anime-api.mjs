@@ -1,3 +1,4 @@
+import {episodePreview} from './episode-preview.mjs';
 import {catalogEligible} from './catalog-api.mjs';
 const cache=new Map();
 const kitsu='https://anime-kitsu.strem.fun';
@@ -66,7 +67,7 @@ export async function animeApi(req,res,cinemeta) {
         if(!Number.isInteger(season)||season<0||season>1000||!episode||episode>10000||seen.has(`${season}:${episode}`))return [];
         seen.add(`${season}:${episode}`);const released=schedule.get(episode)||date(v.released);
         const upcoming=['NOT_YET_RELEASED','CANCELLED'].includes(airing?.status)||!!released&&Date.parse(released)>Date.now()||airing?.status==='RELEASING'&&number(airing.nextAiringEpisode?.episode)!==null&&episode>=airing.nextAiringEpisode.episode;
-        return [{season,episode,malEpisode:episode,absoluteEpisode:absolute,name:String(v.title||v.name||`Episodio ${episode}`).slice(0,200),released,upcoming,imdbId:imdb(v.imdb_id)||imdbId,sourceSeason:Number.isInteger(v.imdbSeason)&&v.imdbSeason>=0?v.imdbSeason:season,sourceEpisode:number(v.imdbEpisode)||episode}];
+        return [{...episodePreview(v),season,episode,malEpisode:episode,absoluteEpisode:absolute,name:String(v.title||v.name||`Episodio ${episode}`).slice(0,200),released,upcoming,imdbId:imdb(v.imdb_id)||imdbId,sourceSeason:Number.isInteger(v.imdbSeason)&&v.imdbSeason>=0?v.imdbSeason:season,sourceEpisode:number(v.imdbEpisode)||episode}];
       }).sort((a,b)=>a.season-b.season||a.episode-b.episode);
       if(movie && !episodes.length) episodes.push({season:1,episode:1,absoluteEpisode:1,name:'Película completa',released:null,upcoming:false,imdbId,sourceSeason:1,sourceEpisode:1});
       send(res,200,{id,kind:'anime',malId,imdbId,tmdbId,playbackType:movie?'movie':'series',name:String(m.name||id).slice(0,200),description:String(m.description||'').slice(0,4000),posterUrl:poster(m.poster),episodes,episodeSource:airing?'Anime Kitsu + calendario AniList':'Anime Kitsu',episodeWarning:(airing?'':'No se pudo contrastar el calendario de episodios. ')+ 'Las entregas pueden tener fichas separadas. El idioma y los subtítulos dependen de cada servidor.'});

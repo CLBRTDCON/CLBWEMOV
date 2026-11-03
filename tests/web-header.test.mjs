@@ -17,3 +17,5 @@ test('web layouts share navigation and preserve hero, player return and mobile c
 
 import vm from 'node:vm';
 test('recommendations retain only the current and previous year',async()=>{const ctx={Intl,Date};ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(await readFile(new URL('../public/genre-shelves.js',import.meta.url),'utf8'),ctx);const result=ctx.CLBShelves.recent([{id:'now',year:2026},{id:'previous',year:'2025'},{id:'old',year:2024},{id:'future',year:2027},{id:'unknown'}],2026);assert.deepEqual(Array.from(result,item=>item.id),['now','previous']);});
+
+test('Kids stays in primary navigation while saved list and adult access remain under More',()=>{const html=withWebHeader('<html><head></head><body><main></main></body></html>','/');const nav=html.match(/<nav aria-label="Secciones">(.*?)<\/nav>/s)[1],more=html.match(/<details class="header-more">(.*?)<\/details>/s)[1];assert.match(nav,/href="\/kids"/);assert.doesNotMatch(nav,/href="\/biblioteca"|href="\/adult"/);assert.match(more,/href="\/biblioteca"/);assert.match(more,/href="\/adult"/);});
