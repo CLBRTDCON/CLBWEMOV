@@ -5,9 +5,11 @@ const decode=value=>String(value).replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').re
 const clean=value=>decode(value).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,240);
 export function microItem(id,title,published=null){return {id:'yt:'+id,kind:'microdrama',section:'drama',name:clean(title),year:published?Number(published.slice(0,4)):null,released:published,posterUrl:`https://i.ytimg.com/vi/${id}/hqdefault.jpg`,genres:['Microdramas oficiales'],platforms:['DramaBox ES'],catalog:dramaChannel.name,languageLabel:/doblad[oa]/i.test(title)?'Doblaje español anunciado · variante sin comprobar':'Canal en español · audio sin comprobar',completeness:'No verificada'};}
 export function parseDramaFeed(xml,now=Date.now()){
- if(/<yt:channelId>([^<]+)<\/yt:channelId>/.exec(xml)?.[1]!==dramaChannel.id)throw Error('El feed no pertenece al canal configurado.');
+ const header=xml.split(/<entry\b/)[0],rawChannel=/<yt:channelId>([^<]+)<\/yt:channelId>/.exec(header)?.[1]||'',channel=rawChannel.startsWith('UC')?rawChannel:'UC'+rawChannel,author=/<uri>([^<]+)<\/uri>/.exec(header)?.[1];
+ if(channel!==dramaChannel.id||author!=='https://www.youtube.com/channel/'+dramaChannel.id)throw Error('El feed no pertenece al canal configurado.');
  const result=new Map();for(const [,entry]of xml.matchAll(/<entry\b[^>]*>([\s\S]*?)<\/entry>/g)){
   const id=/<yt:videoId>([^<]+)<\/yt:videoId>/.exec(entry)?.[1],title=/<title>([\s\S]*?)<\/title>/.exec(entry)?.[1],published=/<published>([^<]+)<\/published>/.exec(entry)?.[1];
+  const entryChannel=/<yt:channelId>([^<]+)<\/yt:channelId>/.exec(entry)?.[1];if(entryChannel&&entryChannel!==dramaChannel.id)continue;
   if(!videoPattern.test(id||'')||!title||!Number.isFinite(Date.parse(published))||Date.parse(published)>now)continue;
   const item=microItem(id,title,published);if(item.name)result.set(id,item);
  }return [...result.values()].slice(0,15);
