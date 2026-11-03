@@ -38,7 +38,7 @@ function item(m, providerIds = []) {
   if (!catalogEligible(m) || (m.type && m.type !== 'series') || !/^tt\d{7,12}$/.test(m.id || '') || typeof m.name !== 'string') return null;
   const genres = (Array.isArray(m.genres) ? m.genres : Array.isArray(m.genre) ? m.genre : []).filter(g=>typeof g==='string').slice(0,6);
   const date = Date.parse(m.released);
-  return {id:m.id,name:m.name.slice(0,200),year:Number(String(m.releaseInfo || m.year || '').slice(0,4)) || null,released:Number.isFinite(date) ? new Date(date).toISOString() : null,posterUrl:poster(m.poster),genres,platforms:providerIds};
+  return {id:m.id,name:m.name.slice(0,200),year:Number(String(m.releaseInfo || m.year || '').slice(0,4)) || null,released:Number.isFinite(date) ? new Date(date).toISOString() : null,posterUrl:poster(m.poster),backgroundUrl:poster(m.background),genres,platforms:providerIds};
 }
 async function feed(id) {
   const previous = cache.get(id);
@@ -82,7 +82,7 @@ export async function seriesApi(req,res,cinemeta) {
         const date = Date.parse(v.released || v.firstAired);
         return [{season,episode,name:String(v.name || `Episodio ${episode}`).slice(0,200),released:Number.isFinite(date) ? new Date(date).toISOString() : null,upcoming:Number.isFinite(date) && date > Date.now()}];
       }).sort((a,b)=>a.season-b.season || a.episode-b.episode);
-      send(res,200,{id,tmdbId:Number.isSafeInteger(tmdb) && tmdb>0 ? String(tmdb) : null,name:String(meta.name || id).slice(0,200),description:String(meta.description || '').slice(0,4000),posterUrl:poster(meta.poster),episodes,episodeSource,episodeWarning});
+      send(res,200,{id,tmdbId:Number.isSafeInteger(tmdb) && tmdb>0 ? String(tmdb) : null,name:String(meta.name || id).slice(0,200),description:String(meta.description || '').slice(0,4000),posterUrl:poster(meta.poster),background:poster(meta.background),episodes,episodeSource,episodeWarning});
     } catch { send(res,502,{error:'No se pudieron consultar temporadas y episodios. Reintenta.'}); }
     return;
   }

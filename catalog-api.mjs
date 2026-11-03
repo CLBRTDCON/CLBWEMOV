@@ -70,7 +70,7 @@ export async function catalog(req, res) {
       let posterUrl = '';
       try { const url = new URL(m.poster); if (url.protocol === 'https:' && ['images.metahub.space','image.tmdb.org','m.media-amazon.com'].includes(url.hostname)) posterUrl = url.href; } catch {}
       const tmdb = Number(m.moviedb_id);
-      return [{id:Number.isSafeInteger(tmdb) && tmdb > 0 ? String(tmdb) : m.id,imdbId:m.id,name:m.name.slice(0,200),year:kind === 'recent' ? String(new Date(released).getUTCFullYear()) : String(m.releaseInfo || m.year || '').slice(0,4),released:Number.isFinite(released) ? new Date(released).toISOString() : null,genres:(Array.isArray(m.genres) ? m.genres : []).filter(g=>typeof g==='string').slice(0,5),posterUrl}];
+      return [{id:Number.isSafeInteger(tmdb) && tmdb > 0 ? String(tmdb) : m.id,imdbId:m.id,name:m.name.slice(0,200),year:kind === 'recent' ? String(new Date(released).getUTCFullYear()) : String(m.releaseInfo || m.year || '').slice(0,4),released:Number.isFinite(released) ? new Date(released).toISOString() : null,backgroundUrl:(()=>{try{const u=new URL(m.background);return u.protocol==='https:'&&['images.metahub.space','image.tmdb.org','m.media-amazon.com'].includes(u.hostname)?u.href:'';}catch{return '';}})(),genres:(Array.isArray(m.genres) ? m.genres : []).filter(g=>typeof g==='string').slice(0,5),posterUrl}];
     });
     if (kind === 'recent') movies.sort((a,b)=>Date.parse(b.released)-Date.parse(a.released));
     res.end(JSON.stringify({movies,nextSkip:skip+raw.metas.length,hasMore:raw.metas.length>0,source:'Cinemeta'}));

@@ -65,7 +65,7 @@
   const grid=element('div',undefined,'web-library-grid');for(const row of rows)grid.append(card(row,type));list.append(grid);
  }
  window.CLBWeb={
-  connect(config){section=config.section;ready.then(lib=>{if(!lib)return;if(config.catalog){const shelf=element('section');shelf.id='web-continue';shelf.hidden=true;document.getElementById(config.catalog)?.prepend(shelf);renderShelf();}
+  connect(config){section=config.section;ready.then(lib=>{if(!lib)return;if(config.catalog){const shelf=element('section');shelf.id='web-continue';shelf.hidden=true;const container=document.getElementById(config.catalog),hero=container?.querySelector('.premium-hero');if(hero)hero.after(shelf);else container?.prepend(shelf);renderShelf();}
    if(config.actions){saveButton=element('button','+ Mi lista','subtle');saveButton.type='button';saveButton.disabled=true;saveButton.addEventListener('click',()=>{if(active){library.toggle(active);updateSave();renderHub();}});document.querySelector(config.actions)?.prepend(saveButton);}
    const requested=core.readRequest(location.search,section);if(requested)config.open(requested.item,requested.episode);
   });},

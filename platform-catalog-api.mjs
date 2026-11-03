@@ -17,7 +17,7 @@ export function createPlatformCatalogApi({fetcher=fetch,anime=animeApi,movies=ca
   if(!catalogEligible(m,now())||m.type!==type||!/^tt\d{7,12}$/.test(m.id||'')||typeof m.name!=='string')return null;
   const y=Number(String(m.releaseInfo||m.year||m.released||'').slice(0,4))||null;
   if(year!=='all'&&y!==Number(year))return null;
-  return {id:m.id,imdbId:m.id,name:m.name.slice(0,200),year:y,released:Number.isFinite(Date.parse(m.released))?new Date(m.released).toISOString():null,posterUrl:poster(m.poster),genres:(Array.isArray(m.genres)?m.genres:[]).filter(g=>typeof g==='string').slice(0,6),kind:type,section:kind,platforms:[platform],catalog:platformCatalogs[kind].find(([id])=>id===platform)[1]};
+  return {id:m.id,imdbId:m.id,name:m.name.slice(0,200),year:y,released:Number.isFinite(Date.parse(m.released))?new Date(m.released).toISOString():null,posterUrl:poster(m.poster),backgroundUrl:poster(m.background),genres:(Array.isArray(m.genres)?m.genres:[]).filter(g=>typeof g==='string').slice(0,6),kind:type,section:kind,platforms:[platform],catalog:platformCatalogs[kind].find(([id])=>id===platform)[1]};
  }
  async function releases(kind,year,current){
   const key='releases:'+kind+':'+year,old=cache.get(key);if(old?.expires>now())return old.value;if(pending.has(key))return pending.get(key);
