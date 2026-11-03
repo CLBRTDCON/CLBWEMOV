@@ -334,8 +334,8 @@
     },
     {
       "file": "avplayer.js",
-      "bytes": 781034,
-      "sha256": "50dd15da670959dc35928b040d629026a1a44cd268a934790b42bb8f69c91b9a",
+      "bytes": 783497,
+      "sha256": "e21d15c18414cad8cd338d9104c573470f0ad26757326225c0347964855bdc98",
       "url": "https://zhaohappy.github.io/libmedia/dist/avplayer-ui/avplayer.js",
       "upstreamSha256": "b29e8a4b786457a0e12ac9942d240ba375141e1c02b853050cb7319531f2509f"
     },
@@ -379,6 +379,11 @@
     {
       "component": "Pip",
       "change": "Fit only the player to the Document PiP viewport; debounce and deduplicate renderer resize; restore the exact DOM position and clean up pending callbacks on close/destroy. Paired with audio-1080.css clb-player-pip rules.",
+      "date": "2026-11-03"
+    },
+    {
+      "component": "Pip aspect ratio",
+      "change": "Open at selected video display aspect ratio, including sample aspect ratio. Discreet +/-/fit controls use user-initiated resizeTo including window frame dimensions. Automatic correction only when browser reports transient activation; no cropping or stretching.",
       "date": "2026-11-03"
     }
   ]
