@@ -64,3 +64,11 @@ test('automatic file panel ignores stale episode results and never queries uncon
  const result=title=>({ok:true,json:async()=>({sources:[{index:1,title:'Release with no size in title',name:'Latinobrid 4K'},{index:0,title,name:'DeepFlix'}]})});deferred.get('2')(result('Episode two 720p'));await second;deferred.get('1')(result('Episode one 720p'));await first;
  const links=ids.get('addons-results').children;assert.equal(links.length,1);assert.equal(new URL(links[0].href,'http://local').searchParams.get('episode'),'2');assert.ok(requests.every(path=>!path.includes('provider=latam')&&!path.includes('provider=latadd')));assert.match(ids.get('addons-status').textContent,/1 archivo/);options.dispose();
 });
+
+test('background catalogue checks queue behind two slots and foreground source selection takes priority',async()=>{
+ let active=0,peak=0;const order=[];
+ const api=createAddonsLocalApi({deployed:true,load:async()=>({latinobrid:'https://example.com/private/manifest.json'}),request:async url=>{active++;peak=Math.max(peak,active);order.push(String(url).match(/tt[0-9]+/)[0]);await new Promise(r=>setTimeout(r,10));active--;return {response:response({streams:[{name:'1080p',url:'https://example.com/video.mp4'}]})};}});
+ const background=Promise.all(['tt1234567','tt1234568','tt1234569'].map(id=>api.inspect({id,kind:'movie'})));await new Promise(setImmediate);
+ const foreground=call(api,'links?provider=latinobrid&kind=movie&id=tt1234570');
+ const [rows,selected]=await Promise.all([background,foreground]);assert.equal(peak,2);assert.ok(rows.every(r=>r.state==='available'));assert.equal(selected.status,200);assert.equal(order[2],'tt1234570');
+});

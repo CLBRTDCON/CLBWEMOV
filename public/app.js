@@ -34,7 +34,7 @@ async function loadCatalog(append = false) {
   let releasesTask=Promise.resolve();
   if(!append&&!query){
     releases={name:'Últimos lanzamientos',items:[],message:'Consultando estrenos…'};
-    releasesTask=fetch('/api/releases?'+new URLSearchParams({kind:'movie',year}),{signal:AbortSignal.any([catalogController.signal,AbortSignal.timeout(45000)])}).then(async r=>{
+    releasesTask=(globalThis.CLBCatalog?.fetch||fetch)('/api/releases?'+new URLSearchParams({kind:'movie',year}),{signal:AbortSignal.any([catalogController.signal,AbortSignal.timeout(45000)])}).then(async r=>{
       const d=await r.json();if(!r.ok)throw Error(d.error);if(request!==catalogRequest)return;
       releases={name:'Últimos lanzamientos',items:d.items.map(m=>({...m,genres:m.genres.map(g=>genreLabels[g]||g),genre:genreLabels[m.genres[0]]||m.genres[0]||'Película'})),note:d.note,message:'No hay estrenos con fecha confirmada para esta selección.'};renderMovies();
     }).catch(error=>{if(request===catalogRequest){releases={name:'Últimos lanzamientos',items:[],message:error.message};renderMovies();}});
@@ -43,9 +43,9 @@ async function loadCatalog(append = false) {
   $('catalog-source').textContent = query ? `Buscando «${query}» en el catálogo de Internet…` : 'Consultando catálogo en Internet…';
   try {
     // Precarga tres páginas de catálogo. Las búsquedas consultan una página por solicitud.
-    for (let page = 0; page < (globalThis.CineDataSaver.enabled || append || query ? 1 : 3); page++) {
+    for (let page = 0; page < (globalThis.CLBAutoPager || globalThis.CineDataSaver.enabled || append || query ? 1 : 3); page++) {
     const params = new URLSearchParams({kind, year, q:query, skip:String(catalogSkip)});
-    const response = await fetch(`/api/catalog?${params}`, {signal:AbortSignal.any([catalogController.signal,AbortSignal.timeout(20000)])});
+    const response = await (globalThis.CLBCatalog?.fetch||fetch)(`/api/catalog?${params}`, {signal:AbortSignal.any([catalogController.signal,AbortSignal.timeout(20000)])});
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'No se pudo consultar el catálogo.');
     if (request !== catalogRequest) return;
@@ -166,7 +166,7 @@ $('player-form').addEventListener('submit', async event => {
   if (CinePlayback.providers[provider].tmdb && id.startsWith('tt')) {
     $('status').textContent = 'Preparando película…';
     try {
-      const response = await fetch(`/api/movie?imdb=${encodeURIComponent(id)}`,{signal:AbortSignal.timeout(20000)});
+      const response = await (globalThis.CLBCatalog?.fetch||fetch)(`/api/movie?imdb=${encodeURIComponent(id)}`,{signal:AbortSignal.timeout(20000)});
       const data = await response.json();
       if (request !== playRequest) return;
       if (!response.ok) throw new Error(data.error || 'No se encontró identificador TMDB.');

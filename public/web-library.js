@@ -4,7 +4,7 @@
  const element=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
  const ready=Promise.all([import('/mobile/library.mjs'),import('/web-library-core.mjs'),import('/mobile/global-search.mjs'),import('/mobile/mobile-playback.mjs')]).then(([lib,c,search,playback])=>{
   core=c;library=lib.createLibrary({onError:message=>notice(message.replace('en el teléfono','en este navegador'))});
-  searchEngine=search.createGlobalSearch({api:async path=>{const r=await fetch(path,{signal:AbortSignal.timeout(50000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar.');return d;}});
+  searchEngine=search.createGlobalSearch({api:async path=>{if(globalThis.CLBCatalog)return CLBCatalog.json(path);const r=await fetch(path,{signal:AbortSignal.timeout(50000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar.');return d;}});
   tracker=playback.installMobilePlayback({document:{getElementById:()=>({set textContent(value){notice(value);}}),get hidden(){return document.hidden;}},window,library,recover:false,actions:{reload:()=>document.getElementById('reload-player')?.click()}});
   initHub();return library;
  }).catch(error=>{notice('La biblioteca no está disponible. '+error.message);return null;});
@@ -38,14 +38,14 @@
     const gate=globalThis.CLBAvailability;
     function draw(){
      if(token!==renderToken||!group.isConnected)return;
-     const result=core.searchAvailability(state.items,gate);
+     const result=core.searchAvailability(state.items,gate);group.dataset.availabilityPending=String(result.pending);
      group.replaceChildren(element('h2',core.sectionNames[state.key]),element('p',state.status==='loading'?'Buscando…':state.error||result.message,'hint'));
      const grid=element('div',undefined,'web-library-grid');for(const item of result.rows)grid.append(card({item}));group.append(grid);
      if(result.failed){const retry=element('button','Reintentar fuentes','subtle');retry.onclick=()=>gate.retry(result.checked);group.append(retry);}
      if(state.warnings?.length)group.append(element('p',state.warnings.join(' · '),'hint'));
-     if(state.hasMore){const more=element('button','Cargar más','subtle');more.addEventListener('click',async()=>{more.disabled=true;try{state=await searchEngine.more(state);if(token===renderToken)renderGroup(state,group);}catch(e){notice(e.message);}finally{more.disabled=false;}});group.append(more);}
+     if(state.hasMore){const more=element('button','Cargar más','subtle');more.disabled=result.pending;more.addEventListener('click',async()=>{more.disabled=true;try{state=await searchEngine.more(state);if(token===renderToken)renderGroup(state,group);}catch(e){notice(e.message);more.textContent='Reintentar';}finally{more.disabled=false;}});group.append(more);}
     }
-    const checked=state.items.filter(core.visibleItem).filter(i=>i.kind!=='tv');
+    const checked=state.items.filter(core.visibleItem).filter(i=>!['tv','microdrama'].includes(i.kind));
     if(gate)gate.track(group,checked,draw);
     draw();
    }

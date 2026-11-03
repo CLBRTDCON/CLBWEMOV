@@ -16,7 +16,8 @@ export function createGlobalSearch({api,sections=searchSections}){
   const incoming=data.movies||data.series||data.items||data.channels||data.sections?.flatMap(s=>s.items)||[];
   const rows=incoming.filter(i=>(!Number(i.year)||Number(i.year)<=new Date().getFullYear())&&(!Number.isFinite(Date.parse(i.released))||Date.parse(i.released)<=Date.now())).map(i=>({...i,kind:i.kind||(key==='documentary'?'movie':key),section:key}));
   const items=[...new Map([...(previous?.items||[]),...rows].map(i=>[i.kind+':'+i.id,i])).values()];
-  return {key,q,source,items,nextSkip:data.nextSkip||0,hasMore:key!=='kids'&&!!data.hasMore&&(data.nextSkip||0)>(previous?.nextSkip||0),status:'ready',warnings:data.warnings||[]};
+  const duplicates=previous&&incoming.length>0&&items.length===previous.items.length?(previous.duplicates||0)+1:0;
+  return {key,q,source,items,duplicates,nextSkip:data.nextSkip||0,hasMore:duplicates<2&&key!=='kids'&&!!data.hasMore&&(data.nextSkip||0)>(previous?.nextSkip||0),status:'ready',warnings:data.warnings||[]};
  }
  return {async search(q,onSection=()=>{}){
   q=q.trim();if(!q||q.length>120||/[\u0000-\u001f]/.test(q))throw Error('Escribe un título para buscar.');

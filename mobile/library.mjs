@@ -1,12 +1,13 @@
 const KEY='clb.library.v1';
 const sections=['movie','series','anime','kids','documentary','tv','drama'];
-const kinds=['movie','series','anime','archive','tv','drama'];
+const kinds=['movie','series','anime','archive','tv','drama','microdrama'];
 const string=(v,n)=>typeof v==='string'?v.slice(0,n):'';
 export function libraryItem(value){
  if(!value||!kinds.includes(value.kind)||!sections.includes(value.section))return null;
- if(!{movie:['movie','anime','kids','documentary'],series:['series','anime','kids','documentary','drama'],anime:['anime','kids'],archive:['documentary'],tv:['tv','kids'],drama:['drama']}[value.kind].includes(value.section))return null;
+ if(!{movie:['movie','anime','kids','documentary'],series:['series','anime','kids','documentary','drama'],anime:['anime','kids'],archive:['documentary'],tv:['tv','kids'],drama:['drama'],microdrama:['drama']}[value.kind].includes(value.section))return null;
  const id=string(String(value.id||''),120);
- if(!/^(?:tt\d{7,12}|[1-9]\d{0,11}|(?:kitsu|mal|anilist):\d{1,10}|reelshort:[a-f0-9]{24}|archive:[a-zA-Z0-9][a-zA-Z0-9_.-]{0,99})$/.test(id)&&!(value.kind==='tv'&&/^[\w.-]{1,120}$/.test(id)))return null;
+ if(!/^(?:tt\d{7,12}|[1-9]\d{0,11}|(?:kitsu|mal|anilist):\d{1,10}|reelshort:[a-f0-9]{24}|yt:[A-Za-z0-9_-]{11}|archive:[a-zA-Z0-9][a-zA-Z0-9_.-]{0,99})$/.test(id)&&!(value.kind==='tv'&&/^[\w.-]{1,120}$/.test(id)))return null;
+ if((value.kind==='microdrama')!==/^yt:[A-Za-z0-9_-]{11}$/.test(id))return null;
  if(!string(value.name,200))return null;
  let posterUrl='';try{const u=new URL(value.posterUrl);if(u.protocol==='https:'&&!u.username&&!u.password)posterUrl=u.href.slice(0,2000);}catch{}
  return {id,kind:value.kind,section:value.section,name:string(value.name,200),country:/^[A-Z]{2}$/.test(value.country||'')?value.country:null,year:/^\d{4}$/.test(String(value.year))?Number(value.year):null,imdbId:/^tt\d{7,12}$/.test(value.imdbId||'')?value.imdbId:null,posterUrl,genres:(Array.isArray(value.genres)?value.genres:[]).filter(g=>typeof g==='string').slice(0,10).map(g=>g.slice(0,60)),platforms:(Array.isArray(value.platforms)?value.platforms:[]).filter(g=>typeof g==='string').slice(0,20).map(g=>g.slice(0,30)),catalog:string(value.catalog,100),format:string(value.format,30)};

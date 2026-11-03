@@ -4,7 +4,7 @@ let releases={name:'Últimos lanzamientos Kids',items:[],message:'Consultando es
 let kind='all',sections=[],request=0,controller,timer,nextSkip=0,detailRequest=0,selected=null,optionIndex=0;
 function element(tag,text,className){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(className)e.className=className;return e;}
 function option(value,text){const e=element('option',text);e.value=value;return e;}
-async function api(path,signal){const r=await fetch(path,{signal:signal||AbortSignal.timeout(50000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar esta historia.');return d;}
+async function api(path,signal){const r=await (globalThis.CLBCatalog?.fetch||fetch)(path,{signal:signal||AbortSignal.timeout(50000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar esta historia.');return d;}
 function changeKind(value){kind=value;for(const b of document.querySelectorAll('[data-kids-kind]'))b.setAttribute('aria-pressed',String(b.dataset.kidsKind===kind));
   $('theme').disabled=kind==='tv';$('kids-year').disabled=kind==='tv';if(kind==='tv'){$('theme').value='all';$('kids-year').value='all';}load();}
 function createCard(item){

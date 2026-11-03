@@ -1,9 +1,9 @@
 // Presence of a compatible HTTP option, not proof of a complete successful playback.
 export function createAvailabilityApi({inspect,animeDetail,deployed=false,now=Date.now}={}){
  const cache=new Map(),pending=new Map(),queue=[];let running=0;
- function pump(){while(running<1&&queue.length){const task=queue.shift();running++;task().finally(()=>{running--;pump();});}}
+ function pump(){while(running<2&&queue.length){const task=queue.shift();running++;task().finally(()=>{running--;pump();});}}
  function identity(item){const id=item.imdbId||item.id;return /^tt\d{5,12}$/.test(id||'')?{kind:item.kind==='movie'?'movie':'series',id,...(item.kind==='movie'?{}:{season:1,episode:1})}:null;}
- function check(item){const key=JSON.stringify(item),old=cache.get(key);if(old&&old.expires>now())return Promise.resolve(old.value);if(pending.has(key))return pending.get(key);
+ function check(item){const key=JSON.stringify({kind:item.kind,id:item.kind!=='anime'?(item.imdbId||item.id):item.id}),old=cache.get(key);if(old&&old.expires>now())return Promise.resolve(old.value);if(pending.has(key))return pending.get(key);
   if(queue.length>100)return Promise.resolve({state:'unknown'});
   const promise=new Promise(resolve=>{queue.push(async()=>{let value={state:'unknown'};try{let context=identity(item);if(item.kind==='anime'){const info=await animeDetail(item.id);const ep=info.episodes?.find(e=>!e.locked&&!e.upcoming&&e.season>0)||info.episodes?.find(e=>!e.locked&&!e.upcoming);const id=ep?.imdbId||info.imdbId;context=/^tt\d{5,12}$/.test(id||'')?{id,kind:info.playbackType==='movie'?'movie':'series',...(info.playbackType==='movie'?{}:{season:ep?.sourceSeason??ep?.season??1,episode:ep?.sourceEpisode??ep?.episode??1})}:null;}if(context)value=await inspect(context);}catch{}if(cache.size>=2000)cache.delete(cache.keys().next().value);cache.set(key,{value,expires:now()+(value.state==='available'?1800000:value.state==='empty'?300000:30000)});pending.delete(key);resolve(value);});});pending.set(key,promise);pump();return promise;
  }

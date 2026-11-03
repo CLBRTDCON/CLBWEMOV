@@ -5,7 +5,7 @@ let countries=new Map(),channels=[],skip=0,request=0,controller,timer,active=nul
 function element(tag,text,className){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(className)e.className=className;return e;}
 function option(value,text){const e=element('option',text);e.value=value;return e;}
 function countryName(code){try{return displayNames.of(code)||countries.get(code)?.name||code;}catch{return code||'País no informado';}}
-async function api(path,signal){const r=await fetch(path,{signal:signal||AbortSignal.timeout(35000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar TV.');return d;}
+async function api(path,signal){const r=await (globalThis.CLBCatalog?.fetch||fetch)(path,{signal:signal||AbortSignal.timeout(35000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar TV.');return d;}
 function render(){
   $('channels').replaceChildren();
   if(!channels.length)$('channels').append(element('p',$('channels').getAttribute('aria-busy')==='true'?'Consultando canales…':'No hay canales con estos filtros. Prueba otro país o categoría.','muted'));

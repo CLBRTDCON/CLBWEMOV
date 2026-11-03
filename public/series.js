@@ -33,7 +33,7 @@ function platformButtons(counts = []) {
 }
 function render() {
   $('series-grid').replaceChildren();
-  if (!shows.length) $('series-grid').append(element('p','muted',$('series-grid').getAttribute('aria-busy')==='true' ? 'Cargando catálogo…' : animePage ? 'Sin resultados en esta página. Cambia los filtros, prueba el otro catálogo o pulsa Cargar más si está disponible.' : 'No hay resultados con esos filtros. Prueba «Todas» o cambia el año o el género.'));
+  if (!shows.length) $('series-grid').append(element('p','muted',$('series-grid').getAttribute('aria-busy')==='true' ? 'Cargando catálogo…' : animePage ? 'Sin resultados en esta página. Cambia los filtros, prueba el otro catálogo o sigue desplazándote para explorar.' : 'No hay resultados con esos filtros. Prueba «Todas» o cambia el año o el género.'));
   const createCard=show=>{
     const card = element('button','movie-card'); card.type='button'; card.dataset.seriesId=show.id; card.setAttribute('aria-label',`Ver episodios de ${show.name}`);
     const art = element('div','poster'); art.append(element('span','poster-fallback',show.name));
@@ -55,17 +55,17 @@ async function load(append=false) {
   let releasesTask=Promise.resolve();
   if(!append&&!$('series-search').value.trim()){
     releases={name:animePage?'Últimos lanzamientos · Anime':'Últimos lanzamientos',items:[],message:'Consultando estrenos…'};
-    releasesTask=fetch('/api/releases?'+new URLSearchParams({kind:animePage?'anime':'series',platform,year:$('series-year').value,format:$('anime-format').value}),{signal:AbortSignal.any([controller.signal,AbortSignal.timeout(45000)])}).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.error);if(id!==requestId)return;releases={name:animePage?'Últimos lanzamientos · '+d.source:'Últimos lanzamientos',items:d.items,note:d.note,message:'No hay estrenos con fecha confirmada para esta selección.'};render();}).catch(error=>{if(id===requestId){releases={name:'Últimos lanzamientos',items:[],message:error.message};render();}});
+    releasesTask=(globalThis.CLBCatalog?.fetch||fetch)('/api/releases?'+new URLSearchParams({kind:animePage?'anime':'series',platform,year:$('series-year').value,format:$('anime-format').value}),{signal:AbortSignal.any([controller.signal,AbortSignal.timeout(45000)])}).then(async r=>{const d=await r.json();if(!r.ok)throw Error(d.error);if(id!==requestId)return;releases={name:animePage?'Últimos lanzamientos · '+d.source:'Últimos lanzamientos',items:d.items,note:d.note,message:'No hay estrenos con fecha confirmada para esta selección.'};render();}).catch(error=>{if(id===requestId){releases={name:'Últimos lanzamientos',items:[],message:error.message};render();}});
   }
   if(!append){shows=[];nextSkip=0;render();}
   $('series-status').textContent='Consultando el catálogo en Internet…';
   try {
     const pages=!append&&!$('series-search').value.trim()?(platform==='internet'?3:['anilist','kitsu'].includes(platform)?2:1):1;
-    for(let page=0;page<(globalThis.CineDataSaver.enabled?1:pages);page++) {
+    for(let page=0;page<(globalThis.CLBAutoPager||globalThis.CineDataSaver.enabled?1:pages);page++) {
       const params=new URLSearchParams({platform,q:$('series-search').value.trim(),year:$('series-year').value,genre:$('series-genre').value,sort:$('series-sort').value,skip:String(nextSkip)});
       const broadAnime=['anilist','kitsu'].includes(platform);
       if(broadAnime){params.set('source',platform);params.set('format',$('anime-format').value);}
-      const response=await fetch(`${broadAnime?'/api/anime/catalog':'/api/series/catalog'}?${params}`,{signal:AbortSignal.any([controller.signal,AbortSignal.timeout(25000)])});
+      const response=await (globalThis.CLBCatalog?.fetch||fetch)(`${broadAnime?'/api/anime/catalog':'/api/series/catalog'}?${params}`,{signal:AbortSignal.any([controller.signal,AbortSignal.timeout(25000)])});
       const data=await response.json();if(id!==requestId)return;
       if(!response.ok)throw new Error(data.error||'Catálogo no disponible.');
       const previousCount=shows.length;
@@ -98,7 +98,7 @@ async function openShow(show,resume=null){
   for(const key of ['season','episode','episode-play','episode-next']) $(key).disabled=true;
   $('series-detail').scrollIntoView({behavior:'smooth',block:'start'});
   try{
-    const response=await fetch(`${/^(kitsu|mal|anilist):/.test(show.id)?'/api/anime/detail':'/api/series/detail'}?id=${encodeURIComponent(show.id)}`,{signal:AbortSignal.timeout(50000)});const data=await response.json();if(id!==detailRequest)return;
+    const response=await (globalThis.CLBCatalog?.fetch||fetch)(`${/^(kitsu|mal|anilist):/.test(show.id)?'/api/anime/detail':'/api/series/detail'}?id=${encodeURIComponent(show.id)}`,{signal:AbortSignal.timeout(50000)});const data=await response.json();if(id!==detailRequest)return;
     if(!response.ok)throw new Error(data.error || 'No se pudo abrir la ficha.');selected=data;webShow={...show,...data,id:show.id,kind:animePage?'anime':'series',section:animePage?'anime':'series'};window.CLBWeb?.setItem(webShow);
     $('series-name').textContent=data.name;$('series-description').textContent=data.description;configureSources();
     $('season').parentElement.hidden=data.playbackType==='movie';$('episode').parentElement.hidden=data.playbackType==='movie';

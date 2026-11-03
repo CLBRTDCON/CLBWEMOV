@@ -22,3 +22,5 @@ test('búsqueda global: integración con el adaptador real de películas no omit
   const movie=(await search.search('Fight Club regression'))[0];assert.equal(movie.status,'ready');assert.equal(movie.items.length,1);assert.match(upstream,/search=Fight%20Club%20regression/);
  }finally{globalThis.fetch=original;}
 });
+
+test('repeated upstream pages eventually stop auto-pagination without dropping distinct results',async()=>{const search=createGlobalSearch({sections:[{key:'movie'}],api:async path=>{const skip=Number(new URL(path,'https://test').searchParams.get('skip'));return {movies:[{id:'tt1234567',name:'Same'}],hasMore:true,nextSkip:skip+48};}});let state=(await search.search('Same'))[0];state=await search.more(state);assert.equal(state.hasMore,true);state=await search.more(state);assert.equal(state.hasMore,false);assert.equal(state.items.length,1);});

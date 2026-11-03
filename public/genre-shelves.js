@@ -1,4 +1,5 @@
 globalThis.CLBShelves=(()=>{
+  const snapshots=new WeakMap();
   const priority=['Acción','Aventura','Comedia','Drama','Ciencia ficción','Suspenso','Terror','Fantasía','Romance','Animación','Familiar','Documental'];
   function groups(items,labels={}){
     const buckets=new Map();
@@ -20,6 +21,7 @@ globalThis.CLBShelves=(()=>{
       items=items.filter(gate.has);if(leading)leading={...leading,items:leading.items.filter(gate.has)};if(featured)featured={...featured,items:featured.items.filter(gate.has)};
       if(!items.length&&!leading?.items.length&&!featured?.items.length){container.replaceChildren();const status=document.createElement('p');status.className='muted';status.setAttribute('role','status');status.textContent=gate.pending(candidates)?'Comprobando archivos disponibles…':gate.failed(candidates)?'No se pudo completar la comprobación de archivos. Reintenta más tarde.':'No encontramos archivos disponibles en esta selección.';container.append(status);return;}
     }
+    const signature=JSON.stringify([items.map(i=>[i.kind,i.id,i.name,i.posterUrl,i.year,i.genres]),leading,featured,labels,search,controls,notes,emptyText]);const previous=snapshots.get(container);if(!items.some(i=>i.section==='drama')&&previous?.signature===signature&&previous.first===container.firstChild)return;
     container.replaceChildren();
     if(!items.length&&!leading){const p=document.createElement('p');p.className='muted';p.textContent=emptyText;container.append(p);return;}
     const sections=search?[{name:'Resultados de búsqueda',items:[...new Map(items.map(i=>[String(i.id),i])).values()]}]:[...(featured?[featured]:[]),...(leading?[leading]:[]),...groups(items,labels)];
@@ -37,6 +39,7 @@ globalThis.CLBShelves=(()=>{
       if(!section.items.length){const p=document.createElement('p');p.className='hint';p.textContent=section.message||'No hay lanzamientos con fecha confirmada en esta selección.';row.append(p);}
       shelf.append(head);if(section.note&&notes){const p=document.createElement('p');p.className='hint';p.textContent=section.note;shelf.append(p);}else if(section.note)head.setAttribute('aria-description',section.note);shelf.append(row);container.append(shelf);
     }
+    snapshots.set(container,{signature,first:container.firstChild});
   }
   function recent(items,year=Number(new Intl.DateTimeFormat('en',{year:'numeric',timeZone:'America/Mexico_City'}).format(new Date()))){return items.filter(item=>{const value=Number(String(item.year||item.released||'').slice(0,4));return Number.isInteger(value)&&value>=year-1&&value<=year;});}
   return {groups,render,recent};

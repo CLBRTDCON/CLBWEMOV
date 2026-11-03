@@ -111,3 +111,12 @@ Las plataformas describen la clasificación del catálogo externo; no se reprodu
 Se retiraron de la ficha el botón de comprobación manual y el panel experimental de Internet Archive. La comprobación de proveedores continúa automáticamente. Esto no retira los documentales que ya utilizan Archive por una integración independiente.
 
 Las filas intentan reunir 24 opciones comprobadas de manera progresiva, recorriendo hasta tres páginas de la fuente automáticamente. Si hay fallos de verificación se detiene el llenado automático; el botón Cargar más permite continuar. Este límite evita consultas sin fin y no garantiza un mínimo cuando no hay archivos. Las recomendaciones de series también se limitan al año actual y el anterior.
+
+
+### Microdramas oficiales y carga de catálogos (noviembre de 2026)
+
+`/dramas` permite alternar entre las publicaciones recientes del canal oficial DramaBox ES y los K-dramas existentes. El RSS devuelve hasta 15 vídeos; no constituye un catálogo completo ni certifica doblaje latino o historias completas. `/microdrama?video=...` valida la autoría mediante oEmbed antes de preparar el iframe de `youtube-nocookie.com`. La página permite formato horizontal/vertical, Mi lista y abrir el vídeo en YouTube. No se extraen archivos ni se desbloquean episodios. No requiere Apify ni una clave de YouTube. La fuente está fijada en `microdramas-api.mjs`; los fallos conservan una lista anterior durante un máximo de 30 minutos.
+
+Los catálogos públicos usan `catalog-runtime.js`: caché de metadatos de dos minutos en la sesión, deduplicación de solicitudes y cancelación independiente por consumidor. Se excluyen activaciones, configuración personal, respuestas de complementos y URLs de vídeo. Los resultados de presencia de archivos se conservan 30 minutos para positivos y cinco para negativos, con dos lotes simultáneos; un error permanece como desconocido y puede reintentarse. El servidor limita las consultas del complemento a dos y atiende antes la selección de reproducción en espera.
+
+`auto-pagination.js` reemplaza los controles de cargar más por carga al aproximarse al final de la lista o de una fila horizontal. Los errores mantienen Reintentar. Las flechas de cada plataforma permiten continuar explorando; las consultas automáticas se acotan para no recorrer indefinidamente páginas vacías o repetidas. Los recursos y controladores de APK no se publican mediante una compilación Android en este cambio.

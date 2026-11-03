@@ -124,7 +124,7 @@ async function load(append=false){
   else if(kind==='tv'){params.set('country',source);params.set('category',$('genre').value);path='/api/tv/catalog';}
   else if(kind==='anime'&&source!=='cru'){params.set('source',source);params.set('format',$('format').value);path='/api/anime/catalog';}
   else{params.set('platform',source);path='/api/series/catalog';}
-  const budget=globalThis.CineDataSaver?.enabled||tvEdition?1:q||['tv','drama'].includes(kind)?1:append?2:4;
+  const budget=globalThis.CLBAutoPager?1:globalThis.CineDataSaver?.enabled||tvEdition?1:q||['tv','drama'].includes(kind)?1:append?2:4;
   let warnings=false;
   for(let page=0;page<budget;page++){
    if(kind==='kids'&&source==='all'&&(append||page>0)){
