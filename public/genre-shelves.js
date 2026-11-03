@@ -13,6 +13,13 @@ globalThis.CLBShelves=(()=>{
     return [...buckets].sort(([a],[b])=>{const ai=priority.indexOf(a),bi=priority.indexOf(b);return (ai<0?999:ai)-(bi<0?999:bi)||a.localeCompare(b,'es');}).map(([name,rows])=>({name,items:[...rows.values()]}));
   }
   function render(container,items,createCard,{labels={},search=false,leading=null,featured=null,controls=true,notes=true,emptyText='No hay resultados.'}={}){
+    const gate=globalThis.CLBAvailability;
+    if(gate&&['movie-grid','series-grid','grid'].includes(container.id)){
+      const originalItems=items,original={labels,search,leading,featured,controls,notes,emptyText};const candidates=[...(featured?.items||[]),...(leading?.items||[]),...items];
+      gate.track(container,candidates,()=>render(container,originalItems,createCard,original));
+      items=items.filter(gate.has);if(leading)leading={...leading,items:leading.items.filter(gate.has)};if(featured)featured={...featured,items:featured.items.filter(gate.has)};
+      if(!items.length&&!leading?.items.length&&!featured?.items.length){container.replaceChildren();const status=document.createElement('p');status.className='muted';status.setAttribute('role','status');status.textContent=gate.pending(candidates)?'Comprobando archivos disponibles…':gate.failed(candidates)?'No se pudo completar la comprobación de archivos. Reintenta más tarde.':'No encontramos archivos disponibles en esta selección.';container.append(status);return;}
+    }
     container.replaceChildren();
     if(!items.length&&!leading){const p=document.createElement('p');p.className='muted';p.textContent=emptyText;container.append(p);return;}
     const sections=search?[{name:'Resultados de búsqueda',items:[...new Map(items.map(i=>[String(i.id),i])).values()]}]:[...(featured?[featured]:[]),...(leading?[leading]:[]),...groups(items,labels)];

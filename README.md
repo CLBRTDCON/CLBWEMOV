@@ -73,3 +73,28 @@ CATALOG//NET conserva su integración por si vuelve; los errores de conexión ah
 Archive solo se consulta al pulsar el botón. Límite2consultas concurrentes, cuatro elementos de Archive contrastados por búsqueda, respuestasJSON2MB, tiempo35s, caché120s y fallo30s. Orígenes de consulta fijos; no se aceptan URLs externas desde el cliente. No se ejecuta código del complemento. Cerrar/cambiar episodio elimina el vídeo y cancela la consulta. Kids no muestra esta opción. Probar desde el despliegue real: el acceso desde una computadora no demuestra acceso desde Vercel.
 
 Respaldo local anterior work/before-archive-20261102-133635.zip (184archivos cotejados). El commit previo de rollback es4eaf560f43d6ef6d1d25b3cda8a9e61a55de47e3. Sin cambios en APKs ni servidor local4173.
+
+
+## Acceso Latinobrid por dispositivo
+
+El menú común incluye **Acceso Latinobrid**, que abre `/activar`. La activación no solicita la clave TorBox al visitante. Desde `/administracion/accesos`, el administrador genera códigos de un solo uso, válidos para canjear durante diez minutos. Cada canje autoriza ese navegador durante 30 días. Borrar cookies, cambiar de navegador o de dispositivo exige otra activación. El administrador puede revocar dispositivos y códigos pendientes.
+
+Variables de Production, guardadas como secretos en Vercel:
+
+- `CLB_LATINOBRID_MANIFEST`: manifest personal completo. Nunca versionarlo ni devolverlo al navegador.
+- `CLB_ADMIN_PASSWORD_HASH`: hash scrypt generado por la configuración local. No es la contraseña en texto.
+- Redis REST: `UPSTASH_REDIS_REST_URL` y `UPSTASH_REDIS_REST_TOKEN`, o `KV_REST_API_URL` y `KV_REST_API_TOKEN`. Esta instalación también acepta el prefijo de integración `clbweb_KV_REST_API_URL` y `clbweb_KV_REST_API_TOKEN`. No usar el token de solo lectura.
+
+La integración Upstash se conecta a Production; guardar variables requiere un nuevo despliegue. Sin almacenamiento o hash de administrador, la API de accesos responde 503. No hay respaldo en memoria ni escritura al disco efímero de Vercel. La contraseña solo se crea localmente; Production permite iniciar sesión con ella. Los códigos locales no se trasladan automáticamente a Redis.
+
+Las sesiones usan cookies HttpOnly, Secure en Vercel y SameSite Strict. Los códigos y tokens se almacenan mediante hashes. El canje es atómico mediante CAS de Redis para evitar usos simultáneos. Los intentos de acceso están limitados. El límite global de intentos puede bloquear temporalmente accesos legítimos ante abuso; esta versión está pensada para uso reducido.
+
+En Vercel, los archivos salen del CDN de TorBox y no pasan por una función de vídeo. La resolución exige un enlace HTTPS del CDN esperado y CORS compatible. Un visitante autorizado puede inspeccionar su enlace temporal; revocar el acceso impide emitir otros enlaces pero no invalida los ya emitidos por TorBox. No se garantiza revocación inmediata de una reproducción existente.
+
+## Visibilidad del catálogo según archivos
+
+Los catálogos y búsqueda consultan automáticamente `/api/availability/check` y muestran candidatos con archivos HTTP anunciados hasta 1080p. Hay caché, deduplicación y consultas limitadas; un fallo de proveedor se registra como desconocido y no como ausencia confirmada. Esto verifica opciones anunciadas, no certifica decodificación ni idioma. Para series se comprueba el primer episodio, no todas las temporadas. Las fichas por enlace directo siguen accesibles. La verificación usa el manifest exclusivamente del servidor y no entrega sus credenciales.
+
+Validación de publicación: `/activar` y `/administracion/accesos` devuelven la interfaz común; `/api/access/status` responde sin errores de configuración; una consulta Latinobrid sin cookie devuelve 401. Iniciar sesión como administrador, crear un código, canjearlo en otro navegador y comprobar vigencia, segundo canje rechazado y revocación. Los tests automatizados cubren canje concurrente, expiración, autorización y CAS. La prueba real de reproducción se realiza aparte con un título conocido.
+
+Rollback: volver al despliegue anterior desde Vercel. Conservar Redis y los secretos; nunca publicar el contenido de `work/`, `.env` o enlaces personales para resolver un despliegue fallido.

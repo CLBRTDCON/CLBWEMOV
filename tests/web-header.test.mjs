@@ -7,7 +7,7 @@ test('web layouts share navigation and preserve hero, player return and mobile c
   const html=withWebHeader(await readFile(new URL('../'+file,import.meta.url),'utf8'),path);
   assert.equal((html.match(/class="clb-web-header"/g)||[]).length,1);
   const header=html.match(/<header class="clb-web-header">.*?<\/header>/s)[0];
-  assert.doesNotMatch(header,/CATALOG\/\/NET|Ajustes/);assert.match(header,/Documentales/);
+  assert.doesNotMatch(header,/CATALOG\/\/NET|Ajustes/);assert.match(header,/Documentales/);assert.match(header,/href="\/activar"[^>]*>Acceso Latinobrid<\/a>/);
   if(path==='/ficha')assert.match(html,/header class="hero"/);
   if(path==='/reproductor')assert.match(html,/nav id="player-return"/);
   if(path==='/documentales')assert.match(html,/id="menu-toggle"/);

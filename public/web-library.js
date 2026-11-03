@@ -17,6 +17,7 @@
   if(record.position>0&&record.duration>0){const progress=element('progress');progress.max=record.duration;progress.value=record.position;progress.setAttribute('aria-label','Progreso confirmado');link.append(progress,element('small',`Continuar desde ${Math.floor(record.position/60)}:${String(Math.floor(record.position%60)).padStart(2,'0')}`));}
   else if(removeType==='history')link.append(element('small','Último título abierto · minuto no informado'));
   box.append(link);
+  if(globalThis.CLBAvailability&&!removeType&&document.getElementById('web-hub')?.dataset.view==='search'){const gate=globalThis.CLBAvailability;box.hidden=!gate.has(item);gate.track(box,[item],()=>{box.hidden=!gate.has(item);});}
   if(removeType){const remove=element('button',removeType==='favorites'?'Quitar de Mi lista':'Quitar de Continuar viendo','subtle web-remove');remove.type='button';remove.addEventListener('click',()=>{if(library.remove(removeType,item)){renderShelf();renderHub();updateSave();}});box.append(remove);}
   return box;
  }

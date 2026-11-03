@@ -1,3 +1,10 @@
+import {createAccessApi} from './access-api.mjs';
+import {createAddonsLocalApi} from './addons-local-api.mjs';
+import {createAvailabilityApi} from './availability-api.mjs';
+import {invoke as invokeAvailability} from './kids-api.mjs';
+const deviceAccess=createAccessApi();
+const addonsLocalApi=createAddonsLocalApi({access:deviceAccess,deployed:true,load:async()=>({latinobrid:process.env.CLB_LATINOBRID_MANIFEST})});
+const availabilityApi=createAvailabilityApi({deployed:true,inspect:identity=>addonsLocalApi.inspect(identity),animeDetail:id=>invokeAvailability(animeApi,'/api/anime/detail?'+new URLSearchParams({id}),cinemeta)});
 import {withWebHeader} from './web-header.mjs';
 import {createArchiveApi} from './archive-api.mjs';
 const archiveApi=createArchiveApi({metadataLookup:path=>cinemeta(path)});
@@ -46,10 +53,14 @@ for(const name of ['source-config.js','genre-shelves.js','vendor/hls-1.7.3.min.j
 for(const [route,file,type] of [['/ficha','ficha.html','text/html'],['/catalognet','catalognet.html','text/html'],['/reproductor','audio-1080.html','text/html']])files.set(route,[file,type]);
 for(const name of ['player-es.mjs','web-player-controls.mjs','ficha.mjs','ficha-core.mjs','ficha.css','audio-1080.mjs','audio-1080-core.mjs','audio-1080.css','catalognet-browse.mjs','player-page.css','web-sources.mjs','web-sources.css'])files.set('/'+name,[name,name.endsWith('.css')?'text/css':'text/javascript']);
 files.set('/web-header.css',['web-header.css','text/css']);
+for(const [route,file,type]of [['/administracion/accesos','access-admin.html','text/html'],['/activar','access-activate.html','text/html'],['/access-ui.mjs','access-ui.mjs','text/javascript'],['/access.css','access.css','text/css'],['/addons-local.mjs','addons-local.mjs','text/javascript'],['/availability-filter.js','availability-filter.js','text/javascript']])files.set(route,[file,type]);
 const avAssets=JSON.parse(await readFile(new URL('./public/vendor/libmedia/MANIFEST.json',import.meta.url),'utf8')).files.map(f=>f.file);
 for(const name of avAssets)files.set('/vendor/libmedia/'+name,['vendor/libmedia/'+name,name.endsWith('.wasm')?'application/wasm':name.endsWith('.js')?'text/javascript':name.endsWith('.svg')?'image/svg+xml':name.endsWith('.mkv')?'video/x-matroska':'text/plain']);
 export const requestHandler = async (req, res) => {
   if(!serveAccess(req,res))return;
+  if(req.url.startsWith('/api/access/')){await deviceAccess.api(req,res);return;}
+  if(req.url==='/api/availability/check'){await availabilityApi(req,res);return;}
+  if(req.url.startsWith('/api/addons-local/')){await addonsLocalApi(req,res);return;}
   if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); res.end(); return; }
   if(req.url.startsWith('/api/archive/links?')){await archiveApi(req,res);return;}
   if(req.url.startsWith('/api/ficha/')){await fichaApi(req,res);return;}
@@ -70,12 +81,13 @@ export const requestHandler = async (req, res) => {
   try {
     let content = await readFile(new URL(`./public/${file[0]}`, import.meta.url));
     if(file[0]==='../mobile/index.html')content=Buffer.from(content.toString('utf8').replace('href="mobile.css"','href="/mobile/mobile.css"').replace('href="tv.css"','href="/mobile/tv.css"').replace('src="app.mjs"','src="/mobile/app.mjs"').replace('src="../public/','src="/public/').replace('src="../public/','src="/public/').replace('src="../public/','src="/public/').replace('</head>','<link rel="stylesheet" href="/web-preview-responsive.css"></head>').replace('<body>','<body class="web-preview">').replace('<button id="menu-toggle"','<nav class="desktop-nav" aria-label="Secciones"><a href="/">Películas</a><a href="/series">Series</a><a href="/anime">Anime</a><a href="/documentales">Documentales</a><a href="/dramas">Dramas</a><a href="/biblioteca?view=search">Buscar en todo</a><a href="/biblioteca">Mi lista</a><a href="/kids">Kids</a><a href="/tv">TV en vivo</a></nav><button id="menu-toggle"').replace('class="tv-connect subtle"','class="tv-connect subtle" hidden'));
-    if(file[1]==='text/html'&&['/','/series','/anime','/documentales','/dramas','/ficha','/reproductor','/biblioteca','/kids','/tv'].includes(path))content=Buffer.from(withWebHeader(content.toString('utf8'),path));
+    if(file[1]==='text/html'&&process.env.CLB_LATINOBRID_MANIFEST&&['/','/series','/anime','/documentales','/biblioteca'].includes(path))content=Buffer.from(content.toString('utf8').replace('<head>','<head><script src="/availability-filter.js"></script>'));
+    if(file[1]==='text/html'&&['/','/series','/anime','/documentales','/dramas','/ficha','/reproductor','/biblioteca','/kids','/tv','/activar','/administracion/accesos'].includes(path))content=Buffer.from(withWebHeader(content.toString('utf8'),path));
     if(file[1]==='text/html'&&file[0]!=='adult.html')content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/web-sources.css"><script src="/web-sources.mjs" type="module"></script></head>'));
     if(file[1]==='text/html'&&!['adult.html','audio-1080.html'].includes(file[0]))content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/extension-notice.css"></head>').replace(/<body([^>]*)>/,'<body$1><aside class="clb-extension-notice" aria-label="Extensión opcional"><span>Mejora tu experiencia: bloquea pestañas emergentes de los proveedores.</span> <a href="/popup-guard.zip" download="CLB-Popup-Guard-1.1.0.zip">Descargar extensión</a> <small>Chrome, Edge y Brave · PC · instalación manual</small></aside>'));
     if(file[0]==='popup-guard.zip')res.setHeader('Content-Disposition','attachment; filename="CLB-Popup-Guard-1.1.0.zip"');
     const audioPage=file[0]==='audio-1080.html';
-    const audioCsp="default-src 'self'; script-src 'self' blob: 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.yandex.net https://*.yandex.ru https://*.yandex.com https://*.yandexusercontent.com; media-src 'self' blob:; worker-src 'self' blob:; img-src 'self' data: blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
+    const audioCsp="default-src 'self'; script-src 'self' blob: 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.tb-cdn.st https://*.yandex.net https://*.yandex.ru https://*.yandex.com https://*.yandexusercontent.com; media-src 'self' blob:; worker-src 'self' blob:; img-src 'self' data: blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
     if(audioPage){res.setHeader('Cross-Origin-Opener-Policy','same-origin');res.setHeader('Cross-Origin-Embedder-Policy','require-corp');}
     const mobileCsp="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; media-src https: blob:; worker-src blob:; img-src 'self' https://image.tmdb.org https://images.metahub.space https://m.media-amazon.com https://images.justwatch.com https://media.kitsu.app https://media.kitsu.io https://s4.anilist.co https://static.tvmaze.com https://archive.org; frame-src https://vixsrc.to https://www.vidking.net https://vidsrc.sh https://vidsrc.to https://facilitoplay.com https://vidlink.pro https://vidfast.vc https://cinesrc.st; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
     const adultCsp="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; media-src https: blob:; worker-src blob:; img-src 'self' https://www.eporner.com https://*.eporner.com https://img.eporner.com; frame-src https://www.eporner.com; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
