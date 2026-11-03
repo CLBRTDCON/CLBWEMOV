@@ -82,7 +82,7 @@ export const requestHandler = async (req, res) => {
   if (!file) { res.writeHead(404); res.end('No encontrado'); return; }
   try {
     let content = await readFile(new URL(`./public/${file[0]}`, import.meta.url));
-    if(file[1]==='text/html'&&['/','/series','/anime','/documentales','/biblioteca','/kids','/tv','/catalognet'].includes(path))content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/catalog-runtime.css"><script src="/catalog-runtime.js"></script><script src="/auto-pagination.js" defer></script></head>'));
+    if(file[1]==='text/html'&&['/','/series','/anime','/documentales','/biblioteca','/kids','/tv','/catalognet','/ficha'].includes(path))content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/catalog-runtime.css"><script src="/catalog-runtime.js"></script><script src="/auto-pagination.js" defer></script></head>'));
     if(file[1]==='text/html'&&process.env.CLB_LATINOBRID_MANIFEST&&['/','/series','/anime','/documentales','/biblioteca'].includes(path))content=Buffer.from(content.toString('utf8').replace('<head>','<head><script src="/availability-filter.js"></script>'));
     if(file[1]==='text/html'&&['/','/series','/anime','/documentales','/ficha','/reproductor','/biblioteca','/kids','/tv','/activar','/administracion/accesos'].includes(path))content=Buffer.from(withWebHeader(content.toString('utf8'),path));
     if(file[1]==='text/html'&&file[0]!=='adult.html')content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/web-sources.css"><script src="/web-sources.mjs" type="module"></script></head>'));
