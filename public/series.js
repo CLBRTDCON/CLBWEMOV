@@ -48,6 +48,7 @@ function render() {
   CLBShelves.render($('series-grid'),!$('series-search').value.trim()&&$('series-year').value==='all'?CLBShelves.recent(shows):shows,createCard,{notes:false,labels:genreLabels,search:!!$('series-search').value.trim(),leading:$('series-search').value.trim()?null:releases,emptyText:'No hay series con estos filtros. Prueba otro año o plataforma.'});
 }
 async function load(append=false) {
+  if(globalThis.CLBPlatforms?.show({kind:animePage?'anime':'series',query:$('series-search').value.trim(),year:$('series-year').value,grid:$('series-grid'),more:$('series-more'),status:$('series-status')})){controller?.abort();++requestId;return;}
   const id=++requestId; controller?.abort(); controller=new AbortController();
   $('series-grid').setAttribute('aria-busy','true');$('series-more').disabled=true;
   $('anime-format').disabled=platform!=='anilist';if(platform!=='anilist')$('anime-format').value='all';

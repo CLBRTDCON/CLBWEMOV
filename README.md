@@ -98,3 +98,14 @@ Los catálogos y búsqueda consultan automáticamente `/api/availability/check` 
 Validación de publicación: `/activar` y `/administracion/accesos` devuelven la interfaz común; `/api/access/status` responde sin errores de configuración; una consulta Latinobrid sin cookie devuelve 401. Iniciar sesión como administrador, crear un código, canjearlo en otro navegador y comprobar vigencia, segundo canje rechazado y revocación. Los tests automatizados cubren canje concurrente, expiración, autorización y CAS. La prueba real de reproducción se realiza aparte con un título conocido.
 
 Rollback: volver al despliegue anterior desde Vercel. Conservar Redis y los secretos; nunca publicar el contenido de `work/`, `.env` o enlaces personales para resolver un despliegue fallido.
+
+
+## Filas por plataforma
+
+La navegación web predeterminada de Películas y Series separa Apple TV+, Netflix, HBO Max, Disney+ y Prime Video por tipo de contenido. Se consulta Streaming Catalogs con rutas `/catalog/movie/…` o `/catalog/series/…`, sin deducir pertenencia por el título ni mezclar ambos tipos. Cada fila tiene paginación independiente, deduplicación, carga cerca de la pantalla y comprobación automática de archivos. La búsqueda por texto mantiene la búsqueda amplia anterior; el filtro de año se aplica también a las filas. Las recomendaciones de películas conservan el año actual y el anterior.
+
+Anime muestra Crunchyroll, Netflix · Anime, AniList y Kitsu. En Netflix se admite solo animación con Japón como primer país informado por la fuente. Es una clasificación conservadora por metadatos: excluye animación occidental y acción real, pero puede omitir coproducciones o fichas incompletas. No equivale a una clasificación editorial infalible. Los títulos Crunchyroll/Netflix conservan su identidad IMDb de serie dentro de la sección Anime, para que capítulos y comprobación de archivos usen la API correcta.
+
+Las plataformas describen la clasificación del catálogo externo; no se reproducen desde cuentas de Netflix/Apple. La disponibilidad de vídeo sigue dependiendo de los archivos/proveedores de CLB. Las filas recorren el catálogo que expone la fuente, no prometen un inventario completo mundial ni regional.
+
+Se retiraron de la ficha el botón de comprobación manual y el panel experimental de Internet Archive. La comprobación de proveedores continúa automáticamente. Esto no retira los documentales que ya utilizan Archive por una integración independiente.

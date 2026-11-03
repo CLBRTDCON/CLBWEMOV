@@ -1,3 +1,5 @@
+import {createPlatformCatalogApi} from './platform-catalog-api.mjs';
+const platformCatalogApi=createPlatformCatalogApi();
 import {createAccessApi} from './access-api.mjs';
 import {createAddonsLocalApi} from './addons-local-api.mjs';
 import {createAvailabilityApi} from './availability-api.mjs';
@@ -54,10 +56,12 @@ for(const [route,file,type] of [['/ficha','ficha.html','text/html'],['/catalogne
 for(const name of ['player-es.mjs','web-player-controls.mjs','ficha.mjs','ficha-core.mjs','ficha.css','audio-1080.mjs','audio-1080-core.mjs','audio-1080.css','catalognet-browse.mjs','player-page.css','web-sources.mjs','web-sources.css'])files.set('/'+name,[name,name.endsWith('.css')?'text/css':'text/javascript']);
 files.set('/web-header.css',['web-header.css','text/css']);
 for(const [route,file,type]of [['/administracion/accesos','access-admin.html','text/html'],['/activar','access-activate.html','text/html'],['/access-ui.mjs','access-ui.mjs','text/javascript'],['/access.css','access.css','text/css'],['/addons-local.mjs','addons-local.mjs','text/javascript'],['/availability-filter.js','availability-filter.js','text/javascript']])files.set(route,[file,type]);
+for(const name of ['platform-catalogs.js','platform-catalogs.css'])files.set('/'+name,[name,name.endsWith('.css')?'text/css':'text/javascript']);
 const avAssets=JSON.parse(await readFile(new URL('./public/vendor/libmedia/MANIFEST.json',import.meta.url),'utf8')).files.map(f=>f.file);
 for(const name of avAssets)files.set('/vendor/libmedia/'+name,['vendor/libmedia/'+name,name.endsWith('.wasm')?'application/wasm':name.endsWith('.js')?'text/javascript':name.endsWith('.svg')?'image/svg+xml':name.endsWith('.mkv')?'video/x-matroska':'text/plain']);
 export const requestHandler = async (req, res) => {
   if(!serveAccess(req,res))return;
+  if(req.url.startsWith('/api/platform-catalog?')){await platformCatalogApi(req,res);return;}
   if(req.url.startsWith('/api/access/')){await deviceAccess.api(req,res);return;}
   if(req.url==='/api/availability/check'){await availabilityApi(req,res);return;}
   if(req.url.startsWith('/api/addons-local/')){await addonsLocalApi(req,res);return;}

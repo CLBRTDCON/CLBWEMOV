@@ -22,6 +22,7 @@ function updateViewButtons() {
 }
 function searchText() { return $('search').value.trim(); }
 async function loadCatalog(append = false) {
+  if(globalThis.CLBPlatforms?.show({kind:'movie',query:searchText(),year:$('release-year').value,grid:$('movie-grid'),more:$('load-more'),status:$('catalog-source')})){catalogController?.abort();++catalogRequest;return;}
   const request = ++catalogRequest;
   catalogController?.abort(); catalogController = new AbortController();
   const query = searchText();
