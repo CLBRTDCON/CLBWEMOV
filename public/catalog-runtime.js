@@ -1,7 +1,7 @@
 // Only public catalogue metadata. Never cache access codes, addon links or signed media URLs.
 (()=>{
  const key='clb.catalog.metadata.v1',cache=new Map(),pending=new Map();let saveTimer;
- const allowed=path=>/^\/api\/(?:platform-catalog|catalog|(?:series|anime|documentaries|kids|tv|microdramas|dramas)\/catalog|tv\/filters|releases)(?:\?|$)/.test(path);
+ const allowed=path=>/^\/api\/(?:platform-catalog|catalog|(?:series|anime|documentaries|kids|tv)\/catalog|tv\/filters|releases)(?:\?|$)/.test(path);
  try{for(const [path,row]of JSON.parse(sessionStorage.getItem(key)||'[]'))if(allowed(path)&&row.expires>Date.now())cache.set(path,row);}catch{}
  const save=()=>{if(typeof setTimeout!=='function')return;clearTimeout(saveTimer);saveTimer=setTimeout(()=>{try{const rows=[...cache].filter(([,v])=>v.expires>Date.now());while(JSON.stringify(rows).length>1500000)rows.shift();sessionStorage.setItem(key,JSON.stringify(rows));}catch{}},200);};
  function awaitSignal(task,signal){if(!signal)return task;if(signal.aborted)return Promise.reject(new DOMException('Consulta cancelada','AbortError'));return new Promise((resolve,reject)=>{const stop=()=>{signal.removeEventListener('abort',stop);reject(new DOMException('Consulta cancelada','AbortError'));};signal.addEventListener('abort',stop,{once:true});task.then(v=>{signal.removeEventListener('abort',stop);resolve(v);},e=>{signal.removeEventListener('abort',stop);reject(e);});});}

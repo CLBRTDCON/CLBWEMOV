@@ -47,10 +47,10 @@ export function createDocumentariesApi({metadata=cinemeta,fetcher=(...args)=>glo
   }
   if(u.pathname!=='/api/documentaries/catalog'){send(404,{error:'Ruta no encontrada.'});return;}
   if(!types.includes(source)||!Number.isInteger(p)||p<0||p>500||q.length>120||/[\u0000-\u001f]/.test(q)||!['popular','rating','recent'].includes(sort)||(year!=='all'&&(!/^\d{4}$/.test(year)||Number(year)<1900||Number(year)>new Date().getFullYear()))){send(400,{error:'Filtros documentales inválidos.'});return;}
-  const tasks=[];if(['all','movie'].includes(source))tasks.push(cinematic('movie',p,q,year,sort));if(['all','series'].includes(source))tasks.push(cinematic('series',p,q,year,sort));if(['all','tvmaze'].includes(source))tasks.push(maze(p,q));if(['all','archive'].includes(source))tasks.push(archive(p,q,year,sort));
+  const tasks=[];if(['all','movie'].includes(source))tasks.push(cinematic('movie',p,q,year,sort));if(['all','series'].includes(source))tasks.push(cinematic('series',p,q,year,sort));if(['all','tvmaze'].includes(source))tasks.push(maze(p,q));if(source==='archive')tasks.push(archive(p,q,year,sort));
   const results=await Promise.allSettled(tasks);if(results.every(r=>r.status==='rejected')){send(502,{error:'No se pudo consultar ninguna fuente documental. Reintenta.'});return;}
   const items=[...new Map(results.flatMap(r=>r.status==='fulfilled'?r.value.items:[]).filter(m=>year==='all'||m.year===Number(year)).filter(m=>catalogEligible(m)).map(m=>[m.kind+':'+m.id,m])).values()];
   if(sort==='recent')items.sort((a,b)=>(Date.parse(b.released)||0)-(Date.parse(a.released)||0));
-  send(200,{items,nextSkip:p+1,hasMore:results.some(r=>r.status==='fulfilled'&&r.value.hasMore),warnings:results.filter(r=>r.status==='rejected').map(r=>r.reason.message),source:'Cinemeta · TVmaze · Internet Archive'});
+  send(200,{items,nextSkip:p+1,hasMore:results.some(r=>r.status==='fulfilled'&&r.value.hasMore),warnings:results.filter(r=>r.status==='rejected').map(r=>r.reason.message),source:source==='archive'?'Internet Archive':'Cinemeta · TVmaze'});
  };
 }

@@ -7,3 +7,22 @@ test('platform rows enforce movie/series types and Netflix anime classification 
 test('platform pagination, validation, caching and anime source routing stay bounded',async()=>{let calls=0,url;const metas=Array.from({length:100},(_,i)=>({id:'tt'+String(1000000+i),type:'movie',name:'Film '+i,year:'2025'}));const api=createPlatformCatalogApi({fetcher:async u=>{calls++;url=u;return {ok:true,text:async()=>JSON.stringify({metas})};},anime:async(req,res)=>{res.writeHead(200);res.end(JSON.stringify({series:[{id:'mal:1',name:'Anime'}],nextSkip:24,hasMore:true}));}});for(let n=0;n<2;n++){const r=await call(api,{kind:'movie',platform:'atp',skip:100});assert.equal(r.body.nextSkip,200);assert.equal(r.body.hasMore,true);}assert.equal(calls,1);assert.match(url,/skip=100/);assert.equal((await call(api,{kind:'movie',platform:'cru'})).status,400);assert.equal((await call(api,{kind:'series',platform:'atp',skip:-1})).status,400);const anime=await call(api,{kind:'anime',platform:'anilist'});assert.equal(anime.body.items[0].kind,'anime');assert.equal(anime.body.nextSkip,24);const list=await call(api,{kind:'anime'});assert.deepEqual(list.body.platforms.map(p=>p.id),['cru','nfx','anilist','kitsu']);});
 
 test('short nonempty upstream pages still allow further browsing, even when only a few anime match',async()=>{const api=createPlatformCatalogApi({fetcher:async()=>({ok:true,text:async()=>JSON.stringify({metas:[{id:'tt9335498',type:'series',name:'Anime',genres:['Animation'],country:'Japan',year:'2019'},{id:'tt0903747',type:'series',name:'Drama',genres:['Drama'],country:'United States'}]})})});const r=await call(api,{kind:'anime',platform:'nfx'});assert.equal(r.body.items.length,1);assert.equal(r.body.hasMore,true);assert.equal(r.body.nextSkip,100);assert.match(r.body.pageKey,/tt0903747/);});
+
+const fixedNow=()=>Date.parse('2026-11-03T12:00:00Z');
+const emptyMetadata=async(req,res)=>{res.writeHead(200);res.end(JSON.stringify({movies:[],series:[]}));};
+test('Estrenos leads movies and series, merges every platform, sorts dates and reuses concurrent requests',async()=>{
+ let calls=0;const requested=[];
+ const api=createPlatformCatalogApi({now:fixedNow,movies:emptyMetadata,series:emptyMetadata,fetcher:async url=>{
+  calls++;requested.push(url);const platform=url.match(/catalog\/movie\/([^/]+)/)[1];
+  return new Response(JSON.stringify({metas:[{id:'tt1000001',name:'Shared',type:'movie',year:'2026',released:'2026-10-01'},{id:platform==='nfx'?'tt1000002':'tt1000003',name:'Other',type:'movie',year:'2026',released:platform==='nfx'?'2026-10-25':'2026-02-01'},{id:'tt1000004',name:'Future',type:'movie',year:'2026',released:'2026-12-01'},{id:'tt1000005',name:'Old',type:'movie',year:'2020'},{id:'tt1000006',name:'Wrong type',type:'series',year:'2026'}]}));
+ }});
+ for(const kind of ['movie','series'])assert.equal((await call(api,{kind})).body.platforms[0].name,'Estrenos');
+ const [first,second]=await Promise.all([call(api,{kind:'movie',platform:'releases'}),call(api,{kind:'movie',platform:'releases'})]);
+ assert.equal(first.status,200);assert.deepEqual(first.body,second.body);assert.equal(calls,5);assert.equal(new Set(requested.map(u=>u.match(/catalog\/movie\/([^/]+)/)[1])).size,5);
+ assert.deepEqual(first.body.items.map(i=>i.id),['tt1000002','tt1000001','tt1000003']);assert.equal(first.body.items[1].platforms.length,5);
+ await call(api,{kind:'movie',platform:'nfx'});assert.equal(calls,5,'individual rows reuse feed cache');
+});
+test('Estrenos keeps series distinct, respects year and tolerates one failed platform',async()=>{
+ const api=createPlatformCatalogApi({now:fixedNow,movies:emptyMetadata,series:emptyMetadata,fetcher:async url=>{if(url.includes('/atp/'))throw Error('unavailable');return new Response(JSON.stringify({metas:[{id:'tt1000010',type:'series',name:'Last year',year:'2025'},{id:'tt1000011',type:'series',name:'Current',year:'2026'},{id:'tt1000012',type:'movie',name:'Film',year:'2025'}]}));}});
+ const r=await call(api,{kind:'series',platform:'releases',year:'2025'});assert.equal(r.status,200);assert.deepEqual(r.body.items.map(i=>i.id),['tt1000010']);assert.equal(r.body.items[0].kind,'series');assert.equal(r.body.items[0].section,'series');
+});

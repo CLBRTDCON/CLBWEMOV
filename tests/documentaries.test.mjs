@@ -4,11 +4,11 @@ import {createDocumentariesApi,openLicense} from '../documentaries-api.mjs';
 async function invoke(api,path){let status=200,body;await api({url:path},{writeHead(s){status=s},end(s){body=JSON.parse(s)}});return {status,...body};}
 const documentary={id:'tt1234567',name:'Documental',genres:['Documentary'],releaseInfo:'2020',released:'2020-05-02'};
 const archive={identifier:'FilmOpen',title:'Film Open',mediatype:'movies',subject:['Documentary'],year:2000,licenseurl:'https://creativecommons.org/publicdomain/zero/1.0/'};
-test('documentales: clasificación estricta, deduplicación entre fuentes y fallos parciales visibles',async()=>{
+test('documentales: clasificación estricta, deduplicación entre fuentes sin consultar archivos sin enlaces por calidad',async()=>{
  const api=createDocumentariesApi({metadata:async path=>({metas:[documentary,{id:'tt1234568',name:'Ficción',genres:['Drama']}, {...documentary,id:'bad'}]}),fetcher:async url=>{
-  if(url.includes('archive.org'))throw Error('Archive caído');return new Response(JSON.stringify([{id:8,name:'Otra ficha',type:'Documentary',genres:[],externals:{imdb:'tt1234567'},premiered:'2020-05-02'},{id:9,type:'Scripted',genres:['Drama'],externals:{imdb:'tt7654321'}}]));
+  assert.ok(!url.includes('archive.org'),'La lista unificada no debe consultar Archive');return new Response(JSON.stringify([{id:8,name:'Otra ficha',type:'Documentary',genres:[],externals:{imdb:'tt1234567'},premiered:'2020-05-02'},{id:9,type:'Scripted',genres:['Drama'],externals:{imdb:'tt7654321'}}]));
  }});
- const result=await invoke(api,'/api/documentaries/catalog?source=all');assert.equal(result.status,200);assert.equal(result.items.length,2);assert.ok(result.items.every(i=>i.genres.includes('Documentary')));assert.equal(result.warnings.length,1);assert.equal(result.nextSkip,1);
+ const result=await invoke(api,'/api/documentaries/catalog?source=all');assert.equal(result.status,200);assert.equal(result.items.length,2);assert.ok(result.items.every(i=>i.genres.includes('Documentary')));assert.equal(result.warnings.length,0);assert.equal(result.nextSkip,1);
 });
 test('documentales: año y búsqueda se conservan; cursor representa páginas de 50 fichas',async()=>{
  const requested=[];const api=createDocumentariesApi({metadata:async path=>{requested.push(path);return {metas:[documentary,{...documentary,id:'tt7654321',releaseInfo:'2021'}]};}});

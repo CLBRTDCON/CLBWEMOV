@@ -4,7 +4,7 @@
  const element=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
  const ready=Promise.all([import('/mobile/library.mjs'),import('/web-library-core.mjs'),import('/mobile/global-search.mjs'),import('/mobile/mobile-playback.mjs')]).then(([lib,c,search,playback])=>{
   core=c;library=lib.createLibrary({onError:message=>notice(message.replace('en el teléfono','en este navegador'))});
-  searchEngine=search.createGlobalSearch({api:async path=>{if(globalThis.CLBCatalog)return CLBCatalog.json(path);const r=await fetch(path,{signal:AbortSignal.timeout(50000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar.');return d;}});
+  searchEngine=search.createGlobalSearch({sections:search.searchSections.filter(s=>s.key!=='drama'),api:async path=>{if(globalThis.CLBCatalog)return CLBCatalog.json(path);const r=await fetch(path,{signal:AbortSignal.timeout(50000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar.');return d;}});
   tracker=playback.installMobilePlayback({document:{getElementById:()=>({set textContent(value){notice(value);}}),get hidden(){return document.hidden;}},window,library,recover:false,actions:{reload:()=>document.getElementById('reload-player')?.click()}});
   initHub();return library;
  }).catch(error=>{notice('La biblioteca no está disponible. '+error.message);return null;});
@@ -45,7 +45,7 @@
      if(state.warnings?.length)group.append(element('p',state.warnings.join(' · '),'hint'));
      if(state.hasMore){const more=element('button','Cargar más','subtle');more.disabled=result.pending;more.addEventListener('click',async()=>{more.disabled=true;try{state=await searchEngine.more(state);if(token===renderToken)renderGroup(state,group);}catch(e){notice(e.message);more.textContent='Reintentar';}finally{more.disabled=false;}});group.append(more);}
     }
-    const checked=state.items.filter(core.visibleItem).filter(i=>!['tv','microdrama'].includes(i.kind));
+    const checked=state.items.filter(core.visibleItem).filter(i=>i.kind!=='tv');
     if(gate)gate.track(group,checked,draw);
     draw();
    }
@@ -60,7 +60,7 @@
   const hub=document.getElementById('web-hub');if(!hub||!library)return;const view=hub.dataset.view;
   const type=view==='history'?'history':'favorites';document.getElementById('web-hub-title').textContent=view==='search'?'Buscar en todo':type==='history'?'Continuar viendo':'Mi lista';
   for(const b of document.querySelectorAll('[data-library-view]')){if(b.dataset.libraryView===view)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');}
-  const list=document.getElementById('web-hub-results');list.replaceChildren();if(view==='search'){list.append(element('p','Busca películas, series, anime, Kids, documentales, dramas y canales desde un solo lugar.','hint'));document.getElementById('web-search').focus();return;}
+  const list=document.getElementById('web-hub-results');list.replaceChildren();if(view==='search'){list.append(element('p','Busca películas, series, anime, Kids, documentales y canales desde un solo lugar.','hint'));document.getElementById('web-search').focus();return;}
   const rows=core.sectionRecords(library[type]());if(!rows.length){list.append(element('p',type==='favorites'?'Guarda títulos desde su ficha con + Mi lista.':'Aquí aparecerán los títulos que abras. El minuto solo se muestra cuando la fuente lo informa.','hint'));return;}
   const grid=element('div',undefined,'web-library-grid');for(const row of rows)grid.append(card(row,type));list.append(grid);
  }

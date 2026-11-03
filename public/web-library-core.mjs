@@ -1,11 +1,10 @@
 import {libraryItem} from '../mobile/library.mjs';
-export const sectionNames={movie:'Películas',series:'Series',anime:'Anime',kids:'Kids',documentary:'Documentales',drama:'Dramas',tv:'TV en vivo'};
-const routes={movie:'/',series:'/series',anime:'/anime',kids:'/kids',documentary:'/documentales',drama:'/dramas',tv:'/tv'};
-export function visibleItem(item){return !!libraryItem(item)&&item.kind!=='drama'&&!String(item.id).startsWith('reelshort:')&&!(item.section==='drama'&&item.genres?.some(g=>g.startsWith('Dramas ')));}
+export const sectionNames={movie:'Películas',series:'Series',anime:'Anime',kids:'Kids',documentary:'Documentales',tv:'TV en vivo'};
+const routes={movie:'/',series:'/series',anime:'/anime',kids:'/kids',documentary:'/documentales',tv:'/tv'};
+export function visibleItem(item){return item?.section!=='drama'&&!!libraryItem(item)&&item.kind!=='drama'&&!String(item.id).startsWith('reelshort:');}
 export function sectionRecords(records,section){return records.filter(r=>visibleItem(r.item)&&(!section||r.item.section===section));}
 export function itemURL(item,episode=null){
  const clean=libraryItem(item);if(!clean||!visibleItem(clean))throw Error('Ficha no disponible.');
- if(clean.kind==='microdrama')return '/microdrama?video='+encodeURIComponent(clean.id.slice(3));
  if(clean.kind==='tv')return '/tv?'+new URLSearchParams({country:'all',channel:clean.id});
  const params=new URLSearchParams({clb:JSON.stringify(clean)});
  if(episode&&Number.isInteger(episode.season)&&episode.season>=0&&Number.isInteger(episode.episode)&&episode.episode>0){params.set('season',episode.season);params.set('episode',episode.episode);}
@@ -19,8 +18,8 @@ export function readRequest(search,section){
 }
 
 export function searchAvailability(items,gate){
- const candidates=items.filter(visibleItem),checked=candidates.filter(i=>!['tv','microdrama'].includes(i.kind));
- const rows=gate?candidates.filter(i=>['tv','microdrama'].includes(i.kind)||gate.has(i)):candidates;
+ const candidates=items.filter(visibleItem),checked=candidates.filter(i=>i.kind!=='tv');
+ const rows=gate?candidates.filter(i=>i.kind==='tv'||gate.has(i)):candidates;
  const pending=!!gate?.pending(checked),failed=!!gate?.failed(checked),count=rows.length===1?'1 título disponible':`${rows.length} títulos disponibles`;
  const message=pending?`${count} · comprobando archivos…`:failed?`${count} · algunas fuentes no respondieron`:rows.length?count:candidates.length?'No se encontraron archivos disponibles para estos resultados.':'Sin resultados.';
  return {rows,checked,pending,failed,message};

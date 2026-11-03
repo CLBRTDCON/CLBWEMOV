@@ -113,9 +113,12 @@ Se retiraron de la ficha el botón de comprobación manual y el panel experiment
 Las filas intentan reunir 24 opciones comprobadas de manera progresiva, recorriendo hasta tres páginas de la fuente automáticamente. Si hay fallos de verificación se detiene el llenado automático; el botón Cargar más permite continuar. Este límite evita consultas sin fin y no garantiza un mínimo cuando no hay archivos. Las recomendaciones de series también se limitan al año actual y el anterior.
 
 
-### Microdramas oficiales y carga de catálogos (noviembre de 2026)
+### Catálogos web (noviembre de 2026)
 
-`/dramas` permite alternar entre las publicaciones recientes del canal oficial DramaBox ES y los K-dramas existentes. El RSS devuelve hasta 15 vídeos; no constituye un catálogo completo ni certifica doblaje latino o historias completas. `/microdrama?video=...` valida la autoría mediante oEmbed antes de preparar el iframe de `youtube-nocookie.com`. La página permite formato horizontal/vertical, Mi lista y abrir el vídeo en YouTube. No se extraen archivos ni se desbloquean episodios. No requiere Apify ni una clave de YouTube. La fuente está fijada en `microdramas-api.mjs`; los fallos conservan una lista anterior durante un máximo de 30 minutos.
+Dramas se retiró de la navegación, búsquedas y rutas HTTP. Las rutas antiguas devuelven 410 sin consultar proveedores. Documentales usa una sola cuadrícula de películas y docuseries, con búsqueda, año y carga progresiva automática, sin agrupar por fuente. La consulta conjunta no pide Archive, cuyos archivos no pasan el filtro de enlaces por calidad.
+
+Películas y Series comienzan con «Estrenos»: combina las cinco plataformas y metadatos recientes, deduplica por IMDb y ordena por fecha de estreno del título (año cuando no existe fecha). Sin filtro de año usa el actual y anterior, excluyendo fechas futuras. No representa nuevas temporadas ni episodios. La agregación y las consultas por plataforma comparten caché de cinco minutos y peticiones en curso. El filtro de archivos disponibles se mantiene.
+
 
 Los catálogos públicos usan `catalog-runtime.js`: caché de metadatos de dos minutos en la sesión, deduplicación de solicitudes y cancelación independiente por consumidor. Se excluyen activaciones, configuración personal, respuestas de complementos y URLs de vídeo. Los resultados de presencia de archivos se conservan 30 minutos para positivos y cinco para negativos, con dos lotes simultáneos; un error permanece como desconocido y puede reintentarse. El servidor limita las consultas del complemento a dos y atiende antes la selección de reproducción en espera.
 
