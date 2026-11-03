@@ -123,3 +123,9 @@ Películas y Series comienzan con «Estrenos»: combina las cinco plataformas y 
 Los catálogos públicos usan `catalog-runtime.js`: caché de metadatos de dos minutos en la sesión, deduplicación de solicitudes y cancelación independiente por consumidor. Se excluyen activaciones, configuración personal, respuestas de complementos y URLs de vídeo. Los resultados de presencia de archivos se conservan 30 minutos para positivos y cinco para negativos, con dos lotes simultáneos; un error permanece como desconocido y puede reintentarse. El servidor limita las consultas del complemento a dos y atiende antes la selección de reproducción en espera.
 
 `auto-pagination.js` reemplaza los controles de cargar más por carga al aproximarse al final de la lista o de una fila horizontal. Los errores mantienen Reintentar. Las flechas de cada plataforma permiten continuar explorando; las consultas automáticas se acotan para no recorrer indefinidamente páginas vacías o repetidas. Los recursos y controladores de APK no se publican mediante una compilación Android en este cambio.
+
+### Ventana flotante de AVPlayer
+
+El parche local del componente Pip de libmedia 1.3.1 mueve únicamente el contenedor del reproductor. La clase `clb-player-pip` elimina márgenes, alturas mínimas, bordes y scroll de la ventana secundaria. Los cambios de tamaño se agrupan cada 150 ms al terminar la ráfaga, se ignoran dimensiones repetidas/cero y se restaura el nodo en su posición original al cerrar. No se captura ni recodifica el vídeo y no se crea un segundo motor. El cierre y la destrucción cancelan los temporizadores pendientes. El hash del recurso modificado se registra en MANIFEST.json.
+
+Las pruebas del componente cubren restauración de DOM, ráfagas de resize, limpieza y errores de apertura. El rendimiento al arrastrar la ventana nativa depende también del compositor y GPU del navegador; esas pruebas no certifican ausencia de tirones en todos los equipos.
