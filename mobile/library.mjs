@@ -4,7 +4,7 @@ const kinds=['movie','series','anime','archive','tv','drama'];
 const string=(v,n)=>typeof v==='string'?v.slice(0,n):'';
 export function libraryItem(value){
  if(!value||!kinds.includes(value.kind)||!sections.includes(value.section))return null;
- if(!{movie:['movie','kids','documentary'],series:['series','kids','documentary','drama'],anime:['anime','kids'],archive:['documentary'],tv:['tv','kids'],drama:['drama']}[value.kind].includes(value.section))return null;
+ if(!{movie:['movie','anime','kids','documentary'],series:['series','anime','kids','documentary','drama'],anime:['anime','kids'],archive:['documentary'],tv:['tv','kids'],drama:['drama']}[value.kind].includes(value.section))return null;
  const id=string(String(value.id||''),120);
  if(!/^(?:tt\d{7,12}|[1-9]\d{0,11}|(?:kitsu|mal|anilist):\d{1,10}|reelshort:[a-f0-9]{24}|archive:[a-zA-Z0-9][a-zA-Z0-9_.-]{0,99})$/.test(id)&&!(value.kind==='tv'&&/^[\w.-]{1,120}$/.test(id)))return null;
  if(!string(value.name,200))return null;

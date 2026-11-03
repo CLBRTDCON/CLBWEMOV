@@ -13,3 +13,10 @@ test('catalog cards stay hidden until confirmed and asynchronous updates preserv
  for(const name of ['public/availability-filter.js','public/genre-shelves.js'])vm.runInContext(await readFile(new URL('../'+name,import.meta.url),'utf8'),ctx);
  const items=[{id:'tt1234567',name:'Has file',genres:['Action']},{id:'tt7654321',name:'No file',genres:['Action']}];let created=[];ctx.CLBShelves.render(root,items,i=>{created.push(i.id);return new E('button');});assert.equal(created.length,0);await new Promise(setImmediate);assert.deepEqual(created,['tt1234567']);assert.equal(root.children[0].className,'genre-shelf');
 });
+
+test('failed availability checks can retry without resubmitting confirmed empty titles',async()=>{
+ let calls=0;const ctx={Map,Set,URL,JSON,AbortSignal,location:{pathname:'/'},fetch:async()=>({ok:true,json:async()=>({results:[{state:++calls===1?'unknown':'available'}]})})};ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(await readFile(new URL('../public/availability-filter.js',import.meta.url),'utf8'),ctx);
+ const rows=[{id:'tt9335498',kind:'series',section:'anime'}],container={isConnected:true};let updates=0;ctx.CLBAvailability.track(container,rows,()=>updates++);await new Promise(setImmediate);assert.equal(ctx.CLBAvailability.failed(rows),true);
+ ctx.CLBAvailability.retry(rows);assert.equal(ctx.CLBAvailability.pending(rows),true);await new Promise(setImmediate);assert.equal(ctx.CLBAvailability.has(rows[0]),true);assert.equal(calls,2);assert.ok(updates>=3);
+ ctx.CLBAvailability.retry(rows);await new Promise(setImmediate);assert.equal(calls,2);
+});

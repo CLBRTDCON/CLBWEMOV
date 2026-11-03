@@ -21,3 +21,14 @@ test('web: continuar viendo filtra sección exacta y comparte biblioteca local e
  let data;const storage={getItem:()=>data,setItem:(k,v)=>data=v};const a=createLibrary({storage});a.remember(series,{episode:{season:1,episode:3}});a.remember(anime,{episode:{season:1,episode:7}});a.toggle(series);
  const b=createLibrary({storage});assert.equal(sectionRecords(b.history(),'movie').length,0);assert.equal(sectionRecords(b.history(),'series')[0].item.id,series.id);assert.equal(sectionRecords(b.history(),'anime')[0].episode.episode,7);assert.equal(sectionRecords(b.history()).length,2);assert.equal(b.has(series),true);
 });
+
+test('global search counts confirmed visible cards and distinguishes pending, absent and failed checks',async()=>{
+ const {searchAvailability}=await import('../public/web-library-core.mjs');
+ const items=[{id:'tt9335498',kind:'series',section:'anime',name:'Anime'},{id:'tt0903747',kind:'series',section:'series',name:'Series'}];
+ const states=new Map();const gate={has:i=>states.get(i.id)==='available',pending:rows=>rows.some(i=>!states.has(i.id)||states.get(i.id)==='pending'),failed:rows=>rows.some(i=>states.get(i.id)==='unknown')};
+ let result=searchAvailability(items,gate);assert.equal(result.rows.length,0);assert.match(result.message,/comprobando/);
+ states.set(items[0].id,'available');states.set(items[1].id,'empty');result=searchAvailability(items,gate);assert.equal(result.rows.length,1);assert.equal(result.message,'1 título disponible');
+ states.set(items[0].id,'empty');assert.match(searchAvailability(items,gate).message,/No se encontraron archivos/);
+ states.set(items[1].id,'unknown');assert.match(searchAvailability(items,gate).message,/no respondieron/);
+ const channel={id:'Canal.mx',kind:'tv',section:'tv',name:'Canal'};assert.equal(searchAvailability([channel],gate).rows.length,1);assert.equal(searchAvailability([channel],gate).checked.length,0);
+});

@@ -16,3 +16,11 @@ export function readRequest(search,section){
  if(s!==null||e!==null){if(!/^\d{1,4}$/.test(s||'')||!/^\d{1,5}$/.test(e||'')||Number(e)<1)return null;episode={season:Number(s),episode:Number(e)};}
  return {item,episode};}catch{return null;}
 }
+
+export function searchAvailability(items,gate){
+ const candidates=items.filter(visibleItem),checked=candidates.filter(i=>i.kind!=='tv');
+ const rows=gate?candidates.filter(i=>i.kind==='tv'||gate.has(i)):candidates;
+ const pending=!!gate?.pending(checked),failed=!!gate?.failed(checked),count=rows.length===1?'1 título disponible':`${rows.length} títulos disponibles`;
+ const message=pending?`${count} · comprobando archivos…`:failed?`${count} · algunas fuentes no respondieron`:rows.length?count:candidates.length?'No se encontraron archivos disponibles para estos resultados.':'Sin resultados.';
+ return {rows,checked,pending,failed,message};
+}

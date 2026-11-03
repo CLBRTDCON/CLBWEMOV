@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {identity,providerTarget,availability,createFichaApi} from '../ficha-api.mjs';
-import {detailURL,sourceContext} from '../public/ficha-core.mjs';
+import {detailItem,detailURL,sourceContext} from '../public/ficha-core.mjs';
 const film={kind:'movie',id:'27205'},chapter={kind:'series',id:'213375',season:1,episode:2};
 const response=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json'}});
 async function query(api,path){let status,body;await api({url:'/api/ficha/'+path,method:'GET'},{writeHead:s=>status=s,end:b=>body=JSON.parse(b)});return {status,body};}
@@ -12,3 +12,17 @@ test('source mapping preserves anime source numbering and rejects unsafe TMDB cr
 test('availability queries fixed providers only, caches requests, and reports unknown on redirects',async()=>{let calls=0;const api=createFichaApi({fetcher:async url=>{calls++;assert.equal(new URL(url).origin,'https://vidsrc.sh');return response({status_code:200,type:'episode',tmdb_id:'213375',season:1,episode:2,quality:'1080p'});}});const path='availability?'+new URLSearchParams({provider:'sh',...chapter});const [a,b]=await Promise.all([query(api,path),query(api,path)]);assert.equal(a.body.state,'listed');assert.equal(b.body.state,'listed');assert.equal(calls,1);const bad=await query(api,'availability?provider=custom&kind=movie&id=27205');assert.equal(bad.status,400);assert.equal(calls,1);assert.equal(availability('facilito',film,302,null).state,'unknown');});
 test('metadata uses verified TMDB/IMDb mapping and preserves synopsis without depending on CATALOGNET',async()=>{const api=createFichaApi({fetcher:async()=>response({status_code:200,type:'movie',tmdb_id:'27205',imdb_id:'tt1375666',title:'Inception'}),metadata:async path=>{assert.equal(path,'meta/movie/tt1375666.json');return {meta:{id:'tt1375666',name:'Inception',description:'A synopsis',poster:'https://image.tmdb.org/t/p/w500/a.jpg'}};}});const d=await query(api,'title?kind=movie&id=27205');assert.equal(d.status,200);assert.equal(d.body.tmdbId,'27205');assert.equal(d.body.imdbId,'tt1375666');assert.equal(d.body.description,'A synopsis');});
 test('provider failure does not turn into a false absence result',async()=>{const api=createFichaApi({fetcher:async()=>{throw Error('offline');}});const d=await query(api,'availability?provider=facilito&kind=movie&id=27205');assert.equal(d.status,200);assert.equal(d.body.state,'unknown');});
+
+test('anime from Crunchyroll and Netflix retains series identity through detail, library and source selection',async()=>{
+ const {createLibrary}=await import('../mobile/library.mjs');let saved;const storage={getItem:()=>saved,setItem:(k,v)=>saved=v};
+ for(const platform of ['cru','nfx']){
+  const original={id:'tt9335498',imdbId:'tt9335498',kind:'series',section:'anime',name:'Demon Slayer',platforms:[platform]};
+  const clean=detailItem(original);assert.equal(clean.kind,'series');assert.equal(clean.section,'anime');
+  const link=new URL(detailURL(original,{season:2,episode:3}),'https://clbwemov.vercel.app');assert.deepEqual(detailItem(JSON.parse(link.searchParams.get('clb'))),clean);
+  const lib=createLibrary({storage});if(!lib.has(clean))assert.equal(lib.toggle(clean),true);lib.remember(clean,{episode:{season:2,episode:3}});
+  const restored=createLibrary({storage});assert.equal(restored.favorites()[0].item.section,'anime');assert.deepEqual(restored.history()[0].episode,{season:2,episode:3});
+  assert.deepEqual(sourceContext({playbackType:clean.kind,imdbId:clean.imdbId,tmdbId:'85937'},{season:2,episode:3},'sh'),{id:'tt9335498',kind:'series',season:2,episode:3});
+ }
+ assert.equal(detailItem({id:'tt1234567',kind:'movie',section:'anime',name:'Anime film'}).kind,'movie');
+ assert.equal(detailItem({id:'tt1234567',kind:'series',section:'movie',name:'Wrong section'}),null);
+});

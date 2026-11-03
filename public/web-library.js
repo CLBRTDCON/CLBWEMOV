@@ -17,7 +17,6 @@
   if(record.position>0&&record.duration>0){const progress=element('progress');progress.max=record.duration;progress.value=record.position;progress.setAttribute('aria-label','Progreso confirmado');link.append(progress,element('small',`Continuar desde ${Math.floor(record.position/60)}:${String(Math.floor(record.position%60)).padStart(2,'0')}`));}
   else if(removeType==='history')link.append(element('small','Último título abierto · minuto no informado'));
   box.append(link);
-  if(globalThis.CLBAvailability&&!removeType&&document.getElementById('web-hub')?.dataset.view==='search'){const gate=globalThis.CLBAvailability;box.hidden=!gate.has(item);gate.track(box,[item],()=>{box.hidden=!gate.has(item);});}
   if(removeType){const remove=element('button',removeType==='favorites'?'Quitar de Mi lista':'Quitar de Continuar viendo','subtle web-remove');remove.type='button';remove.addEventListener('click',()=>{if(library.remove(removeType,item)){renderShelf();renderHub();updateSave();}});box.append(remove);}
   return box;
  }
@@ -33,7 +32,25 @@
    event.preventDefault();const q=document.getElementById('web-search').value.trim();if(!q)return;const token=++renderToken;
    document.getElementById('web-hub-title').textContent=`Resultados de «${q}»`;document.getElementById('web-hub-results').replaceChildren();
    for(const a of document.querySelectorAll('[data-library-view]'))a.removeAttribute('aria-current');
-   const sections=new Map();try{await searchEngine.search(q,state=>{if(token!==renderToken)return;let group=sections.get(state.key);if(!group){group=element('section',undefined,'web-result-group');sections.set(state.key,group);document.getElementById('web-hub-results').append(group);}group.replaceChildren(element('h2',core.sectionNames[state.key]));const rows=state.items.filter(core.visibleItem);group.append(element('p',state.status==='loading'?'Buscando…':state.error||(!rows.length?'Sin resultados.':`${rows.length} títulos`),'hint'));const grid=element('div',undefined,'web-library-grid');for(const item of rows)grid.append(card({item}));group.append(grid);if(state.warnings?.length)group.append(element('p',state.warnings.join(' · '),'hint'));if(state.hasMore){const more=element('button','Cargar más','subtle');more.addEventListener('click',async()=>{more.disabled=true;try{const result=await searchEngine.more(state);if(token===renderToken){state=result;group.replaceChildren(element('h2',core.sectionNames[state.key]));const list=element('div',undefined,'web-library-grid');for(const item of state.items.filter(core.visibleItem))list.append(card({item}));group.append(list);if(state.hasMore)group.append(more);}}catch(e){notice(e.message);}finally{more.disabled=false;}});group.append(more);}});}catch(e){notice(e.message);}
+   const sections=new Map();
+   function renderGroup(state,group){
+    if(token!==renderToken||!group.isConnected)return;
+    const gate=globalThis.CLBAvailability;
+    function draw(){
+     if(token!==renderToken||!group.isConnected)return;
+     const result=core.searchAvailability(state.items,gate);
+     group.replaceChildren(element('h2',core.sectionNames[state.key]),element('p',state.status==='loading'?'Buscando…':state.error||result.message,'hint'));
+     const grid=element('div',undefined,'web-library-grid');for(const item of result.rows)grid.append(card({item}));group.append(grid);
+     if(result.failed){const retry=element('button','Reintentar fuentes','subtle');retry.onclick=()=>gate.retry(result.checked);group.append(retry);}
+     if(state.warnings?.length)group.append(element('p',state.warnings.join(' · '),'hint'));
+     if(state.hasMore){const more=element('button','Cargar más','subtle');more.addEventListener('click',async()=>{more.disabled=true;try{state=await searchEngine.more(state);if(token===renderToken)renderGroup(state,group);}catch(e){notice(e.message);}finally{more.disabled=false;}});group.append(more);}
+    }
+    const checked=state.items.filter(core.visibleItem).filter(i=>i.kind!=='tv');
+    if(gate)gate.track(group,checked,draw);
+    draw();
+   }
+   try{await searchEngine.search(q,state=>{if(token!==renderToken)return;let group=sections.get(state.key);if(!group){group=element('section',undefined,'web-result-group');sections.set(state.key,group);document.getElementById('web-hub-results').append(group);}renderGroup(state,group);});}catch(e){notice(e.message);}
+
   });
   for(const b of document.querySelectorAll('[data-library-view]'))b.addEventListener('click',()=>{++renderToken;document.getElementById('web-hub').dataset.view=b.dataset.libraryView;renderHub();});
   const requestedView=new URLSearchParams(location.search).get('view');if(['favorites','history','search'].includes(requestedView))document.getElementById('web-hub').dataset.view=requestedView;
