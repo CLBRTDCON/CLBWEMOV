@@ -147,3 +147,18 @@ La distribución utiliza márgenes fluidos, portadas entre 132 y 184 px y una ca
 La revisión en navegador comprobó cabecera, ficha, catálogo y búsqueda a 320, 390, 768, 1024, 1138, 1280 y 1920 px según la vista. Los anchos 1280/1920 equivalen al viewport CSS de una ventana de 1536 px al 120%/80%; no constituyen una prueba de todos los controles nativos de zoom de cada navegador. No hubo desbordamiento horizontal de página ni colisión de elementos del header en los tamaños revisados; las filas de portadas mantienen scroll horizontal intencional.
 
 Las fichas de películas y documentales colocan la información a la izquierda y todas las opciones de reproducción a la derecha; por debajo de 960 px vuelven a una columna. Las docuseries conservan sus capítulos bajo la información. El desplegable de episodio y el botón siguiente están retirados de la presentación; la selección se realiza desde las miniaturas y los capítulos se muestran en lotes de ocho al acercarse al final de la lista, utilizando el paginador existente. Los IDs internos de los controles se conservan por compatibilidad con el estado y los enlaces a episodios concretos.
+
+## Código unificado (2026-11-04)
+La fuente oficial es este repositorio CLBWEMOV. `npm start` usa la misma aplicación en http://127.0.0.1:4173; Vercel importa el mismo handler sin abrir un puerto.
+
+- `npm run sync:local`: actualiza la copia de ejecución `../cine-local` desde los archivos versionados. Conserva `work/`, cuentas, configuración privada, cachés y APKs.
+- `npm run verify:local`: compara hashes y falla si hay diferencias en los archivos compartidos.
+- Trabajar primero en este repositorio y sincronizar antes de probar/publicar evita volver a mantener dos ramas de producto.
+- Backups anteriores a la unificación, verificados por CRC: `work/before-unification-{web,local}-20261104.zip`.
+
+### Ajustes del entorno
+Local usa archivos privados en `work/` para disponibilidad y portadas. Vercel usa la conexión Redis ya configurada para disponibilidad y CDN para portadas, con respaldo de memoria limitado; no escribe en el paquete desplegado. Los accesos privados conservan sus cookies y su almacén separado.
+
+Las fuentes clásicas que necesitan retransmitir archivos completos siguen siendo una capacidad local. No se retransmiten películas completas a través de una función de Vercel: su límite de duración/cuerpo no permite trasladar sin más el relay del PC. Latinobrid directo y los reproductores de terceros conservan su funcionamiento en Vercel. Es una limitación de infraestructura explícita del mismo código, no otra interfaz mantenida por separado.
+
+Positivos de disponibilidad: 4h frescos, hasta 24h con renovación en segundo plano; negativos 15min; errores no se guardan como ausencia. Local renueva hasta 20 positivos vencidos cada 5min. En Vercel la renovación se ejecuta al consultar con `waitUntil`, sin depender de un temporizador permanente. Estado de caché significa que una fuente entregó opciones, no reproducción completa de todos los episodios ni doblaje latino confirmado.

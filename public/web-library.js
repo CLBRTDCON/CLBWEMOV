@@ -29,7 +29,7 @@
  function initHub(){
   if(!document.getElementById('web-hub'))return;
   document.getElementById('web-search-form').addEventListener('submit',async event=>{
-   event.preventDefault();const q=document.getElementById('web-search').value.trim();if(!q)return;const token=++renderToken;
+   event.preventDefault();document.getElementById('web-hub').dataset.view='search';const q=document.getElementById('web-search').value.trim();if(!q)return;const token=++renderToken;
    document.getElementById('web-hub-title').textContent=`Resultados de «${q}»`;document.getElementById('web-hub-results').replaceChildren();
    for(const a of document.querySelectorAll('[data-library-view]'))a.removeAttribute('aria-current');
    const sections=new Map();

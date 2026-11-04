@@ -2,7 +2,7 @@ import {preparePlayerLanguage,localizePlayer} from './player-es.mjs';
 import {installWebPlayerControls} from './web-player-controls.mjs';
 import {createLibrary} from '/mobile/library.mjs';
 import {detailItem,detailURL} from './ficha-core.mjs';
-import {exactVariant,recoverablePlayback,within1080,supportedDimensions,wasmResource,spanishTrack,playbackFailure} from './audio-1080-core.mjs';
+import {exactVariant,recoverablePlayback,within1080,supportedDimensions,wasmResource,spanishTrack,playbackFailure,audioChoices} from './audio-1080-core.mjs';
 const $=id=>document.getElementById(id);let player=null,generation=0,request=null,queue=Promise.resolve(),blockedPolicy=false,activeRecord=null,lastProgressSave=0,lastEngineError='';
 let recoverAction=null,recoveries=0,recoveryTimer=null,paused=false;
 function requestRecovery(error){if(!recoverAction||paused||recoveries>=1||blockedPolicy||!recoverablePlayback(error))return false;recoveries++;clearTimeout(recoveryTimer);$('audio-status').textContent='Renovando el enlace y recuperando la posición…';recoveryTimer=setTimeout(()=>{recoveryTimer=null;recoverAction(true);},1500);return true;}
@@ -10,12 +10,12 @@ const library=createLibrary({onError:message=>$('audio-status').textContent=mess
 function persistProgress(completed=activeRecord?.completed===true){if(!player||!activeRecord||activeRecord.restoring)return;try{const position=Number(player.currentTime)/1000,duration=Number(player.getDuration())/1000;if(!Number.isFinite(position)||!Number.isFinite(duration)||position<0||duration<=0||duration>86400)return;library.progress(activeRecord.item,{position,duration,episode:activeRecord.episode,provider:activeRecord.provider||'catalognet',variantKey:activeRecord.variantKey||'',streamIndex:activeRecord.index,evidence:'file',completed});}catch{}}
 // Serialize engine creation/destruction: old async loads must never replace a newer choice.
 function schedule(task){const id=++generation;request?.abort();request=new AbortController();const signal=request.signal;queue=queue.catch(()=>{}).then(async()=>{await destroy();if(id!==generation)return;try{await task(id,signal);}catch(e){if(id===generation&&e.name!=='AbortError'){$('audio-status').textContent=typeof e?.message==='string'&&e.message.startsWith('CLB:')?e.message.slice(4):blockedPolicy?'La política de seguridad bloqueó un módulo del reproductor. Recarga esta página para recibir la política actualizada.':'No se pudo abrir el archivo. '+(lastEngineError||playbackFailure(e));await destroy();if(!requestRecovery(e)&&recoverAction)$('player-recover').hidden=false;}}});}
-async function destroy(){persistProgress();activeRecord=null;const previous=player;player=null;if(previous)try{await previous.destroy();}catch{}$('av-screen').replaceChildren();}
+async function destroy(){if($('player-audio-label'))$('player-audio-label').hidden=true;persistProgress();activeRecord=null;const previous=player;player=null;if(previous)try{await previous.destroy();}catch{}$('av-screen').replaceChildren();}
 async function json(path,signal){const r=await fetch(path,{signal});const data=await r.json();if(!r.ok)throw Error('CLB:'+ (data.error||'La fuente respondió HTTP '+r.status));return data;}
 function identity(){const addon=new URL(location.href).searchParams.get('addon');const kind=$('media-kind').value,id=$('media-id').value.trim(),season=Number($('media-season').value),episode=Number($('media-episode').value);if(!(addon?/^tt\d{5,12}$/:/^[1-9]\d{0,11}$/).test(id)||!['movie','series'].includes(kind)||kind==='series'&&(!Number.isInteger(season)||season<0||season>1000||!Number.isInteger(episode)||episode<1||episode>10000))throw Error('CLB:Identidad o episodio inválido.');return new URLSearchParams({kind,id,...(kind==='series'?{season,episode}:{})});}
 function endpoint(action,params){const addon=new URL(location.href).searchParams.get('addon');const query=new URLSearchParams(params);if(addon)query.set('provider',addon);return (addon?'/api/addons-local/':'/api/catalognet/')+action+'?'+query;}
 document.addEventListener('securitypolicyviolation',event=>{if(event.blockedURI?.startsWith('blob')&&/script-src|worker-src/.test(event.effectiveDirective)){blockedPolicy=true;$('audio-status').textContent='La política de seguridad bloqueó el módulo de audio. Recarga la página para recibir la corrección.';}});
-async function open(source,title,id,signal,record=null,format){
+async function open(source,title,id,signal,record=null,format,transportTracks=[]){
  const mediaURL=new URL(source,location.href);let ext=['mkv','mp4','ts','webm','m3u8'].includes(format)?format:undefined;
  if(mediaURL.origin===new URL(location.href).origin&&mediaURL.pathname==='/api/addons-local/media'){
   const head=await fetch(mediaURL.href,{method:'HEAD',signal});
@@ -48,7 +48,13 @@ async function open(source,title,id,signal,record=null,format){
  engine.on('error',error=>{if(id===generation){lastEngineError=playbackFailure(error);$('audio-status').textContent='Error de AVPlayer: '+lastEngineError;if(!requestRecovery(lastEngineError)&&recoverAction)$('player-recover').hidden=false;}});
  void AVPlayer.audioContext?.resume()?.catch(()=>{});let timeout;try{await Promise.race([engine.load(mediaURL.href,{ext,http:{referrerPolicy:'no-referrer'}}),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('CLB:La fuente tardó más de 35 segundos en abrir. Vuelve a seleccionar una opción.')),35000);})]);}finally{clearTimeout(timeout);}if(id!==generation||signal.aborted)return;
  const streams=engine.getStreams();if(!supportedDimensions(streams))throw Error('CLB:El vídeo supera 1920×1080 o no se pudo comprobar su resolución. No se inicia en esta prueba.');
- const spanish=spanishTrack(streams);if(spanish)await engine.selectAudio(spanish.id);
+ const choices=audioChoices(streams,transportTracks),spanish=choices.find(t=>/^(es|spa)(?:$|[-_])/.test(t.language))||spanishTrack(streams);
+ if(spanish)await engine.selectAudio(spanish.id);
+ const audioSelect=$('player-audio'),audioLabel=$('player-audio-label');
+ if(audioLabel)audioLabel.hidden=choices.length<2;
+ if(audioSelect&&audioLabel&&choices.length>1){audioSelect.disabled=false;audioSelect.replaceChildren();for(const choice of choices){const option=document.createElement('option');option.value=String(choice.id);option.textContent=choice.label;audioSelect.append(option);}audioSelect.value=String(engine.getSelectedAudioStreamId());audioLabel.hidden=choices.length<2;
+ audioSelect.onchange=async()=>{const selected=choices.find(c=>String(c.id)===audioSelect.value);if(!selected||id!==generation)return;audioSelect.disabled=true;try{await engine.selectAudio(selected.id);}catch{if(id===generation)$('audio-status').textContent='No se pudo cambiar la pista de audio.';}finally{if(id===generation){audioSelect.value=String(engine.getSelectedAudioStreamId());audioSelect.disabled=false;}}};}
+
  if(record){const saved=library.find(record.item);activeRecord=record;library.remember(record.item,{episode:record.episode,provider:record.provider||'catalognet',variantKey:record.variantKey||'',streamIndex:record.index});const duration=Number(engine.getDuration())/1000;if(saved?.provider===(record.provider||'catalognet')&&!saved.completed&&(record.variantKey?saved.variantKey===record.variantKey:saved.streamIndex===record.index)&&JSON.stringify(saved.episode)===JSON.stringify(record.episode)&&saved.position>0&&saved.position<duration-3){record.restoring=true;let pending=true;engine.on('played',()=>{if(!pending||id!==generation)return;pending=false;Promise.resolve().then(()=>engine.seek(BigInt(Math.floor(saved.position*1000)))).catch(()=>{if(id===generation)$('audio-status').textContent='No se pudo recuperar la posición guardada; puedes avanzar con la barra.';}).finally(()=>{if(activeRecord===record)record.restoring=false;});});}}
 
  Promise.resolve(engine.play()).catch(()=>{if(id===generation)$('audio-status').textContent='Pulsa Reproducir dentro del vídeo para iniciar.';});if(id===generation){$('audio-status').textContent='';}
@@ -71,7 +77,7 @@ if(params.get('from')==='ficha'){
    if(!row||(!addon&&!within1080(row.quality)))throw Error('CLB:El archivo seleccionado ya no figura o cambió. Vuelve a la ficha.');
    if(addon){variant=row.key||variant;if(variant)query.set('variant',variant);}query.delete('renew');query.set('index',String(row.index));
    const result=await json(endpoint('resolve',query),signal);
-   if(id===generation)await open(result.url,title+' · '+(row.quality||row.name||'Archivo'),id,signal,original?{item:original,index:row.index,provider:addon||'catalognet',variantKey:variant||'',episode:params.has('detailSeason')?{season:Number(params.get('detailSeason')),episode:Number(params.get('detailEpisode'))}:null}:null,result.ext);
+   if(id===generation)await open(result.url,title+' · '+(row.quality||row.name||'Archivo'),id,signal,original?{item:original,index:row.index,provider:addon||'catalognet',variantKey:variant||'',episode:params.has('detailSeason')?{season:Number(params.get('detailSeason')),episode:Number(params.get('detailEpisode'))}:null}:null,result.ext,result.audioTracks);
   });
   recoverAction=addon?playSelected:null;playSelected();
  }

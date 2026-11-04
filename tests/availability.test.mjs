@@ -20,3 +20,19 @@ test('failed availability checks can retry without resubmitting confirmed empty 
  ctx.CLBAvailability.retry(rows);assert.equal(ctx.CLBAvailability.pending(rows),true);await new Promise(setImmediate);assert.equal(ctx.CLBAvailability.has(rows[0]),true);assert.equal(calls,2);assert.ok(updates>=3);
  ctx.CLBAvailability.retry(rows);await new Promise(setImmediate);assert.equal(calls,2);
 });
+
+test('streaming availability delivers a ready title before a slower title finishes',async()=>{
+ let finishSlow;const slow=new Promise(resolve=>finishSlow=resolve);const api=createAvailabilityApi({inspect:async item=>item.id==='tt7654321'?slow:{state:'available'}});const chunks=[];let status;
+ const req=Object.assign(Readable.from([JSON.stringify({items:[{kind:'series',id:'tt1234567'},{kind:'series',id:'tt7654321'}]})]),{url:'/api/availability/check?stream=1',method:'POST',headers:{host:'127.0.0.1:4173',origin:'http://127.0.0.1:4173','content-type':'application/json'}});
+ const task=api(req,{writeHead(code){status=code;},write(text){chunks.push(JSON.parse(text));},end(){}});await new Promise(setImmediate);assert.equal(status,200);assert.deepEqual(chunks.map(({index,state})=>({index,state})),[{index:0,state:'available'}]);finishSlow({state:'empty'});await task;assert.deepEqual(chunks.map(({index,state})=>({index,state})),[{index:0,state:'available'},{index:1,state:'empty'}]);
+});
+test('browser applies each streamed availability result before response completion',async()=>{
+ let controller;const updates=[];const ctx={Map,Set,URL,JSON,AbortSignal,TextDecoder,location:{pathname:'/series'},fetch:async()=>({ok:true,headers:{get:()=> 'application/x-ndjson'},body:new ReadableStream({start(c){controller=c;}})})};ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(await readFile(new URL('../public/availability-filter.js',import.meta.url),'utf8'),ctx);
+ const items=[{kind:'series',id:'tt1234567'},{kind:'series',id:'tt7654321'}];ctx.CLBAvailability.track({isConnected:true},items,()=>updates.push(items.map(i=>ctx.CLBAvailability.has(i))));await new Promise(setImmediate);
+ const encoder=new TextEncoder();controller.enqueue(encoder.encode('{"index":0,"state":"available"}\n'));await new Promise(setImmediate);assert.equal(ctx.CLBAvailability.has(items[0]),true);assert.equal(ctx.CLBAvailability.pending(items),true);assert.deepEqual(updates[0],[true,false]);
+ controller.enqueue(encoder.encode('{"index":1,"state":"empty"}\n'));controller.close();await new Promise(setImmediate);assert.equal(ctx.CLBAvailability.pending(items),false);assert.equal(ctx.CLBAvailability.has(items[1]),false);
+});
+
+test('browser retries an unknown result after its short TTL rather than hiding it forever',async()=>{
+ let clock=1000,calls=0;const ctx={Map,Set,URL,JSON,AbortSignal,Date:{now:()=>clock},location:{pathname:'/series'},fetch:async()=>({ok:true,json:async()=>({results:[{state:++calls===1?'unknown':'available'}]})})};ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(await readFile(new URL('../public/availability-filter.js',import.meta.url),'utf8'),ctx);const item={kind:'series',id:'tt0086817'},container={isConnected:true};ctx.CLBAvailability.track(container,[item],()=>{});await new Promise(setImmediate);assert.equal(ctx.CLBAvailability.failed([item]),true);clock+=30001;ctx.CLBAvailability.track(container,[item],()=>{});await new Promise(setImmediate);assert.equal(ctx.CLBAvailability.has(item),true);assert.equal(calls,2);
+});

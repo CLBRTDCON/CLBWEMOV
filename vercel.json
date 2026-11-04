@@ -6,10 +6,23 @@
       "src": "api/index.mjs",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["public/**", "mobile/**"],
-        "excludeFiles": ["tests/**", "work/**", "popup-guard/**"]
+        "includeFiles": [
+          "public/**",
+          "mobile/**",
+          "lacartoons-ids.json"
+        ],
+        "excludeFiles": [
+          "tests/**",
+          "work/**",
+          "popup-guard/**"
+        ]
       }
     }
   ],
-  "routes": [{"src": "/(.*)", "dest": "/api/index.mjs"}]
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.mjs"
+    }
+  ]
 }

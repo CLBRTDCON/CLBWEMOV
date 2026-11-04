@@ -25,9 +25,10 @@ export function serveAccess(req,res,env=process.env){
   if(!valid){res.writeHead(401,{'WWW-Authenticate':'Basic realm="CLB", charset="UTF-8"','Content-Type':'text/plain; charset=utf-8'});res.end('Acceso privado.');return false;}
  }
  // Even authenticated responses must never be cached for another visitor.
+ if(!requireAuth&&new URL(req.url||'/','http://localhost').pathname==='/api/poster')return true;
  const writeHead=res.writeHead;
  res.writeHead=function(status,...args){
-  if(args[0]&&typeof args[0]==='object')args[0]={...args[0],'Cache-Control':'private, no-store'};
+  if(args[0]&&typeof args[0]==='object')args[0]={...args[0],'Cache-Control':'private, no-store',...(args[0]['Vercel-CDN-Cache-Control']?{'Vercel-CDN-Cache-Control':'private, no-store'}:{})};
   this.setHeader('Cache-Control','private, no-store');return writeHead.call(this,status,...args);
  };
  return true;

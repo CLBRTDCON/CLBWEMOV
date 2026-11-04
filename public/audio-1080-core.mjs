@@ -13,3 +13,9 @@ export function exactVariant(sources,key,index){
  return rows.find(s=>s.index===index)||null;
 }
 export function recoverablePlayback(error){const text=String(error?.message||error||'');return !/401|403|409|429|codec|códec|resolución|1080|AudioWorklet|política|identidad|lista de archivos|ya no figura/i.test(text)&&/fetch|network|red|HTTP 5\d\d|HTTP 410|expir|timeout|tardó|open stream failed|ret: -2/i.test(text);}
+
+export function audioChoices(streams,transport=[]){
+ const audio=streams.filter(s=>(s.codecparProxy||s.codecpar)?.codecType===1);
+ const languages={spa:'Español',es:'Español',jpn:'Japonés',ja:'Japonés',eng:'Inglés',en:'Inglés',por:'Portugués',pt:'Portugués',fra:'Francés',fr:'Francés',deu:'Alemán',de:'Alemán'};
+ return audio.map((s,i)=>{const language=String(s.metadata?.language||(audio.length===transport.length?transport[i]?.language:'')||'').toLowerCase();const name=languages[language]||languages[language.split(/[-_]/)[0]];return {id:s.id,language,label:name||'Pista '+(i+1)};});
+}

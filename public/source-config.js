@@ -19,7 +19,8 @@ globalThis.CineRecovery=(()=>{
 globalThis.CineDataSaver=(()=>{
   let enabled=false;try{enabled=globalThis.localStorage?.getItem('clb.dataSaver.v1')==='1';}catch{}
   function set(value){enabled=value===true;try{globalThis.localStorage?.setItem('clb.dataSaver.v1',enabled?'1':'0');}catch{}return enabled;}
-  function poster(value){if(!enabled)return value;try{const u=new URL(value);if(u.hostname==='image.tmdb.org')u.pathname=u.pathname.replace(/\/t\/p\/(original|w\d+)\//,'/t/p/w185/');if(u.hostname==='images.metahub.space')u.pathname=u.pathname.replace('/poster/medium/','/poster/small/');return u.href;}catch{return value;}}
+  function poster(value){try{const u=new URL(value);if(enabled){if(u.hostname==='image.tmdb.org')u.pathname=u.pathname.replace(/\/t\/p\/(original|w\d+)\//,'/t/p/w185/');if(u.hostname==='images.metahub.space')u.pathname=u.pathname.replace('/poster/medium/','/poster/small/');}const allowed=['image.tmdb.org','images.metahub.space','live.metahub.space','m.media-amazon.com','images.justwatch.com','media.kitsu.app','media.kitsu.io','s4.anilist.co','static.tvmaze.com'];return globalThis.CLBPosterCache&&u.protocol==='https:'&&allowed.includes(u.hostname)?'/api/poster?'+new URLSearchParams({url:u.href}):u.href;}catch{return value;}}
+
   function bind(){const input=globalThis.document?.getElementById('data-saver');if(!input)return;input.checked=enabled;input.addEventListener?.('change',()=>{set(input.checked);});}
   if(globalThis.document){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();}
   return {get enabled(){return enabled;},set,poster};

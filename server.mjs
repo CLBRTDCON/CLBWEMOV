@@ -1,3 +1,11 @@
+import {waitUntil} from '@vercel/functions';
+import {fileAvailabilityStore,redisAvailabilityStore} from './availability-store.mjs';
+import {createPosterCache} from './poster-cache.mjs';
+const deployed=process.env.VERCEL==='1';
+const posterCache=createPosterCache({memoryOnly:deployed,background:task=>deployed?waitUntil(task):void task});
+const redisUrl=process.env.UPSTASH_REDIS_REST_URL||process.env.KV_REST_API_URL||process.env.clbweb_KV_REST_API_URL;
+const redisToken=process.env.UPSTASH_REDIS_REST_TOKEN||process.env.KV_REST_API_TOKEN||process.env.clbweb_KV_REST_API_TOKEN;
+const availabilityStore=deployed?(redisUrl&&redisToken?redisAvailabilityStore({url:redisUrl,token:redisToken}):undefined):fileAvailabilityStore();
 import {createPlatformCatalogApi} from './platform-catalog-api.mjs';
 const platformCatalogApi=createPlatformCatalogApi();
 import {createAccessApi} from './access-api.mjs';
@@ -5,8 +13,9 @@ import {createAddonsLocalApi} from './addons-local-api.mjs';
 import {createAvailabilityApi} from './availability-api.mjs';
 import {invoke as invokeAvailability} from './kids-api.mjs';
 const deviceAccess=createAccessApi();
-const addonsLocalApi=createAddonsLocalApi({access:deviceAccess,deployed:true,load:async()=>({latinobrid:process.env.CLB_LATINOBRID_MANIFEST})});
-const availabilityApi=createAvailabilityApi({deployed:true,inspect:identity=>addonsLocalApi.inspect(identity),animeDetail:id=>invokeAvailability(animeApi,'/api/anime/detail?'+new URLSearchParams({id}),cinemeta)});
+const addonsLocalApi=createAddonsLocalApi({access:deviceAccess,deployed,...(deployed?{load:async()=>({latinobrid:process.env.CLB_LATINOBRID_MANIFEST})}:{})});
+const availabilityApi=createAvailabilityApi({deployed,store:availabilityStore,namespace:()=>addonsLocalApi.cacheNamespace(),background:task=>deployed?waitUntil(task):void task,onError:()=>console.warn('No se pudo actualizar la caché compartida de disponibilidad.'),inspect:identity=>addonsLocalApi.inspect(identity),animeDetail:id=>invokeAvailability(animeApi,'/api/anime/detail?'+new URLSearchParams({id}),cinemeta)});
+if(!deployed)availabilityApi.start();
 import {withWebHeader} from './web-header.mjs';
 import {createArchiveApi} from './archive-api.mjs';
 const archiveApi=createArchiveApi({metadataLookup:path=>cinemeta(path)});
@@ -34,6 +43,7 @@ const files = new Map([['/', ['index.html', 'text/html']], ['/app.js', ['app.js'
 for(const [path,file,type] of [['/tv','tv.html','text/html'],['/tv.js','tv.js','text/javascript'],['/tv.css','tv.css','text/css'],['/vendor/hls-1.7.3.min.js','vendor/hls-1.7.3.min.js','text/javascript']])files.set(path,[file,type]);
 for(const [path,file,type] of [['/kids','kids.html','text/html'],['/kids.js','kids.js','text/javascript'],['/kids.css','kids.css','text/css'],['/player-policy.mjs','../mobile/player-policy.mjs','text/javascript']])files.set(path,[file,type]);
 for(const [route,file,type] of [['/adult','adult.html','text/html'],['/adult.js','adult.js','text/javascript'],['/adult.css','adult.css','text/css'],['/index.html',['index.html','text/html'][0],'text/html']])files.set(route,[file,type]);
+files.set('/shared-cache-config.js',['shared-cache-config.js','text/javascript']);
 files.set('/archive-options.mjs',['archive-options.mjs','text/javascript']);
 files.set('/genre-shelves.js',['genre-shelves.js','text/javascript']);
 for(const [route,file,type] of [['/biblioteca','biblioteca.html','text/html'],['/web-library.js','web-library.js','text/javascript'],['/web-library-core.mjs','web-library-core.mjs','text/javascript'],['/web-library.css','web-library.css','text/css']])files.set(route,[file,type]);
@@ -62,7 +72,8 @@ export const requestHandler = async (req, res) => {
   const removedPath=new URL(req.url,'http://clb.invalid').pathname;if(['/dramas','/microdrama','/mobile/'].includes(removedPath)||removedPath.startsWith('/api/dramas/')||removedPath.startsWith('/api/microdramas/')){res.writeHead(410,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify({error:'La sección de dramas se retiró de CLB.'}));return;}
   if(req.url.startsWith('/api/platform-catalog?')){await platformCatalogApi(req,res);return;}
   if(req.url.startsWith('/api/access/')){await deviceAccess.api(req,res);return;}
-  if(req.url==='/api/availability/check'){await availabilityApi(req,res);return;}
+  if(new URL(req.url,'http://localhost').pathname==='/api/poster'){await posterCache(req,res);return;}
+  if(new URL(req.url,'http://localhost').pathname==='/api/availability/check'){await availabilityApi(req,res);return;}
   if(req.url.startsWith('/api/addons-local/')){await addonsLocalApi(req,res);return;}
   if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); res.end(); return; }
   if(req.url.startsWith('/api/archive/links?')){await archiveApi(req,res);return;}
@@ -82,8 +93,9 @@ export const requestHandler = async (req, res) => {
   if (!file) { res.writeHead(404); res.end('No encontrado'); return; }
   try {
     let content = await readFile(new URL(`./public/${file[0]}`, import.meta.url));
+    if(file[1]==='text/html')content=Buffer.from(content.toString('utf8').replace('<head>','<head><script src="/shared-cache-config.js"></script>'));
     if(file[1]==='text/html'&&['/','/series','/anime','/documentales','/biblioteca','/kids','/tv','/catalognet','/ficha'].includes(path))content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/catalog-runtime.css"><script src="/catalog-runtime.js"></script><script src="/auto-pagination.js" defer></script></head>'));
-    if(file[1]==='text/html'&&process.env.CLB_LATINOBRID_MANIFEST&&['/','/series','/anime','/documentales','/biblioteca'].includes(path))content=Buffer.from(content.toString('utf8').replace('<head>','<head><script src="/availability-filter.js"></script>'));
+    if(file[1]==='text/html'&&(!deployed||process.env.CLB_LATINOBRID_MANIFEST)&&['/','/series','/anime','/documentales','/biblioteca'].includes(path))content=Buffer.from(content.toString('utf8').replace('<head>','<head><script src="/availability-filter.js"></script>'));
     if(file[1]==='text/html'&&['/','/series','/anime','/documentales','/ficha','/reproductor','/biblioteca','/kids','/tv','/activar','/administracion/accesos'].includes(path))content=Buffer.from(withWebHeader(content.toString('utf8'),path));
     if(file[1]==='text/html'&&file[0]!=='adult.html')content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/web-sources.css"><script src="/web-sources.mjs" type="module"></script></head>'));
     if(file[1]==='text/html'&&!['adult.html','audio-1080.html'].includes(file[0]))content=Buffer.from(content.toString('utf8').replace('</head>','<link rel="stylesheet" href="/extension-notice.css"></head>').replace(/<body([^>]*)>/,'<body$1><aside class="clb-extension-notice" aria-label="Extensión opcional"><span>Mejora tu experiencia: bloquea pestañas emergentes de los proveedores.</span> <a href="/popup-guard.zip" download="CLB-Popup-Guard-1.1.0.zip">Descargar extensión</a> <small>Chrome, Edge y Brave · PC · instalación manual</small></aside>'));
@@ -91,8 +103,8 @@ export const requestHandler = async (req, res) => {
     const audioPage=file[0]==='audio-1080.html';
     const audioCsp="default-src 'self'; script-src 'self' blob: 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.tb-cdn.st https://*.yandex.net https://*.yandex.ru https://*.yandex.com https://*.yandexusercontent.com; media-src 'self' blob:; worker-src 'self' blob:; img-src 'self' data: blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
     if(audioPage){res.setHeader('Cross-Origin-Opener-Policy','same-origin');res.setHeader('Cross-Origin-Embedder-Policy','require-corp');}
-    const mobileCsp="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; media-src https: blob:; worker-src blob:; img-src 'self' https://image.tmdb.org https://images.metahub.space https://m.media-amazon.com https://images.justwatch.com https://media.kitsu.app https://media.kitsu.io https://s4.anilist.co https://static.tvmaze.com https://episodes.metahub.space https://archive.org; frame-src https://vixsrc.to https://www.vidking.net https://vidsrc.sh https://vidsrc.to https://facilitoplay.com https://vidlink.pro https://vidfast.vc https://cinesrc.st; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
+    const mobileCsp="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; media-src https: blob:; worker-src blob:; img-src 'self' https://image.tmdb.org https://images.metahub.space https://live.metahub.space https://m.media-amazon.com https://images.justwatch.com https://media.kitsu.app https://media.kitsu.io https://s4.anilist.co https://static.tvmaze.com https://episodes.metahub.space https://archive.org; frame-src https://vixsrc.to https://www.vidking.net https://vidsrc.sh https://vidsrc.to https://facilitoplay.com https://vidlink.pro https://vidfast.vc https://cinesrc.st; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
     const adultCsp="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; media-src https: blob:; worker-src blob:; img-src 'self' https://www.eporner.com https://*.eporner.com https://img.eporner.com; frame-src https://www.eporner.com; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
-    await writeStatic(req,res,content, {'Content-Type': `${file[1]}; charset=utf-8`, 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Cache-Control': 'no-store', 'Content-Security-Policy': audioPage?audioCsp:['ficha.html','catalognet.html','documentaries.html'].includes(file[0])?mobileCsp:file[0]==='adult.html'?adultCsp:file[0]==='tv.html' ? "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https:; media-src https: blob:; worker-src blob:; img-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'" : "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https://image.tmdb.org https://images.metahub.space https://m.media-amazon.com https://images.justwatch.com https://media.kitsu.app https://media.kitsu.io https://s4.anilist.co; frame-src https://vixsrc.to https://www.vidking.net https://vidsrc.sh https://vidsrc.to https://facilitoplay.com https://vidlink.pro https://vidfast.vc https://cinesrc.st; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"},file[0]);
+    await writeStatic(req,res,content, {'Content-Type': `${file[1]}; charset=utf-8`, 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'Cache-Control': 'no-store', 'Content-Security-Policy': audioPage?audioCsp:['ficha.html','catalognet.html','documentaries.html'].includes(file[0])?mobileCsp:file[0]==='adult.html'?adultCsp:file[0]==='tv.html' ? "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https:; media-src https: blob:; worker-src blob:; img-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'" : "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https://image.tmdb.org https://images.metahub.space https://live.metahub.space https://m.media-amazon.com https://images.justwatch.com https://media.kitsu.app https://media.kitsu.io https://s4.anilist.co; frame-src https://vixsrc.to https://www.vidking.net https://vidsrc.sh https://vidsrc.to https://facilitoplay.com https://vidlink.pro https://vidfast.vc https://cinesrc.st; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"},file[0]);
   } catch { res.writeHead(500); res.end('No se pudo leer el recurso local'); }
 };

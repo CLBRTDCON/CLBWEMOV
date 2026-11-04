@@ -1,0 +1,15 @@
+import {readFile,mkdir,writeFile,rename} from 'node:fs/promises';
+// Small local persistent store; no signed media URLs, manifests or user identifiers.
+export function fileAvailabilityStore(file=new URL('./work/cache/availability.json',import.meta.url),{now=Date.now,maxEntries=5000}={}){
+ let records={},revision=0,written=0,queue=Promise.resolve();
+ const ready=readFile(file,'utf8').then(text=>{const data=JSON.parse(text);if(data.version===1&&data.records&&typeof data.records==='object')records=data.records;}).catch(()=>{});
+ function trim(){const entries=Object.entries(records).filter(([,r])=>r&&['available','empty'].includes(r.state)&&Number.isFinite(r.staleUntil)&&r.staleUntil>now()).sort((a,b)=>b[1].checkedAt-a[1].checkedAt).slice(0,maxEntries);records=Object.fromEntries(entries);}
+ return {async get(key){await ready;return records[key]||null;},async set(key,value){await ready;records[key]=value;trim();const current=++revision;const task=queue.catch(()=>{}).then(async()=>{if(written>=current)return;await mkdir(new URL('.',file),{recursive:true});const snapshot=revision;await writeFile(new URL('./availability.tmp',file),JSON.stringify({version:1,records}),{mode:0o600});await rename(new URL('./availability.tmp',file),file);written=snapshot;});queue=task;await task;},async entries(){await ready;trim();return Object.entries(records);}};
+}
+export function redisAvailabilityStore({url,token,fetcher=fetch,now=Date.now}={}){
+ const endpoint=new URL(url);if(endpoint.protocol!=='https:'||endpoint.username||endpoint.password)throw Error('Redis HTTPS requerido.');
+ const prefix='clb:availability:v3:',index=prefix+'due';
+ async function command(args){const r=await fetcher(endpoint,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(args),signal:AbortSignal.timeout(8000)});if(!r.ok)throw Error('Caché Redis no disponible.');const d=await r.json();if(d.error)throw Error('Caché Redis no disponible.');return d.result;}
+ const key=value=>prefix+Buffer.from(value).toString('base64url');
+ return {async get(id){const text=await command(['GET',key(id)]);return text?JSON.parse(text):null;},async set(id,value){const k=key(id),ttl=Math.max(1,Math.ceil((value.staleUntil-now())/1000));await command(['EVAL',"redis.call('SET',KEYS[1],ARGV[1],'EX',ARGV[2]); if ARGV[3]=='available' then redis.call('ZADD',KEYS[2],ARGV[4],KEYS[1]) else redis.call('ZREM',KEYS[2],KEYS[1]) end; local old=redis.call('ZRANGEBYSCORE',KEYS[2],'-inf',ARGV[5]); for _,k in ipairs(old) do redis.call('ZREM',KEYS[2],k); redis.call('DEL',k) end; local overflow=redis.call('ZRANGE',KEYS[2],0,-5001); for _,k in ipairs(overflow) do redis.call('ZREM',KEYS[2],k); redis.call('DEL',k) end; return 1",2,k,index,JSON.stringify(value),ttl,value.state,value.expires,now()-86400000]);},async entries(){const keys=await command(['ZRANGEBYSCORE',index,'-inf',now(),'LIMIT',0,20]);if(!keys?.length)return [];const values=await command(['MGET',...keys]);return keys.flatMap((k,i)=>values[i]?[[Buffer.from(k.slice(prefix.length),'base64url').toString(),JSON.parse(values[i])]]:[]);}};
+}
