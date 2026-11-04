@@ -6,7 +6,7 @@
   core=c;library=lib.createLibrary({onError:message=>notice(message.replace('en el teléfono','en este navegador'))});
   searchEngine=search.createGlobalSearch({sections:search.searchSections.filter(s=>s.key!=='drama'),api:async path=>{if(globalThis.CLBCatalog)return CLBCatalog.json(path);const r=await fetch(path,{signal:AbortSignal.timeout(50000)});const d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo consultar.');return d;}});
   tracker=playback.installMobilePlayback({document:{getElementById:()=>({set textContent(value){notice(value);}}),get hidden(){return document.hidden;}},window,library,recover:false,actions:{reload:()=>document.getElementById('reload-player')?.click()}});
-  initHub();return library;
+  library.subscribe?.(()=>{renderShelf();if(document.getElementById('web-hub')?.dataset.view!=='search')renderHub();updateSave();});initHub();return library;
  }).catch(error=>{notice('La biblioteca no está disponible. '+error.message);return null;});
  function notice(text){let n=document.getElementById('web-notice');if(!n){n=element('p',undefined,'hint');n.id='web-notice';n.setAttribute('role','status');document.querySelector('main').prepend(n);}n.textContent=text;}
  function thumbnail(item){const art=element('div',undefined,'web-poster');art.append(element('span',item.name));if(item.posterUrl){const img=element('img');img.src=globalThis.CineDataSaver?.poster(item.posterUrl)||item.posterUrl;img.alt='';img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';img.addEventListener('error',()=>img.remove(),{once:true});art.append(img);}return art;}
@@ -74,6 +74,7 @@
   decorate(url,item,episode=null){return tracker?new URL(tracker.decorate(String(url),item,episode)):url;},
   stop(){tracker?.detach();renderShelf();},
  };
+ window.addEventListener('clb-library-sync',event=>{const note=document.getElementById('web-library-sync-note');if(note)note.textContent=event.detail.message||(event.detail.profileId?'Mi lista y progreso sincronizados con '+event.detail.label+'.':'Guardado en este dispositivo. Activa Mi cuenta para sincronizar.');});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)tracker?.suspend();});
  window.addEventListener('pagehide',()=>tracker?.detach());
 })();

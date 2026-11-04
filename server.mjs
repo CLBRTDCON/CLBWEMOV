@@ -1,3 +1,4 @@
+import {createLibraryApi} from './library-api.mjs';
 import {waitUntil} from '@vercel/functions';
 import {fileAvailabilityStore,redisAvailabilityStore} from './availability-store.mjs';
 import {createPosterCache} from './poster-cache.mjs';
@@ -13,6 +14,7 @@ import {createAddonsLocalApi} from './addons-local-api.mjs';
 import {createAvailabilityApi} from './availability-api.mjs';
 import {invoke as invokeAvailability} from './kids-api.mjs';
 const deviceAccess=createAccessApi();
+const libraryApi=createLibraryApi({access:deviceAccess});
 const addonsLocalApi=createAddonsLocalApi({access:deviceAccess,deployed,...(deployed?{load:async()=>({latinobrid:process.env.CLB_LATINOBRID_MANIFEST})}:{})});
 const availabilityApi=createAvailabilityApi({deployed,store:availabilityStore,namespace:()=>addonsLocalApi.cacheNamespace(),background:task=>deployed?waitUntil(task):void task,onError:()=>console.warn('No se pudo actualizar la caché compartida de disponibilidad.'),inspect:identity=>addonsLocalApi.inspect(identity),animeDetail:id=>invokeAvailability(animeApi,'/api/anime/detail?'+new URLSearchParams({id}),cinemeta)});
 if(!deployed)availabilityApi.start();
@@ -54,7 +56,7 @@ files.set('/extension-notice.css',['extension-notice.css','text/css']);
 files.set('/responsive.css',['responsive.css','text/css']);
 files.set('/clb-theme.css',['clb-theme.css','text/css']);
 // Recursos compartidos que aún utilizan las fichas, búsquedas y reproducción web.
-for(const name of ['library','global-search','mobile-playback','playback-capabilities'])files.set(`/mobile/${name}.mjs`,[`../mobile/${name}.mjs`,'text/javascript']);
+for(const name of ['library','library-sync','global-search','mobile-playback','playback-capabilities'])files.set(`/mobile/${name}.mjs`,[`../mobile/${name}.mjs`,'text/javascript']);
 for(const name of ['catalog-api','series-api','anime-api','tv-api','kids-api','releases-api','documentaries-api','episode-preview'])files.set(`/${name}.mjs`,[`../${name}.mjs`,'text/javascript']);
 for(const name of ['source-config.js','genre-shelves.js','vendor/hls-1.7.3.min.js'])files.set(`/public/${name}`,[name,'text/javascript']);
 
@@ -71,6 +73,7 @@ export const requestHandler = async (req, res) => {
   if(!serveAccess(req,res))return;
   const removedPath=new URL(req.url,'http://clb.invalid').pathname;if(['/dramas','/microdrama','/mobile/'].includes(removedPath)||removedPath.startsWith('/api/dramas/')||removedPath.startsWith('/api/microdramas/')){res.writeHead(410,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify({error:'La sección de dramas se retiró de CLB.'}));return;}
   if(req.url.startsWith('/api/platform-catalog?')){await platformCatalogApi(req,res);return;}
+  if(new URL(req.url,'http://localhost').pathname==='/api/library'){await libraryApi(req,res);return;}
   if(req.url.startsWith('/api/access/')){await deviceAccess.api(req,res);return;}
   if(new URL(req.url,'http://localhost').pathname==='/api/poster'){await posterCache(req,res);return;}
   if(new URL(req.url,'http://localhost').pathname==='/api/availability/check'){await availabilityApi(req,res);return;}

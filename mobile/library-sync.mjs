@@ -1,0 +1,27 @@
+import {libraryKey,newLibraryId} from './library.mjs';
+// One sync worker per page; multiple UI modules share it, but accounts keep separate outboxes.
+let shared;
+export function createLibrarySync({library,fetcher=globalThis.fetch,storage=globalThis.localStorage,now=Date.now,notify=()=>{},native=false}={}){
+ const libraries=new Set([library]);let account=null,revision=-1,busy=false,queue=[],timer,offset=0,stopped=false,lastWrite=0,currentTask,starting=true,early=[];
+ const queueKey=id=>'clb.library.outbox.v1.'+id;
+ function pending(){try{storage?.setItem(queueKey(account.id),JSON.stringify(queue));}catch{notify('No se pudo guardar la cola de sincronización.');}}
+ function apply(snapshot){for(const lib of libraries)lib.applyRemote(snapshot,account?.id||'',queue);notify('');}
+ async function api(path,data){const options=data?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}:{};options.signal=AbortSignal.timeout(12000);let r;if(native){const query=new URLSearchParams({path,...(data?{body:JSON.stringify(data)}:{})});r=await fetcher('/clb-api?'+query,{credentials:'same-origin',signal:options.signal});}else r=await fetcher(path,{...options,credentials:'same-origin'});const d=await r.json();if(!r.ok){const e=Error(d.error||'No se pudo sincronizar.');e.status=r.status;throw e;}return d;}
+ function attach(lib){if(libraries.has(lib)&&lib!==library)return;libraries.add(lib);lib.subscribe(change=>{if(!change)return;const op={...change,id:newLibraryId(),at:now()+offset};if(!account){const hint=lib.scope();if(hint){try{const old=JSON.parse(storage?.getItem(queueKey(hint))||'[]').filter(p=>p.group!==op.group||libraryKey(p.record.item)!==libraryKey(op.record.item));storage?.setItem(queueKey(hint),JSON.stringify([...old,op]));}catch{notify('No se pudo guardar la cola de sincronización.');}}else if(starting)early.push(op);return;}queue=queue.filter(p=>p.group!==op.group||libraryKey(p.record.item)!==libraryKey(op.record.item));queue.push(op);pending();clearTimeout(timer);const delay=change.group==='history'?Math.max(500,15000-(now()-lastWrite)):500;timer=setTimeout(()=>{void sync();},delay);});if(account)lib.applyRemote(library.snapshot(),account.id,queue);}
+ attach(library);
+ async function refreshAccount(){const status=await api('/api/access/status');const next=status.authorized?status.account:null;if(next?.id!==account?.id){account=next;revision=-1;queue=[];if(account){try{queue=JSON.parse(storage?.getItem(queueKey(account.id))||'[]').filter(op=>op?.id&&op?.record);}catch{queue=[];}queue.push(...early);pending();}early=[];for(const lib of libraries)lib.applyRemote(null,account?.id||'',queue);}starting=false;return status;}
+ function sync(options={}){if(currentTask)return options.checkAccount?currentTask.then(()=>sync(options)):currentTask;currentTask=perform(options).finally(()=>currentTask=null);return currentTask;}
+ async function perform({checkAccount=false}={}){if(stopped)return;busy=true;try{if(checkAccount||!account)await refreshAccount();if(!account)return;
+  const sent=queue.slice(0,native?10:30),data=sent.length?await api('/api/library',{revision:Math.max(0,revision),operations:sent}):await api('/api/library?'+new URLSearchParams(revision>=0?{since:revision}:{}));
+  if(data.profileId!==account.id)throw Error('La cuenta cambió durante la sincronización.');offset=Math.max(-120000,Math.min(120000,data.serverTime-now()));
+  if(data.ack){queue=queue.filter(op=>!data.ack.includes(op.id));pending();lastWrite=now();}
+  revision=data.revision;if(data.snapshot)apply(data.snapshot);else notify('');if(data.expired)notify('Algunos cambios sin conexión tenían más de siete días. Importa los datos locales desde Mi cuenta si deseas recuperarlos.');
+ }catch(e){if(e.status===401){account=null;revision=-1;queue=[];for(const lib of libraries)lib.applyRemote(null,'');}notify(e.message);}finally{busy=false;}}
+ return {attach,sync,refresh:()=>sync({checkAccount:true}),account:()=>account,async importLocal(){await sync({checkAccount:true});if(!account)throw Error('Activa esta cuenta primero.');const local=library.anonymous();for(const group of ['favorites','history'])for(const record of local[group]){queue.push({id:newLibraryId(),group,action:'set',record,at:now()+offset});}pending();while(queue.length){const before=queue.length;await sync();if(queue.length>=before)break;}},stop(){stopped=true;clearTimeout(timer);},start(){void sync({checkAccount:true});}};
+}
+export function connectLibrary(library){
+ if(shared){shared.attach(library);return shared;}
+ const native=globalThis.location?.origin==='https://appassets.androidplatform.net';
+ shared=createLibrarySync({library,native,notify:message=>{globalThis.dispatchEvent?.(new CustomEvent('clb-library-sync',{detail:{message,profileId:shared?.account()?.id,label:shared?.account()?.label}}));}});shared.start();
+ const interval=setInterval(()=>{if(!document.hidden&&shared.account())void shared.sync();},20000);globalThis.addEventListener('focus',()=>{void shared.refresh();});document.addEventListener('visibilitychange',()=>{if(!document.hidden)void shared.refresh();});globalThis.addEventListener('clb-account-change',()=>{void shared.refresh();});globalThis.addEventListener('pagehide',event=>{if(!event.persisted){clearInterval(interval);shared.stop();}});globalThis.addEventListener('pageshow',event=>{if(event.persisted)void shared.refresh();});return shared;
+}
