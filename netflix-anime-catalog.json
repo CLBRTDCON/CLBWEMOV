@@ -1,0 +1,3419 @@
+{
+  "source": "https://www.netflix.com/mx-en/browse/genre/7424",
+  "checkedAt": "2026-11-04T06:22:58.244Z",
+  "metas": [
+    {
+      "id": "tt12343534",
+      "type": "series",
+      "name": "Jujutsu Kaisen",
+      "releaseInfo": "2020–",
+      "released": "2020-10-02T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt12343534/img",
+      "background": "https://images.metahub.space/background/medium/tt12343534/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/81278456"
+    },
+    {
+      "id": "tt0988824",
+      "type": "series",
+      "name": "Naruto: Shippuden",
+      "releaseInfo": "2007–2017",
+      "released": "2009-10-28T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0988824/img",
+      "background": "https://images.metahub.space/background/medium/tt0988824/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80000603"
+    },
+    {
+      "id": "tt0388629",
+      "type": "series",
+      "name": "One Piece",
+      "releaseInfo": "1999–",
+      "released": "1999-10-20T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0388629/img",
+      "background": "https://images.metahub.space/background/medium/tt0388629/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80107103"
+    },
+    {
+      "id": "tt5626028",
+      "type": "series",
+      "name": "My Hero Academia",
+      "releaseInfo": "2016–2026",
+      "released": "2018-05-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt5626028/img",
+      "background": "https://images.metahub.space/background/medium/tt5626028/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80135674"
+    },
+    {
+      "id": "tt7441658",
+      "type": "series",
+      "name": "Black Clover",
+      "releaseInfo": "2017–2026",
+      "released": "2017-10-03T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt7441658/img",
+      "background": "https://images.metahub.space/background/medium/tt7441658/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80238012"
+    },
+    {
+      "id": "tt38201910",
+      "type": "series",
+      "name": "Baki-Dou: The Invincible Samurai",
+      "releaseInfo": "2026–",
+      "released": "2026-02-26T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt38201910/img",
+      "background": "https://images.metahub.space/background/medium/tt38201910/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81922765"
+    },
+    {
+      "id": "tt0409591",
+      "type": "series",
+      "name": "Naruto",
+      "releaseInfo": "2002–2007",
+      "released": "2005-09-10T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0409591/img",
+      "background": "https://images.metahub.space/background/medium/tt0409591/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70205012"
+    },
+    {
+      "id": "tt36592690",
+      "type": "series",
+      "name": "The Fragrant Flower Blooms with Dignity",
+      "releaseInfo": "2025",
+      "released": "2025-09-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt36592690/img",
+      "background": "https://images.metahub.space/background/medium/tt36592690/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82024665"
+    },
+    {
+      "id": "tt15222080",
+      "type": "series",
+      "name": "Blue Lock",
+      "releaseInfo": "2022–",
+      "released": "2022-10-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt15222080/img",
+      "background": "https://images.metahub.space/background/medium/tt15222080/img",
+      "genres": [
+        "Animation",
+        "Sport",
+        "Thriller"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81640753"
+    },
+    {
+      "id": "tt9335498",
+      "type": "series",
+      "name": "Demon Slayer: Kimetsu no Yaiba",
+      "releaseInfo": "2019–2024",
+      "released": "2021-01-22T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9335498/img",
+      "background": "https://images.metahub.space/background/medium/tt9335498/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81091393"
+    },
+    {
+      "id": "tt13676344",
+      "type": "series",
+      "name": "Record of Ragnarok",
+      "releaseInfo": "2021–",
+      "released": "2021-06-17T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13676344/img",
+      "background": "https://images.metahub.space/background/medium/tt13676344/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81281579"
+    },
+    {
+      "id": "tt13706018",
+      "type": "series",
+      "name": "Spy x Family",
+      "releaseInfo": "2022–",
+      "released": "2022-04-09T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13706018/img",
+      "background": "https://images.metahub.space/background/medium/tt13706018/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81511410"
+    },
+    {
+      "id": "tt26743760",
+      "type": "series",
+      "name": "The Apothecary Diaries",
+      "releaseInfo": "2023–",
+      "released": "2023-10-21T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt26743760/img",
+      "background": "https://images.metahub.space/background/medium/tt26743760/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "History"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81712068"
+    },
+    {
+      "id": "tt4508902",
+      "type": "series",
+      "name": "One Punch Man",
+      "releaseInfo": "2015–",
+      "released": "2015-10-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt4508902/img",
+      "background": "https://images.metahub.space/background/medium/tt4508902/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80117291"
+    },
+    {
+      "id": "tt38268282",
+      "type": "series",
+      "name": "Steel Ball Run: JoJo's Bizarre Adventure",
+      "releaseInfo": "2026–",
+      "released": "2026-03-19T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt38268282/img",
+      "background": "https://images.metahub.space/background/medium/tt38268282/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82116553"
+    },
+    {
+      "id": "tt0877057",
+      "type": "series",
+      "name": "Death Note",
+      "releaseInfo": "2006–2007",
+      "released": "2007-10-20T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0877057/img",
+      "background": "https://images.metahub.space/background/medium/tt0877057/img",
+      "genres": [
+        "Animation",
+        "Crime",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70204970"
+    },
+    {
+      "id": "tt39123061",
+      "type": "series",
+      "name": "Koori no Jyouheki",
+      "releaseInfo": "2026–",
+      "released": "2026-04-02T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt39123061/img",
+      "background": "https://images.metahub.space/background/medium/tt39123061/img",
+      "genres": [
+        "Animation",
+        "Romance"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82031882"
+    },
+    {
+      "id": "tt10233448",
+      "type": "series",
+      "name": "Vinland Saga",
+      "releaseInfo": "2019–2023",
+      "released": "2019-07-06T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt10233448/img",
+      "background": "https://images.metahub.space/background/medium/tt10233448/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81249833"
+    },
+    {
+      "id": "tt15765670",
+      "type": "series",
+      "name": "My Dress-Up Darling",
+      "releaseInfo": "2022–2025",
+      "released": "2022-01-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt15765670/img",
+      "background": "https://images.metahub.space/background/medium/tt15765670/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Romance"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/81569754"
+    },
+    {
+      "id": "tt0290223",
+      "type": "series",
+      "name": "Inuyasha",
+      "releaseInfo": "2000–2004",
+      "released": "2002-08-31T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0290223/img",
+      "background": "https://images.metahub.space/background/medium/tt0290223/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70204995"
+    },
+    {
+      "id": "tt13293588",
+      "type": "series",
+      "name": "Mushoku Tensei: Jobless Reincarnation",
+      "releaseInfo": "2021–",
+      "released": "2022-03-29T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13293588/img",
+      "background": "https://images.metahub.space/background/medium/tt13293588/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80987039"
+    },
+    {
+      "id": "tt28776190",
+      "type": "series",
+      "name": "Shangri-La Frontier",
+      "releaseInfo": "2023–2026",
+      "released": "2023-10-01T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt28776190/img",
+      "background": "https://images.metahub.space/background/medium/tt28776190/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81727242"
+    },
+    {
+      "id": "tt17069148",
+      "type": "series",
+      "name": "Sakamoto Days",
+      "releaseInfo": "2025–",
+      "released": "2025-01-11T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt17069148/img",
+      "background": "https://images.metahub.space/background/medium/tt17069148/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81663325"
+    },
+    {
+      "id": "tt12590266",
+      "type": "series",
+      "name": "Cyberpunk: Edgerunners",
+      "releaseInfo": "2022–",
+      "released": "2022-09-13T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt12590266/img",
+      "background": "https://images.metahub.space/background/medium/tt12590266/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan, United States, Poland",
+      "netflixTitle": "https://www.netflix.com/title/81054853"
+    },
+    {
+      "id": "tt13103134",
+      "type": "series",
+      "name": "Horimiya",
+      "releaseInfo": "2021",
+      "released": "2021-01-10T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13103134/img",
+      "background": "https://images.metahub.space/background/medium/tt13103134/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81020819"
+    },
+    {
+      "id": "tt3909224",
+      "type": "series",
+      "name": "The Seven Deadly Sins",
+      "releaseInfo": "2014–2021",
+      "released": "2015-11-01T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3909224/img",
+      "background": "https://images.metahub.space/background/medium/tt3909224/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80050063"
+    },
+    {
+      "id": "tt9679542",
+      "type": "series",
+      "name": "Dr. Stone",
+      "releaseInfo": "2019–2026",
+      "released": "2019-08-25T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9679542/img",
+      "background": "https://images.metahub.space/background/medium/tt9679542/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81046193"
+    },
+    {
+      "id": "tt3358020",
+      "type": "series",
+      "name": "Parasyte: The Maxim",
+      "releaseInfo": "2014–2015",
+      "released": "2016-12-31T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3358020/img",
+      "background": "https://images.metahub.space/background/medium/tt3358020/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80191008"
+    },
+    {
+      "id": "tt37532356",
+      "type": "series",
+      "name": "Daemons of the Shadow Realm",
+      "releaseInfo": "2026–",
+      "released": "2026-04-04T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt37532356/img",
+      "background": "https://images.metahub.space/background/medium/tt37532356/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82719204"
+    },
+    {
+      "id": "tt4728568",
+      "type": "series",
+      "name": "Is It Wrong to Try to Pick Up Girls in a Dungeon?",
+      "releaseInfo": "2015–",
+      "released": "2015-04-03T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt4728568/img",
+      "background": "https://images.metahub.space/background/medium/tt4728568/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80185873"
+    },
+    {
+      "id": "tt0347149",
+      "type": "movie",
+      "name": "Howl's Moving Castle",
+      "releaseInfo": "2005",
+      "released": "2005-06-17T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0347149/img",
+      "background": "https://images.metahub.space/background/medium/tt0347149/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Family"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/70028883"
+    },
+    {
+      "id": "tt0245429",
+      "type": "movie",
+      "name": "Spirited Away",
+      "releaseInfo": "2003",
+      "released": "2003-03-28T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0245429/img",
+      "background": "https://images.metahub.space/background/medium/tt0245429/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Family"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/60023642"
+    },
+    {
+      "id": "tt0876563",
+      "type": "movie",
+      "name": "Ponyo",
+      "releaseInfo": "2009",
+      "released": "2009-08-14T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0876563/img",
+      "background": "https://images.metahub.space/background/medium/tt0876563/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70106454"
+    },
+    {
+      "id": "tt0112159",
+      "type": "series",
+      "name": "Neon Genesis Evangelion",
+      "releaseInfo": "1995–1996",
+      "released": "1997-08-20T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0112159/img",
+      "background": "https://images.metahub.space/background/medium/tt0112159/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81033445"
+    },
+    {
+      "id": "tt0096283",
+      "type": "movie",
+      "name": "My Neighbor Totoro",
+      "releaseInfo": "1990",
+      "released": "1990-07-13T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0096283/img",
+      "background": "https://images.metahub.space/background/medium/tt0096283/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/60032294"
+    },
+    {
+      "id": "tt0119698",
+      "type": "movie",
+      "name": "Princess Mononoke",
+      "releaseInfo": "1997",
+      "released": "1997-07-12T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0119698/img",
+      "background": "https://images.metahub.space/background/medium/tt0119698/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/28630857"
+    },
+    {
+      "id": "tt14626352",
+      "type": "series",
+      "name": "Komi Can't Communicate",
+      "releaseInfo": "2021–2022",
+      "released": "2021-10-21T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt14626352/img",
+      "background": "https://images.metahub.space/background/medium/tt14626352/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81228573"
+    },
+    {
+      "id": "tt6587046",
+      "type": "movie",
+      "name": "The Boy and the Heron",
+      "releaseInfo": "2023",
+      "released": "2023-12-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6587046/img",
+      "background": "https://images.metahub.space/background/medium/tt6587046/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81725555"
+    },
+    {
+      "id": "tt0097814",
+      "type": "movie",
+      "name": "Kiki's Delivery Service",
+      "releaseInfo": "1990",
+      "released": "1990-12-20T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0097814/img",
+      "background": "https://images.metahub.space/background/medium/tt0097814/img",
+      "genres": [
+        "Animation",
+        "Family",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/60027106"
+    },
+    {
+      "id": "tt0095327",
+      "type": "movie",
+      "name": "Grave of the Fireflies",
+      "releaseInfo": "1989",
+      "released": "1989-07-26T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0095327/img",
+      "background": "https://images.metahub.space/background/medium/tt0095327/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "War"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/557010"
+    },
+    {
+      "id": "tt0347618",
+      "type": "movie",
+      "name": "The Cat Returns",
+      "releaseInfo": "2005",
+      "released": "2005-07-13T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0347618/img",
+      "background": "https://images.metahub.space/background/medium/tt0347618/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70019058"
+    },
+    {
+      "id": "tt12441478",
+      "type": "movie",
+      "name": "Earwig and the Witch",
+      "releaseInfo": "2020",
+      "released": "2020-12-30T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt12441478/img",
+      "background": "https://images.metahub.space/background/medium/tt12441478/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Family"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81316559"
+    },
+    {
+      "id": "tt0087544",
+      "type": "movie",
+      "name": "Nausicaä of the Valley of the Wind",
+      "releaseInfo": "1987",
+      "released": "1987-11-25T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0087544/img",
+      "background": "https://images.metahub.space/background/medium/tt0087544/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Sci-Fi"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70019062"
+    },
+    {
+      "id": "tt2576852",
+      "type": "movie",
+      "name": "The Tale of The Princess Kaguya",
+      "releaseInfo": "2013",
+      "released": "2013-11-23T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt2576852/img",
+      "background": "https://images.metahub.space/background/medium/tt2576852/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Family"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80013552"
+    },
+    {
+      "id": "tt1798188",
+      "type": "movie",
+      "name": "From Up on Poppy Hill",
+      "releaseInfo": "2011",
+      "released": "2011-07-16T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1798188/img",
+      "background": "https://images.metahub.space/background/medium/tt1798188/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70262786"
+    },
+    {
+      "id": "tt0113824",
+      "type": "movie",
+      "name": "Whisper of the Heart",
+      "releaseInfo": "1996",
+      "released": "1996-12-13T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0113824/img",
+      "background": "https://images.metahub.space/background/medium/tt0113824/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Family"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70045021"
+    },
+    {
+      "id": "tt2013293",
+      "type": "movie",
+      "name": "The Wind Rises",
+      "releaseInfo": "2014",
+      "released": "2014-02-21T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt2013293/img",
+      "background": "https://images.metahub.space/background/medium/tt2013293/img",
+      "genres": [
+        "Animation",
+        "Biography",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70293674"
+    },
+    {
+      "id": "tt3398268",
+      "type": "movie",
+      "name": "When Marnie Was There",
+      "releaseInfo": "2015",
+      "released": "2015-08-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3398268/img",
+      "background": "https://images.metahub.space/background/medium/tt3398268/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Family"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80036398"
+    },
+    {
+      "id": "tt0495596",
+      "type": "movie",
+      "name": "Tales from Earthsea",
+      "releaseInfo": "2006",
+      "released": "2006-07-29T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0495596/img",
+      "background": "https://images.metahub.space/background/medium/tt0495596/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70142821"
+    },
+    {
+      "id": "tt0110008",
+      "type": "movie",
+      "name": "Pom Poko",
+      "releaseInfo": "1995",
+      "released": "1995-12-25T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0110008/img",
+      "background": "https://images.metahub.space/background/medium/tt0110008/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70035036"
+    },
+    {
+      "id": "tt0104652",
+      "type": "movie",
+      "name": "Porco Rosso",
+      "releaseInfo": "1994",
+      "released": "1994-12-16T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0104652/img",
+      "background": "https://images.metahub.space/background/medium/tt0104652/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70019060"
+    },
+    {
+      "id": "tt0092067",
+      "type": "movie",
+      "name": "Castle in the Sky",
+      "releaseInfo": "1991",
+      "released": "1991-07-19T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0092067/img",
+      "background": "https://images.metahub.space/background/medium/tt0092067/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Family"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/60027393"
+    },
+    {
+      "id": "tt0108432",
+      "type": "movie",
+      "name": "Ocean Waves",
+      "releaseInfo": "1994",
+      "released": "1994-07-13T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0108432/img",
+      "background": "https://images.metahub.space/background/medium/tt0108432/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Romance"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80158668"
+    },
+    {
+      "id": "tt0206013",
+      "type": "movie",
+      "name": "My Neighbors the Yamadas",
+      "releaseInfo": "2000",
+      "released": "2000-12-22T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0206013/img",
+      "background": "https://images.metahub.space/background/medium/tt0206013/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70035035"
+    },
+    {
+      "id": "tt29605391",
+      "type": "series",
+      "name": "Wind Breaker",
+      "releaseInfo": "2024–2025",
+      "released": "2024-04-04T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt29605391/img",
+      "background": "https://images.metahub.space/background/medium/tt29605391/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81771389"
+    },
+    {
+      "id": "tt30217403",
+      "type": "series",
+      "name": "Dandadan",
+      "releaseInfo": "2024–",
+      "released": "2024-09-13T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt30217403/img",
+      "background": "https://images.metahub.space/background/medium/tt30217403/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81736884"
+    },
+    {
+      "id": "tt39443399",
+      "type": "series",
+      "name": "Kill Ao",
+      "releaseInfo": "2026–",
+      "poster": "https://images.metahub.space/poster/small/tt39443399/img",
+      "background": "https://images.metahub.space/background/medium/tt39443399/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82757009"
+    },
+    {
+      "id": "tt39551330",
+      "type": "series",
+      "name": "Chainsmoker Cat",
+      "releaseInfo": "2026–",
+      "poster": "https://images.metahub.space/poster/small/tt39551330/img",
+      "background": "https://images.metahub.space/background/medium/tt39551330/img",
+      "genres": [
+        "Animation",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82760630"
+    },
+    {
+      "id": "tt33028568",
+      "type": "series",
+      "name": "The Summer Hikaru Died",
+      "releaseInfo": "2025–",
+      "released": "2025-07-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt33028568/img",
+      "background": "https://images.metahub.space/background/medium/tt33028568/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Horror"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81948057"
+    },
+    {
+      "id": "tt0102587",
+      "type": "movie",
+      "name": "Only Yesterday",
+      "releaseInfo": "2016",
+      "released": "2016-02-26T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0102587/img",
+      "background": "https://images.metahub.space/background/medium/tt0102587/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Romance"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/80092922"
+    },
+    {
+      "id": "tt3742982",
+      "type": "series",
+      "name": "Akame ga Kill!",
+      "releaseInfo": "2014",
+      "released": "2016-12-31T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3742982/img",
+      "background": "https://images.metahub.space/background/medium/tt3742982/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80052714"
+    },
+    {
+      "id": "tt21991254",
+      "type": "series",
+      "name": "Romantic Killer",
+      "releaseInfo": "2022",
+      "released": "2022-10-27T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt21991254/img",
+      "background": "https://images.metahub.space/background/medium/tt21991254/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81318888"
+    },
+    {
+      "id": "tt39050141",
+      "type": "series",
+      "name": "Love Through a Prism",
+      "releaseInfo": "2026–2026",
+      "poster": "https://live.metahub.space/poster/small/tt39050141/img",
+      "background": "https://live.metahub.space/background/medium/tt39050141/img",
+      "genres": [
+        "Animation",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81498882"
+    },
+    {
+      "id": "tt39229727",
+      "type": "series",
+      "name": "SNOWBALL EARTH",
+      "releaseInfo": "2026–",
+      "poster": "https://live.metahub.space/poster/small/tt39229727/img",
+      "background": "https://live.metahub.space/background/medium/tt39229727/img",
+      "genres": [
+        "Animation",
+        "Action & Adventure",
+        "Sci-Fi & Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82746480"
+    },
+    {
+      "id": "tt25811262",
+      "type": "series",
+      "name": "Zom 100: Bucket List of the Dead",
+      "releaseInfo": "2023",
+      "released": "2023-07-09T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt25811262/img",
+      "background": "https://images.metahub.space/background/medium/tt25811262/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81680101"
+    },
+    {
+      "id": "tt14833612",
+      "type": "series",
+      "name": "Castlevania: Nocturne",
+      "releaseInfo": "2023–",
+      "released": "2023-09-28T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt14833612/img",
+      "background": "https://images.metahub.space/background/medium/tt14833612/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United States",
+      "netflixTitle": "https://www.netflix.com/title/81436901"
+    },
+    {
+      "id": "tt0434685",
+      "type": "series",
+      "name": "Gantz",
+      "releaseInfo": "2004",
+      "released": "2004-04-13T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0434685/img",
+      "background": "https://images.metahub.space/background/medium/tt0434685/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80133769"
+    },
+    {
+      "id": "tt13167196",
+      "type": "series",
+      "name": "Edens Zero",
+      "releaseInfo": "2021–2023",
+      "released": "2021-04-11T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13167196/img",
+      "background": "https://images.metahub.space/background/medium/tt13167196/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81261630"
+    },
+    {
+      "id": "tt38939446",
+      "type": "series",
+      "name": "Sparks of Tomorrow",
+      "releaseInfo": "2026–",
+      "poster": "https://images.metahub.space/poster/small/tt38939446/img",
+      "background": "https://images.metahub.space/background/medium/tt38939446/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Romance"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81698957"
+    },
+    {
+      "id": "tt15490038",
+      "type": "series",
+      "name": "Kotaro Lives Alone",
+      "releaseInfo": "2022–2022",
+      "poster": "https://live.metahub.space/poster/small/tt15490038/img",
+      "background": "https://live.metahub.space/background/medium/tt15490038/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81275353"
+    },
+    {
+      "id": "tt9288848",
+      "type": "series",
+      "name": "Pacific Rim: The Black",
+      "releaseInfo": "2021–2022",
+      "released": "2021-03-04T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9288848/img",
+      "background": "https://images.metahub.space/background/medium/tt9288848/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United States, Australia",
+      "netflixTitle": "https://www.netflix.com/title/81002003"
+    },
+    {
+      "id": "tt10011306",
+      "type": "series",
+      "name": "Spriggan",
+      "releaseInfo": "2022",
+      "released": "2022-06-18T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt10011306/img",
+      "background": "https://images.metahub.space/background/medium/tt10011306/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81050064"
+    },
+    {
+      "id": "tt15975122",
+      "type": "series",
+      "name": "Call of the Night",
+      "releaseInfo": "2022–2025",
+      "released": "2022-07-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt15975122/img",
+      "background": "https://images.metahub.space/background/medium/tt15975122/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81621036"
+    },
+    {
+      "id": "tt13229934",
+      "type": "series",
+      "name": "Godzilla Singular Point",
+      "releaseInfo": "2021–2021",
+      "poster": "https://live.metahub.space/poster/small/tt13229934/img",
+      "background": "https://live.metahub.space/background/medium/tt13229934/img",
+      "genres": [
+        "Animation",
+        "Action & Adventure",
+        "Sci-Fi & Fantasy",
+        "Mystery"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80234811"
+    },
+    {
+      "id": "tt33332400",
+      "type": "series",
+      "name": "YAIBA: Samurai Legend",
+      "releaseInfo": "2025–",
+      "poster": "https://live.metahub.space/poster/small/tt33332400/img",
+      "background": "https://live.metahub.space/background/medium/tt33332400/img",
+      "genres": [
+        "Action & Adventure",
+        "Animation",
+        "Sci-Fi & Fantasy",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82030192"
+    },
+    {
+      "id": "tt3431758",
+      "type": "series",
+      "name": "No Game, No Life",
+      "releaseInfo": "2014",
+      "released": "2014-04-09T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3431758/img",
+      "background": "https://images.metahub.space/background/medium/tt3431758/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80052669"
+    },
+    {
+      "id": "tt21856734",
+      "type": "series",
+      "name": "Junji Ito Maniac: Japanese Tales of the Macabre",
+      "releaseInfo": "2023",
+      "released": "2023-01-19T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt21856734/img",
+      "background": "https://images.metahub.space/background/medium/tt21856734/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Horror"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81295011"
+    },
+    {
+      "id": "tt26737616",
+      "type": "series",
+      "name": "Pluto",
+      "releaseInfo": "2023",
+      "released": "2023-10-26T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt26737616/img",
+      "background": "https://images.metahub.space/background/medium/tt26737616/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan, Poland",
+      "netflixTitle": "https://www.netflix.com/title/81281344"
+    },
+    {
+      "id": "tt15483602",
+      "type": "series",
+      "name": "Reincarnated as a Sword",
+      "releaseInfo": "2022–",
+      "released": "2022-09-28T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt15483602/img",
+      "background": "https://images.metahub.space/background/medium/tt15483602/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81642998"
+    },
+    {
+      "id": "tt28521881",
+      "type": "series",
+      "name": "GOOD NIGHT WORLD",
+      "releaseInfo": "2023–2023",
+      "poster": "https://live.metahub.space/poster/small/tt28521881/img",
+      "background": "https://live.metahub.space/background/medium/tt28521881/img",
+      "genres": [
+        "Animation",
+        "Sci-Fi & Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81340213"
+    },
+    {
+      "id": "tt13851958",
+      "type": "series",
+      "name": "Vivy: Fluorite Eye's Song",
+      "releaseInfo": "2021",
+      "released": "2021-04-03T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13851958/img",
+      "background": "https://images.metahub.space/background/medium/tt13851958/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81511893"
+    },
+    {
+      "id": "tt31141567",
+      "type": "series",
+      "name": "2.5 Dimensional Seduction",
+      "releaseInfo": "2024–2024",
+      "poster": "https://live.metahub.space/poster/small/tt31141567/img",
+      "background": "https://live.metahub.space/background/medium/tt31141567/img",
+      "genres": [
+        "Animation",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81909977"
+    },
+    {
+      "id": "tt15219320",
+      "type": "series",
+      "name": "Uncle from Another World",
+      "releaseInfo": "2022–2023",
+      "released": "2022-07-20T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt15219320/img",
+      "background": "https://images.metahub.space/background/medium/tt15219320/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81499847"
+    },
+    {
+      "id": "tt39395275",
+      "type": "series",
+      "name": "Dragon Ball Super: Beerus",
+      "releaseInfo": "2026–",
+      "poster": "https://images.metahub.space/poster/small/tt39395275/img",
+      "background": "https://images.metahub.space/background/medium/tt39395275/img",
+      "genres": [
+        "Animation"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/83189604"
+    },
+    {
+      "id": "tt7222086",
+      "type": "series",
+      "name": "Made in Abyss",
+      "releaseInfo": "2017–2022",
+      "released": "2017-07-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt7222086/img",
+      "background": "https://images.metahub.space/background/medium/tt7222086/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80193163"
+    },
+    {
+      "id": "tt13357140",
+      "type": "series",
+      "name": "Baki Hanma",
+      "releaseInfo": "2021–2023",
+      "released": "2021-09-30T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13357140/img",
+      "background": "https://images.metahub.space/background/medium/tt13357140/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81236338"
+    },
+    {
+      "id": "tt9054364",
+      "type": "series",
+      "name": "That Time I Got Reincarnated as a Slime",
+      "releaseInfo": "2018–",
+      "released": "2018-09-30T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9054364/img",
+      "background": "https://images.metahub.space/background/medium/tt9054364/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81028712"
+    },
+    {
+      "id": "tt6357658",
+      "type": "series",
+      "name": "Baki",
+      "releaseInfo": "2016–2020",
+      "released": "2018-12-18T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6357658/img",
+      "background": "https://images.metahub.space/background/medium/tt6357658/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/80204451"
+    },
+    {
+      "id": "tt6342474",
+      "type": "series",
+      "name": "Boruto: Naruto Next Generations",
+      "releaseInfo": "2017–2023",
+      "released": "2017-04-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6342474/img",
+      "background": "https://images.metahub.space/background/medium/tt6342474/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81080523"
+    },
+    {
+      "id": "tt20672482",
+      "type": "series",
+      "name": "Moonrise",
+      "releaseInfo": "2025–",
+      "released": "2025-04-10T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt20672482/img",
+      "background": "https://images.metahub.space/background/medium/tt20672482/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81251383"
+    },
+    {
+      "id": "tt21621494",
+      "type": "series",
+      "name": "Delicious in Dungeon",
+      "releaseInfo": "2024–",
+      "released": "2024-01-04T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt21621494/img",
+      "background": "https://images.metahub.space/background/medium/tt21621494/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81564899"
+    },
+    {
+      "id": "tt20228550",
+      "type": "series",
+      "name": "The Seven Deadly Sins: Four Knights of the Apocalypse",
+      "releaseInfo": "2023–2024",
+      "poster": "https://live.metahub.space/poster/small/tt20228550/img",
+      "background": "https://live.metahub.space/background/medium/tt20228550/img",
+      "genres": [
+        "Animation",
+        "Action & Adventure",
+        "Sci-Fi & Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81562396"
+    },
+    {
+      "id": "tt9058134",
+      "type": "series",
+      "name": "Kengan Ashura",
+      "releaseInfo": "2019–",
+      "released": "2019-07-31T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9058134/img",
+      "background": "https://images.metahub.space/background/medium/tt9058134/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Sport"
+      ],
+      "country": "United States, Japan",
+      "netflixTitle": "https://www.netflix.com/title/80992228"
+    },
+    {
+      "id": "tt3837246",
+      "type": "series",
+      "name": "Assassination Classroom",
+      "releaseInfo": "2013–2016",
+      "released": "2015-02-18T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3837246/img",
+      "background": "https://images.metahub.space/background/medium/tt3837246/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80045948"
+    },
+    {
+      "id": "tt9529546",
+      "type": "series",
+      "name": "The Rising of the Shield Hero",
+      "releaseInfo": "2019–",
+      "released": "2019-01-09T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9529546/img",
+      "background": "https://images.metahub.space/background/medium/tt9529546/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81058649"
+    },
+    {
+      "id": "tt2348803",
+      "type": "series",
+      "name": "Kuroko's Basketball",
+      "releaseInfo": "2012–2015",
+      "released": "2012-04-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt2348803/img",
+      "background": "https://images.metahub.space/background/medium/tt2348803/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Sport"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80063153"
+    },
+    {
+      "id": "tt1424037",
+      "type": "series",
+      "name": "Kenichi: The Mightiest Disciple",
+      "releaseInfo": "2006–2014",
+      "released": "2006-10-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1424037/img",
+      "background": "https://images.metahub.space/background/medium/tt1424037/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70204998"
+    },
+    {
+      "id": "tt32639706",
+      "type": "series",
+      "name": "Blue Box",
+      "releaseInfo": "2024–",
+      "released": "2024-10-03T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt32639706/img",
+      "background": "https://images.metahub.space/background/medium/tt32639706/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Romance"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81663323"
+    },
+    {
+      "id": "tt14115938",
+      "type": "series",
+      "name": "The Eminence in Shadow",
+      "releaseInfo": "2022–2023",
+      "released": "2022-10-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt14115938/img",
+      "background": "https://images.metahub.space/background/medium/tt14115938/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81642096"
+    },
+    {
+      "id": "tt19869172",
+      "type": "series",
+      "name": "My Happy Marriage",
+      "releaseInfo": "2023–2025",
+      "released": "2023-07-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt19869172/img",
+      "background": "https://images.metahub.space/background/medium/tt19869172/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81564905"
+    },
+    {
+      "id": "tt2320220",
+      "type": "series",
+      "name": "Kamisama Kiss",
+      "releaseInfo": "2012–2016",
+      "released": "2012-10-02T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt2320220/img",
+      "background": "https://images.metahub.space/background/medium/tt2320220/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80070071"
+    },
+    {
+      "id": "tt0816397",
+      "type": "series",
+      "name": "Ouran High School Host Club",
+      "releaseInfo": "2006",
+      "released": "2006-04-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0816397/img",
+      "background": "https://images.metahub.space/background/medium/tt0816397/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Romance"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70205014"
+    },
+    {
+      "id": "tt33165027",
+      "type": "series",
+      "name": "Witch Watch",
+      "releaseInfo": "2025–",
+      "released": "2025-04-06T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt33165027/img",
+      "background": "https://images.metahub.space/background/medium/tt33165027/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81991687"
+    },
+    {
+      "id": "tt21423786",
+      "type": "series",
+      "name": "The Dangers in My Heart",
+      "releaseInfo": "2023–2027",
+      "released": "2023-04-01T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt21423786/img",
+      "background": "https://images.metahub.space/background/medium/tt21423786/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81788312"
+    },
+    {
+      "id": "tt7078180",
+      "type": "series",
+      "name": "Violet Evergarden",
+      "releaseInfo": "2018",
+      "released": "2020-08-22T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt7078180/img",
+      "background": "https://images.metahub.space/background/medium/tt7078180/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80182123"
+    },
+    {
+      "id": "tt8963328",
+      "type": "series",
+      "name": "Hi Score Girl",
+      "releaseInfo": "2018–2019",
+      "released": "2018-07-14T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt8963328/img",
+      "background": "https://images.metahub.space/background/medium/tt8963328/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Romance"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80997338"
+    },
+    {
+      "id": "tt27250301",
+      "type": "series",
+      "name": "Ōoku: The Inner Chambers",
+      "releaseInfo": "2023–2023",
+      "poster": "https://live.metahub.space/poster/small/tt27250301/img",
+      "background": "https://live.metahub.space/background/medium/tt27250301/img",
+      "genres": [
+        "Animation",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81464005"
+    },
+    {
+      "id": "tt3615002",
+      "type": "series",
+      "name": "Monthly Girls' Nozaki-kun",
+      "releaseInfo": "2014–2014",
+      "poster": "https://live.metahub.space/poster/small/tt3615002/img",
+      "background": "https://live.metahub.space/background/medium/tt3615002/img",
+      "genres": [
+        "Animation",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80081848"
+    },
+    {
+      "id": "tt0810705",
+      "type": "series",
+      "name": "Nana",
+      "releaseInfo": "2006–2007",
+      "released": "2006-04-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0810705/img",
+      "background": "https://images.metahub.space/background/medium/tt0810705/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70205010"
+    },
+    {
+      "id": "tt3895150",
+      "type": "series",
+      "name": "Your Lie in April",
+      "releaseInfo": "2014–2015",
+      "released": "2014-10-09T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3895150/img",
+      "background": "https://images.metahub.space/background/medium/tt3895150/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80041089"
+    },
+    {
+      "id": "tt8856470",
+      "type": "movie",
+      "name": "Pokémon: Mewtwo Strikes Back - Evolution",
+      "releaseInfo": "2019",
+      "released": "2020-02-27T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt8856470/img",
+      "background": "https://images.metahub.space/background/medium/tt8856470/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Family"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/81223075"
+    },
+    {
+      "id": "tt1524993",
+      "type": "series",
+      "name": "Dinosaur King",
+      "releaseInfo": "2007–2009",
+      "released": "2007-09-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1524993/img",
+      "background": "https://images.metahub.space/background/medium/tt1524993/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80007912"
+    },
+    {
+      "id": "tt11858104",
+      "type": "series",
+      "name": "Dragon Quest: The Adventure of Dai",
+      "releaseInfo": "2020–2022",
+      "released": "2020-10-03T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt11858104/img",
+      "background": "https://images.metahub.space/background/medium/tt11858104/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81374392"
+    },
+    {
+      "id": "tt26692417",
+      "type": "series",
+      "name": "Pokémon Horizons",
+      "releaseInfo": "2023–",
+      "poster": "https://live.metahub.space/poster/small/tt26692417/img",
+      "background": "https://live.metahub.space/background/medium/tt26692417/img",
+      "genres": [
+        "Animation",
+        "Action & Adventure",
+        "Sci-Fi & Fantasy",
+        "Kids"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81696980"
+    },
+    {
+      "id": "tt27865962",
+      "type": "series",
+      "name": "Beyblade X",
+      "releaseInfo": "2023–",
+      "poster": "https://live.metahub.space/poster/small/tt27865962/img",
+      "background": "https://live.metahub.space/background/medium/tt27865962/img",
+      "genres": [
+        "Animation",
+        "Action & Adventure",
+        "Comedy",
+        "Sci-Fi & Fantasy",
+        "Kids"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81924739"
+    },
+    {
+      "id": "tt10380814",
+      "type": "series",
+      "name": "Dino Girl Gauko",
+      "releaseInfo": "2019–2020",
+      "poster": "https://live.metahub.space/poster/small/tt10380814/img",
+      "background": "https://live.metahub.space/background/medium/tt10380814/img",
+      "genres": [
+        "Animation",
+        "Family",
+        "Kids",
+        "Comedy"
+      ],
+      "country": "United States, Japan, Philippines, Singapore",
+      "netflixTitle": "https://www.netflix.com/title/80216180"
+    },
+    {
+      "id": "tt1033796",
+      "type": "series",
+      "name": "Den-noh Coil",
+      "releaseInfo": "2007–2007",
+      "poster": "https://live.metahub.space/poster/small/tt1033796/img",
+      "background": "https://live.metahub.space/background/medium/tt1033796/img",
+      "genres": [
+        "Animation",
+        "Sci-Fi & Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81299264"
+    },
+    {
+      "id": "tt22248376",
+      "type": "series",
+      "name": "Frieren: Beyond Journey's End",
+      "releaseInfo": "2023–",
+      "released": "2023-09-29T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt22248376/img",
+      "background": "https://images.metahub.space/background/medium/tt22248376/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81726714"
+    },
+    {
+      "id": "tt0367413",
+      "type": "series",
+      "name": "Sonic X",
+      "releaseInfo": "2003–2006",
+      "released": "2003-08-23T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0367413/img",
+      "background": "https://images.metahub.space/background/medium/tt0367413/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan, Germany, Canada",
+      "netflixTitle": "https://www.netflix.com/title/81172267"
+    },
+    {
+      "id": "tt4869896",
+      "type": "series",
+      "name": "Overlord",
+      "releaseInfo": "2015–2022",
+      "released": "2015-07-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt4869896/img",
+      "background": "https://images.metahub.space/background/medium/tt4869896/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80132110"
+    },
+    {
+      "id": "tt6356032",
+      "type": "series",
+      "name": "Chi's Sweet Adventure",
+      "releaseInfo": "2016–",
+      "released": "2017-01-12T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6356032/img",
+      "background": "https://images.metahub.space/background/medium/tt6356032/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Family"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81712502"
+    },
+    {
+      "id": "tt11043632",
+      "type": "series",
+      "name": "Beastars",
+      "releaseInfo": "2019–2026",
+      "released": "2020-03-13T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt11043632/img",
+      "background": "https://images.metahub.space/background/medium/tt11043632/img",
+      "genres": [
+        "Animation",
+        "Crime",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81054847"
+    },
+    {
+      "id": "tt6517102",
+      "type": "series",
+      "name": "Castlevania",
+      "releaseInfo": "2017–2021",
+      "released": "2017-07-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6517102/img",
+      "background": "https://images.metahub.space/background/medium/tt6517102/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United States",
+      "netflixTitle": "https://www.netflix.com/title/80095241"
+    },
+    {
+      "id": "tt5897304",
+      "type": "series",
+      "name": "Mob Psycho 100",
+      "releaseInfo": "2016–2022",
+      "released": "2018-10-27T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt5897304/img",
+      "background": "https://images.metahub.space/background/medium/tt5897304/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80179798"
+    },
+    {
+      "id": "tt1355642",
+      "type": "series",
+      "name": "Fullmetal Alchemist: Brotherhood",
+      "releaseInfo": "2009–2010",
+      "released": "2009-04-09T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1355642/img",
+      "background": "https://images.metahub.space/background/medium/tt1355642/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70204981"
+    },
+    {
+      "id": "tt16428256",
+      "type": "movie",
+      "name": "Suzume",
+      "releaseInfo": "2023",
+      "released": "2023-04-14T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt16428256/img",
+      "background": "https://images.metahub.space/background/medium/tt16428256/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81696498"
+    },
+    {
+      "id": "tt6354518",
+      "type": "series",
+      "name": "The Disastrous Life of Saiki K.",
+      "releaseInfo": "2016–2018",
+      "released": "2016-08-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6354518/img",
+      "background": "https://images.metahub.space/background/medium/tt6354518/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80117781"
+    },
+    {
+      "id": "tt3950102",
+      "type": "series",
+      "name": "World Trigger",
+      "releaseInfo": "2014–",
+      "released": "2014-10-04T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3950102/img",
+      "background": "https://images.metahub.space/background/medium/tt3950102/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Sci-Fi"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80149562"
+    },
+    {
+      "id": "tt14603848",
+      "type": "movie",
+      "name": "Overlord: The Sacred Kingdom",
+      "releaseInfo": "2024",
+      "released": "2024-11-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt14603848/img",
+      "background": "https://images.metahub.space/background/medium/tt14603848/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82040442"
+    },
+    {
+      "id": "tt11147852",
+      "type": "series",
+      "name": "Dorohedoro",
+      "releaseInfo": "2020–2026",
+      "released": "2020-05-28T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt11147852/img",
+      "background": "https://images.metahub.space/background/medium/tt11147852/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80991903"
+    },
+    {
+      "id": "tt7131720",
+      "type": "series",
+      "name": "Kakegurui",
+      "releaseInfo": "2017–2019",
+      "released": "2018-02-01T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt7131720/img",
+      "background": "https://images.metahub.space/background/medium/tt7131720/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Mystery"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80175351"
+    },
+    {
+      "id": "tt10009170",
+      "type": "series",
+      "name": "Blood of Zeus",
+      "releaseInfo": "2020–2025",
+      "released": "2020-10-27T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt10009170/img",
+      "background": "https://images.metahub.space/background/medium/tt10009170/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United States",
+      "netflixTitle": "https://www.netflix.com/title/81001988"
+    },
+    {
+      "id": "tt17736234",
+      "type": "series",
+      "name": "Bastard!! Heavy Metal, Dark Fantasy",
+      "releaseInfo": "2022–2023",
+      "released": "2022-06-30T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt17736234/img",
+      "background": "https://images.metahub.space/background/medium/tt17736234/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81281582"
+    },
+    {
+      "id": "tt1799631",
+      "type": "series",
+      "name": "Blue Exorcist",
+      "releaseInfo": "2011",
+      "released": "2014-02-23T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1799631/img",
+      "background": "https://images.metahub.space/background/medium/tt1799631/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70304252"
+    },
+    {
+      "id": "tt1999167",
+      "type": "movie",
+      "name": "Naruto Shippuden the Movie: Blood Prison",
+      "releaseInfo": "2014",
+      "released": "2014-02-18T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1999167/img",
+      "background": "https://images.metahub.space/background/medium/tt1999167/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Mystery"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80152537"
+    },
+    {
+      "id": "tt6660498",
+      "type": "series",
+      "name": "Devilman: Crybaby",
+      "releaseInfo": "2018",
+      "released": "2018-01-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6660498/img",
+      "background": "https://images.metahub.space/background/medium/tt6660498/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80174974"
+    },
+    {
+      "id": "tt17677744",
+      "type": "movie",
+      "name": "The Seven Deadly Sins: Grudge of Edinburgh Part 1",
+      "releaseInfo": "2022",
+      "poster": "https://live.metahub.space/poster/small/tt17677744/img",
+      "background": "https://live.metahub.space/background/medium/tt17677744/img",
+      "genres": [
+        "Animation",
+        "Fantasy",
+        "Adventure",
+        "Action"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81302750"
+    },
+    {
+      "id": "tt7944664",
+      "type": "series",
+      "name": "B: The Beginning",
+      "releaseInfo": "2018–2021",
+      "released": "2018-03-02T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt7944664/img",
+      "background": "https://images.metahub.space/background/medium/tt7944664/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Crime"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80097594"
+    },
+    {
+      "id": "tt7415066",
+      "type": "series",
+      "name": "Sword Gai: The Animation",
+      "releaseInfo": "2018",
+      "released": "2018-03-23T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt7415066/img",
+      "background": "https://images.metahub.space/background/medium/tt7415066/img",
+      "genres": [
+        "Animation",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80175350"
+    },
+    {
+      "id": "tt14872196",
+      "type": "series",
+      "name": "The Grimm Variations",
+      "releaseInfo": "2024–2024",
+      "poster": "https://live.metahub.space/poster/small/tt14872196/img",
+      "background": "https://live.metahub.space/background/medium/tt14872196/img",
+      "genres": [
+        "Animation",
+        "Sci-Fi & Fantasy",
+        "Drama",
+        "Mystery"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81050090"
+    },
+    {
+      "id": "tt10011314",
+      "type": "series",
+      "name": "Vampire in the Garden",
+      "releaseInfo": "2022",
+      "released": "2022-05-16T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt10011314/img",
+      "background": "https://images.metahub.space/background/medium/tt10011314/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80996247"
+    },
+    {
+      "id": "tt10011298",
+      "type": "series",
+      "name": "Dragon's Dogma",
+      "releaseInfo": "2020",
+      "released": "2020-09-17T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt10011298/img",
+      "background": "https://images.metahub.space/background/medium/tt10011298/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "netflixTitle": "https://www.netflix.com/title/80992784"
+    },
+    {
+      "id": "tt25010142",
+      "type": "movie",
+      "name": "The Seven Deadly Sins: Grudge of Edinburgh Part 2",
+      "releaseInfo": "2023",
+      "released": "2023-08-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt25010142/img",
+      "background": "https://images.metahub.space/background/medium/tt25010142/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81306306"
+    },
+    {
+      "id": "tt9310336",
+      "type": "series",
+      "name": "Trese",
+      "releaseInfo": "2021",
+      "released": "2021-06-10T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9310336/img",
+      "background": "https://images.metahub.space/background/medium/tt9310336/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United States, Singapore, Malaysia, Indonesia, Philippines",
+      "netflixTitle": "https://www.netflix.com/title/81012541"
+    },
+    {
+      "id": "tt9310330",
+      "type": "series",
+      "name": "Yasuke",
+      "releaseInfo": "2021",
+      "released": "2021-04-29T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9310330/img",
+      "background": "https://images.metahub.space/background/medium/tt9310330/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/80990863"
+    },
+    {
+      "id": "tt10106108",
+      "type": "series",
+      "name": "Seis Manos",
+      "releaseInfo": "2019–2019",
+      "poster": "https://live.metahub.space/poster/small/tt10106108/img",
+      "background": "https://live.metahub.space/background/medium/tt10106108/img",
+      "genres": [
+        "Action & Adventure",
+        "Animation",
+        "Sci-Fi & Fantasy"
+      ],
+      "country": "United States",
+      "netflixTitle": "https://www.netflix.com/title/80217066"
+    },
+    {
+      "id": "tt13173144",
+      "type": "series",
+      "name": "Resident Evil: Infinite Darkness",
+      "releaseInfo": "2021",
+      "released": "2021-07-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13173144/img",
+      "background": "https://images.metahub.space/background/medium/tt13173144/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Horror"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/80987064"
+    },
+    {
+      "id": "tt32592756",
+      "type": "series",
+      "name": "Sakuna: Of Rice and Ruin",
+      "releaseInfo": "2024–2024",
+      "poster": "https://live.metahub.space/poster/small/tt32592756/img",
+      "background": "https://live.metahub.space/background/medium/tt32592756/img",
+      "genres": [
+        "Animation",
+        "Action & Adventure",
+        "Sci-Fi & Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81914001"
+    },
+    {
+      "id": "tt2263944",
+      "type": "movie",
+      "name": "Dragon Ball Z: Battle of Gods",
+      "releaseInfo": "2014",
+      "released": "2014-08-05T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt2263944/img",
+      "background": "https://images.metahub.space/background/medium/tt2263944/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70295183"
+    },
+    {
+      "id": "tt22264252",
+      "type": "series",
+      "name": "Onmyoji",
+      "releaseInfo": "2023–2023",
+      "poster": "https://live.metahub.space/poster/small/tt22264252/img",
+      "background": "https://live.metahub.space/background/medium/tt22264252/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Sci-Fi & Fantasy",
+        "Mystery"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81215624"
+    },
+    {
+      "id": "tt7484994",
+      "type": "series",
+      "name": "Children of the Whales",
+      "releaseInfo": "2017",
+      "released": "2017-10-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt7484994/img",
+      "background": "https://images.metahub.space/background/medium/tt7484994/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80174917"
+    },
+    {
+      "id": "tt13269670",
+      "type": "movie",
+      "name": "New Gods: Nezha Reborn",
+      "releaseInfo": "2021",
+      "released": "2021-04-12T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13269670/img",
+      "background": "https://images.metahub.space/background/medium/tt13269670/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Fantasy"
+      ],
+      "country": "China",
+      "netflixTitle": "https://www.netflix.com/title/81418302"
+    },
+    {
+      "id": "tt22868844",
+      "type": "movie",
+      "name": "Black Clover: Sword of the Wizard King",
+      "releaseInfo": "2023",
+      "released": "2023-06-16T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt22868844/img",
+      "background": "https://images.metahub.space/background/medium/tt22868844/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81448990"
+    },
+    {
+      "id": "tt32176689",
+      "type": "movie",
+      "name": "My Hero Academia: You're Next",
+      "releaseInfo": "2024",
+      "released": "2024-10-11T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt32176689/img",
+      "background": "https://images.metahub.space/background/medium/tt32176689/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82036353"
+    },
+    {
+      "id": "tt13884144",
+      "type": "movie",
+      "name": "The Seven Deadly Sins: Cursed by Light",
+      "releaseInfo": "2021",
+      "released": "2021-10-01T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13884144/img",
+      "background": "https://images.metahub.space/background/medium/tt13884144/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81263946"
+    },
+    {
+      "id": "tt15494038",
+      "type": "movie",
+      "name": "Drifting Home",
+      "releaseInfo": "2022",
+      "released": "2022-09-16T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt15494038/img",
+      "background": "https://images.metahub.space/background/medium/tt15494038/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81328781"
+    },
+    {
+      "id": "tt2375379",
+      "type": "movie",
+      "name": "One Piece Film: Z",
+      "releaseInfo": "2012",
+      "released": "2012-12-15T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt2375379/img",
+      "background": "https://images.metahub.space/background/medium/tt2375379/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80198443"
+    },
+    {
+      "id": "tt7745068",
+      "type": "movie",
+      "name": "My Hero Academia: Two Heroes",
+      "releaseInfo": "2018",
+      "released": "2018-09-25T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt7745068/img",
+      "background": "https://images.metahub.space/background/medium/tt7745068/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81051689"
+    },
+    {
+      "id": "tt1174954",
+      "type": "movie",
+      "name": "Resident Evil: Degeneration",
+      "releaseInfo": "2008",
+      "released": "2008-10-18T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1174954/img",
+      "background": "https://images.metahub.space/background/medium/tt1174954/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Horror"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70109473"
+    },
+    {
+      "id": "tt42186253",
+      "type": "movie",
+      "name": "THE RIBBON HERO",
+      "releaseInfo": "2026",
+      "poster": "https://live.metahub.space/poster/small/tt42186253/img",
+      "background": "https://live.metahub.space/background/medium/tt42186253/img",
+      "genres": [
+        "Animation",
+        "Fantasy",
+        "Drama",
+        "Action"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81493703"
+    },
+    {
+      "id": "tt1920885",
+      "type": "movie",
+      "name": "Big Fish & Begonia",
+      "releaseInfo": "2016",
+      "released": "2016-07-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1920885/img",
+      "background": "https://images.metahub.space/background/medium/tt1920885/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Drama"
+      ],
+      "country": "China",
+      "netflixTitle": "https://www.netflix.com/title/80233883"
+    },
+    {
+      "id": "tt31869664",
+      "type": "movie",
+      "name": "Baki Hanma VS Kengan Ashura",
+      "releaseInfo": "2024",
+      "released": "2024-06-06T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt31869664/img",
+      "background": "https://images.metahub.space/background/medium/tt31869664/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81648184"
+    },
+    {
+      "id": "tt31788773",
+      "type": "movie",
+      "name": "My Oni Girl",
+      "releaseInfo": "2024",
+      "released": "2024-05-24T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt31788773/img",
+      "background": "https://images.metahub.space/background/medium/tt31788773/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81582442"
+    },
+    {
+      "id": "tt9760504",
+      "type": "movie",
+      "name": "NiNoKuni",
+      "releaseInfo": "2019",
+      "released": "2019-08-23T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9760504/img",
+      "background": "https://images.metahub.space/background/medium/tt9760504/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan, South Korea",
+      "netflixTitle": "https://www.netflix.com/title/81093113"
+    },
+    {
+      "id": "tt6425816",
+      "type": "movie",
+      "name": "One Piece: Heart of Gold",
+      "releaseInfo": "2016",
+      "poster": "https://live.metahub.space/poster/small/tt6425816/img",
+      "background": "https://live.metahub.space/background/medium/tt6425816/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy",
+        "Fantasy",
+        "Action"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81679591"
+    },
+    {
+      "id": "tt11657662",
+      "type": "movie",
+      "name": "The Witcher: Nightmare of the Wolf",
+      "releaseInfo": "2021",
+      "released": "2021-08-23T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt11657662/img",
+      "background": "https://images.metahub.space/background/medium/tt11657662/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "South Korea, United States, Japan, Poland, China",
+      "netflixTitle": "https://www.netflix.com/title/81037868"
+    },
+    {
+      "id": "tt9310328",
+      "type": "movie",
+      "name": "Altered Carbon: Resleeved",
+      "releaseInfo": "2020",
+      "released": "2020-03-19T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9310328/img",
+      "background": "https://images.metahub.space/background/medium/tt9310328/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Crime"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/81001991"
+    },
+    {
+      "id": "tt0791188",
+      "type": "movie",
+      "name": "Naruto the Movie 2: Legend of the Stone of Gelel",
+      "releaseInfo": "2005",
+      "released": "2005-08-06T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0791188/img",
+      "background": "https://images.metahub.space/background/medium/tt0791188/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70101321"
+    },
+    {
+      "id": "tt13288678",
+      "type": "movie",
+      "name": "Mobile Suit Gundam: Hathaway",
+      "releaseInfo": "2021",
+      "released": "2021-07-01T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13288678/img",
+      "background": "https://images.metahub.space/background/medium/tt13288678/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81439253"
+    },
+    {
+      "id": "tt0476680",
+      "type": "movie",
+      "name": "Naruto the Movie: Ninja Clash in the Land of Snow",
+      "releaseInfo": "2007",
+      "released": "2007-06-06T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0476680/img",
+      "background": "https://images.metahub.space/background/medium/tt0476680/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70074559"
+    },
+    {
+      "id": "tt6574146",
+      "type": "movie",
+      "name": "Blame!",
+      "releaseInfo": "2017",
+      "released": "2017-05-20T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6574146/img",
+      "background": "https://images.metahub.space/background/medium/tt6574146/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80115466"
+    },
+    {
+      "id": "tt1160524",
+      "type": "movie",
+      "name": "Naruto Shippuden: The Movie - Bonds",
+      "releaseInfo": "2011",
+      "released": "2011-10-25T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt1160524/img",
+      "background": "https://images.metahub.space/background/medium/tt1160524/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70105699"
+    },
+    {
+      "id": "tt10127562",
+      "type": "movie",
+      "name": "Dragon Quest: Your Story",
+      "releaseInfo": "2019",
+      "released": "2019-08-02T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt10127562/img",
+      "background": "https://images.metahub.space/background/medium/tt10127562/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81170086"
+    },
+    {
+      "id": "tt14153236",
+      "type": "series",
+      "name": "Terminator Zero",
+      "releaseInfo": "2024",
+      "released": "2024-08-29T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt14153236/img",
+      "background": "https://images.metahub.space/background/medium/tt14153236/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United States, Japan",
+      "netflixTitle": "https://www.netflix.com/title/81217220"
+    },
+    {
+      "id": "tt0213338",
+      "type": "series",
+      "name": "Cowboy Bebop",
+      "releaseInfo": "1998–1999",
+      "released": "2001-09-02T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0213338/img",
+      "background": "https://images.metahub.space/background/medium/tt0213338/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80001305"
+    },
+    {
+      "id": "tt9466298",
+      "type": "series",
+      "name": "Ghost in the Shell: SAC_2045",
+      "releaseInfo": "2020–2022",
+      "released": "2020-04-23T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9466298/img",
+      "background": "https://images.metahub.space/background/medium/tt9466298/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Crime"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/81030224"
+    },
+    {
+      "id": "tt32581509",
+      "type": "series",
+      "name": "Tokyo Override",
+      "releaseInfo": "2024–",
+      "released": "2024-11-21T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt32581509/img",
+      "background": "https://images.metahub.space/background/medium/tt32581509/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Thailand, Japan",
+      "netflixTitle": "https://www.netflix.com/title/81153111"
+    },
+    {
+      "id": "tt15392166",
+      "type": "movie",
+      "name": "Ghost in the Shell: SAC_2045 - Sustainable War",
+      "releaseInfo": "2022",
+      "released": "2022-05-09T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt15392166/img",
+      "background": "https://images.metahub.space/background/medium/tt15392166/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Sci-Fi"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81513128"
+    },
+    {
+      "id": "tt9561968",
+      "type": "series",
+      "name": "Ingress: The Animation",
+      "releaseInfo": "2018–2019",
+      "released": "2019-04-30T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt9561968/img",
+      "background": "https://images.metahub.space/background/medium/tt9561968/img",
+      "genres": [
+        "Animation",
+        "Sci-Fi"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80992853"
+    },
+    {
+      "id": "tt14837566",
+      "type": "series",
+      "name": "Captain Laserhawk: A Blood Dragon Remix",
+      "releaseInfo": "2023–2024",
+      "released": "2023-10-19T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt14837566/img",
+      "background": "https://images.metahub.space/background/medium/tt14837566/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United States, Canada, France",
+      "netflixTitle": "https://www.netflix.com/title/81306319"
+    },
+    {
+      "id": "tt7161218",
+      "type": "series",
+      "name": "ID-0",
+      "releaseInfo": "2017–2017",
+      "poster": "https://live.metahub.space/poster/small/tt7161218/img",
+      "background": "https://live.metahub.space/background/medium/tt7161218/img",
+      "genres": [
+        "Animation",
+        "Sci-Fi & Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80174918"
+    },
+    {
+      "id": "tt8893554",
+      "type": "series",
+      "name": "Last Hope",
+      "releaseInfo": "2018",
+      "released": "2018-03-29T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt8893554/img",
+      "background": "https://images.metahub.space/background/medium/tt8893554/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80221272"
+    },
+    {
+      "id": "tt3331846",
+      "type": "movie",
+      "name": "Stand by Me Doraemon",
+      "releaseInfo": "2014",
+      "released": "2014-10-24T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3331846/img",
+      "background": "https://images.metahub.space/background/medium/tt3331846/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan, United States",
+      "netflixTitle": "https://www.netflix.com/title/80158156"
+    },
+    {
+      "id": "tt13428402",
+      "type": "movie",
+      "name": "Stand by Me Doraemon 2",
+      "releaseInfo": "2021",
+      "released": "2021-12-24T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13428402/img",
+      "background": "https://images.metahub.space/background/medium/tt13428402/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81451264"
+    },
+    {
+      "id": "tt28717062",
+      "type": "movie",
+      "name": "EVANGELION: DEATH (TRUE)²",
+      "releaseInfo": "1998",
+      "poster": "https://live.metahub.space/poster/small/tt28717062/img",
+      "background": "https://live.metahub.space/background/medium/tt28717062/img",
+      "genres": [
+        "Animation",
+        "Science Fiction",
+        "Action",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81033473"
+    },
+    {
+      "id": "tt16969708",
+      "type": "series",
+      "name": "Scott Pilgrim Takes Off",
+      "releaseInfo": "2023",
+      "released": "2023-11-17T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt16969708/img",
+      "background": "https://images.metahub.space/background/medium/tt16969708/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United Kingdom, United States, Japan, Canada",
+      "netflixTitle": "https://www.netflix.com/title/81153115"
+    },
+    {
+      "id": "tt8019444",
+      "type": "series",
+      "name": "Aggretsuko",
+      "releaseInfo": "2018–2023",
+      "released": "2018-04-20T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt8019444/img",
+      "background": "https://images.metahub.space/background/medium/tt8019444/img",
+      "genres": [
+        "Animation",
+        "Short",
+        "Comedy"
+      ],
+      "country": "Japan, Poland",
+      "netflixTitle": "https://www.netflix.com/title/80198505"
+    },
+    {
+      "id": "tt1260507",
+      "type": "movie",
+      "name": "Anpanman: The Secret of Fairy Rin-Rin",
+      "releaseInfo": "2008",
+      "poster": "https://live.metahub.space/poster/small/tt1260507/img",
+      "background": "https://live.metahub.space/background/medium/tt1260507/img",
+      "genres": [
+        "Animation",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81719804"
+    },
+    {
+      "id": "tt38872297",
+      "type": "movie",
+      "name": "Cosmic Princess Kaguya!",
+      "releaseInfo": "2026",
+      "released": "2026-01-22T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt38872297/img",
+      "background": "https://images.metahub.space/background/medium/tt38872297/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81756595"
+    },
+    {
+      "id": "tt3124992",
+      "type": "series",
+      "name": "Sailor Moon Crystal",
+      "releaseInfo": "2014–2021",
+      "released": "2015-11-20T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt3124992/img",
+      "background": "https://images.metahub.space/background/medium/tt3124992/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80145747"
+    },
+    {
+      "id": "tt35636246",
+      "type": "series",
+      "name": "My Hero Academia: Vigilantes",
+      "releaseInfo": "2025–",
+      "released": "2025-04-07T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt35636246/img",
+      "background": "https://images.metahub.space/background/medium/tt35636246/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82036361"
+    },
+    {
+      "id": "tt0965547",
+      "type": "series",
+      "name": "Slam Dunk",
+      "releaseInfo": "1993–1996",
+      "released": "1993-10-23T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0965547/img",
+      "background": "https://images.metahub.space/background/medium/tt0965547/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70024218"
+    },
+    {
+      "id": "tt14115912",
+      "type": "series",
+      "name": "Blue Period",
+      "releaseInfo": "2021–2021",
+      "poster": "https://live.metahub.space/poster/small/tt14115912/img",
+      "background": "https://live.metahub.space/background/medium/tt14115912/img",
+      "genres": [
+        "Animation",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81318842"
+    },
+    {
+      "id": "tt22297722",
+      "type": "series",
+      "name": "Lookism",
+      "releaseInfo": "2022–",
+      "released": "2022-12-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt22297722/img",
+      "background": "https://images.metahub.space/background/medium/tt22297722/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Drama"
+      ],
+      "country": "South Korea",
+      "netflixTitle": "https://www.netflix.com/title/81177634"
+    },
+    {
+      "id": "tt38797595",
+      "type": "series",
+      "name": "Akane-banashi",
+      "releaseInfo": "2026–",
+      "poster": "https://images.metahub.space/poster/small/tt38797595/img",
+      "background": "https://images.metahub.space/background/medium/tt38797595/img",
+      "genres": [
+        "Animation"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/82701514"
+    },
+    {
+      "id": "tt12735338",
+      "type": "movie",
+      "name": "Words Bubble Up Like Soda Pop",
+      "releaseInfo": "2021",
+      "released": "2021-07-22T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt12735338/img",
+      "background": "https://images.metahub.space/background/medium/tt12735338/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Music"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81400497"
+    },
+    {
+      "id": "tt8673610",
+      "type": "series",
+      "name": "Cells at Work!",
+      "releaseInfo": "2018–2021",
+      "released": "2018-07-08T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt8673610/img",
+      "background": "https://images.metahub.space/background/medium/tt8673610/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81028791"
+    },
+    {
+      "id": "tt14935892",
+      "type": "movie",
+      "name": "Maboroshi",
+      "releaseInfo": "2024",
+      "released": "2024-01-15T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt14935892/img",
+      "background": "https://images.metahub.space/background/medium/tt14935892/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81450803"
+    },
+    {
+      "id": "tt10937602",
+      "type": "series",
+      "name": "Ahiru no Sora",
+      "releaseInfo": "2019–",
+      "released": "2019-10-02T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt10937602/img",
+      "background": "https://images.metahub.space/background/medium/tt10937602/img",
+      "genres": [
+        "Animation",
+        "Sport"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80245713"
+    },
+    {
+      "id": "tt6728390",
+      "type": "movie",
+      "name": "Kuroko's Basketball: Last Game",
+      "releaseInfo": "2017",
+      "released": "2017-03-18T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6728390/img",
+      "background": "https://images.metahub.space/background/medium/tt6728390/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Sport"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80991755"
+    },
+    {
+      "id": "tt15912380",
+      "type": "series",
+      "name": "KAKEGURUI TWIN",
+      "releaseInfo": "2022–2022",
+      "poster": "https://live.metahub.space/poster/small/tt15912380/img",
+      "background": "https://live.metahub.space/background/medium/tt15912380/img",
+      "genres": [
+        "Animation",
+        "Mystery"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81176966"
+    },
+    {
+      "id": "tt8107988",
+      "type": "series",
+      "name": "Carole & Tuesday",
+      "releaseInfo": "2019",
+      "released": "2019-04-10T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt8107988/img",
+      "background": "https://images.metahub.space/background/medium/tt8107988/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Music"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80992137"
+    },
+    {
+      "id": "tt15242330",
+      "type": "movie",
+      "name": "The First Slam Dunk",
+      "releaseInfo": "2023",
+      "released": "2023-07-28T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt15242330/img",
+      "background": "https://images.metahub.space/background/medium/tt15242330/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81765372"
+    },
+    {
+      "id": "tt11163352",
+      "type": "series",
+      "name": "The Disastrous Life of Saiki K.: Reawakened",
+      "releaseInfo": "2019–2019",
+      "poster": "https://live.metahub.space/poster/small/tt11163352/img",
+      "background": "https://live.metahub.space/background/medium/tt11163352/img",
+      "genres": [
+        "Animation",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81054849"
+    },
+    {
+      "id": "tt16360006",
+      "type": "movie",
+      "name": "Bubble",
+      "releaseInfo": "2022",
+      "released": "2022-04-28T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt16360006/img",
+      "background": "https://images.metahub.space/background/medium/tt16360006/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81345945"
+    },
+    {
+      "id": "tt8994044",
+      "type": "series",
+      "name": "Tsurune",
+      "releaseInfo": "2018–",
+      "released": "2018-10-22T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt8994044/img",
+      "background": "https://images.metahub.space/background/medium/tt8994044/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Sport"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81416630"
+    },
+    {
+      "id": "tt18274178",
+      "type": "movie",
+      "name": "Adam by Eve: A Live in Animation",
+      "releaseInfo": "2022",
+      "released": "2022-03-15T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt18274178/img",
+      "background": "https://images.metahub.space/background/medium/tt18274178/img",
+      "genres": [
+        "Animation",
+        "Music"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81450005"
+    },
+    {
+      "id": "tt10981202",
+      "type": "movie",
+      "name": "Her Blue Sky",
+      "releaseInfo": "2019",
+      "released": "2019-10-11T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt10981202/img",
+      "background": "https://images.metahub.space/background/medium/tt10981202/img",
+      "genres": [
+        "Animation",
+        "Drama",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81427482"
+    },
+    {
+      "id": "tt30400535",
+      "type": "series",
+      "name": "Rising Impact",
+      "releaseInfo": "2024–2024",
+      "poster": "https://live.metahub.space/poster/small/tt30400535/img",
+      "background": "https://live.metahub.space/background/medium/tt30400535/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81563026"
+    },
+    {
+      "id": "tt32581507",
+      "type": "series",
+      "name": "Leviathan",
+      "releaseInfo": "2025–2025",
+      "poster": "https://live.metahub.space/poster/small/tt32581507/img",
+      "background": "https://live.metahub.space/background/medium/tt32581507/img",
+      "genres": [
+        "Animation",
+        "Action & Adventure",
+        "Sci-Fi & Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81152269"
+    },
+    {
+      "id": "tt13352232",
+      "type": "series",
+      "name": "High-Rise Invasion",
+      "releaseInfo": "2021",
+      "released": "2021-02-25T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt13352232/img",
+      "background": "https://images.metahub.space/background/medium/tt13352232/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Horror"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81043571"
+    },
+    {
+      "id": "tt12013558",
+      "type": "series",
+      "name": "BNA",
+      "releaseInfo": "2020",
+      "released": "2020-03-21T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt12013558/img",
+      "background": "https://images.metahub.space/background/medium/tt12013558/img",
+      "genres": [
+        "Animation",
+        "Comedy",
+        "Fantasy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/81220429"
+    },
+    {
+      "id": "tt30475122",
+      "type": "movie",
+      "name": "Monsters: 103 Mercies Dragon Damnation",
+      "releaseInfo": "2024",
+      "released": "2024-01-22T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt30475122/img",
+      "background": "https://images.metahub.space/background/medium/tt30475122/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "United States, Japan",
+      "netflixTitle": "https://www.netflix.com/title/81733654"
+    },
+    {
+      "id": "tt0948103",
+      "type": "series",
+      "name": "Gurren Lagann",
+      "releaseInfo": "2007",
+      "released": "2007-04-01T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt0948103/img",
+      "background": "https://images.metahub.space/background/medium/tt0948103/img",
+      "genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/70213196"
+    },
+    {
+      "id": "tt6352180",
+      "type": "series",
+      "name": "Little Witch Academia",
+      "releaseInfo": "2017",
+      "released": "2017-06-30T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt6352180/img",
+      "background": "https://images.metahub.space/background/medium/tt6352180/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Comedy"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80156387"
+    },
+    {
+      "id": "tt12031040",
+      "type": "series",
+      "name": "Japan Sinks: 2020",
+      "releaseInfo": "2020",
+      "released": "2020-07-09T00:00:00.000Z",
+      "poster": "https://images.metahub.space/poster/small/tt12031040/img",
+      "background": "https://images.metahub.space/background/medium/tt12031040/img",
+      "genres": [
+        "Animation",
+        "Adventure",
+        "Drama"
+      ],
+      "country": "Japan",
+      "netflixTitle": "https://www.netflix.com/title/80993018"
+    }
+  ]
+}
