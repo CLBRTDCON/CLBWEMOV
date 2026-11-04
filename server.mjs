@@ -49,7 +49,7 @@ for(const name of ['catalog-api','series-api','anime-api','tv-api','kids-api','r
 for(const name of ['source-config.js','genre-shelves.js','vendor/hls-1.7.3.min.js'])files.set(`/public/${name}`,[name,'text/javascript']);
 
 for(const [route,file,type] of [['/ficha','ficha.html','text/html'],['/catalognet','catalognet.html','text/html'],['/reproductor','audio-1080.html','text/html']])files.set(route,[file,type]);
-for(const name of ['player-es.mjs','web-player-controls.mjs','ficha.mjs','ficha-core.mjs','ficha.css','audio-1080.mjs','audio-1080-core.mjs','audio-1080.css','catalognet-browse.mjs','player-page.css','web-sources.mjs','web-sources.css'])files.set('/'+name,[name,name.endsWith('.css')?'text/css':'text/javascript']);
+for(const name of ['player-es.mjs','web-player-controls.mjs','ficha.mjs','ficha-core.mjs','recommendations-core.mjs','ficha.css','audio-1080.mjs','audio-1080-core.mjs','audio-1080.css','catalognet-browse.mjs','player-page.css','web-sources.mjs','web-sources.css'])files.set('/'+name,[name,name.endsWith('.css')?'text/css':'text/javascript']);
 files.set('/web-header.css',['web-header.css','text/css']);
 for(const name of ['premium.css','premium.js'])files.set('/'+name,[name,name.endsWith('.css')?'text/css':'text/javascript']);
 for(const [route,file,type]of [['/administracion/accesos','access-admin.html','text/html'],['/activar','access-activate.html','text/html'],['/access-ui.mjs','access-ui.mjs','text/javascript'],['/access.css','access.css','text/css'],['/addons-local.mjs','addons-local.mjs','text/javascript'],['/availability-filter.js','availability-filter.js','text/javascript']])files.set(route,[file,type]);

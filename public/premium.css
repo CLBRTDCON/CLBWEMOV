@@ -75,3 +75,9 @@ body.clb-premium{--accent:#e4bd9c;margin:0;background:#121216;color:#f5f1ec;font
 @media(max-width:580px){.clb-premium.detail-side-layout .detail-workspace>.source-columns{padding:18px}.clb-premium.detail-side-layout .hero-content{padding:19px;gap:15px}.clb-premium.detail-side-layout .hero h1{font-size:28px}}
 
 .clb-premium.detail-side-layout .detail-shell:has(>.detail-workspace>.episode-picker:not([hidden]))>.hero{position:relative;top:auto}
+
+/* Keep the selected episode and its sources readable while scrolling on desktop. */
+@media(min-width:1101px){.clb-premium .detail-workspace:has(>.episode-picker:not([hidden]))>.source-columns{position:sticky;top:100px;align-self:start}}
+.clb-premium .source-panel+.source-panel{border-top-color:#665348}.clb-personalized .genre-heading small{color:#aaa6b0}
+
+.clb-premium .premium-episode[aria-current=true],.clb-premium .premium-episode[aria-current=true]:hover{background:#e4bd9c;color:#251d22}.clb-premium .premium-episode[aria-current=true] .episode-duration{color:#463933}

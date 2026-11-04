@@ -18,15 +18,15 @@ export function installLocalAddons({item,info,episode,document=globalThis.docume
   if(!context){status.textContent='Sin correspondencia IMDb o sin episodio seleccionado. Puedes usar los reproductores de cada fuente.';return;}
   status.textContent='Buscando archivos disponibles…';let count=0,failed=0,locked=0;
   try{const {providers}=await json('/api/addons-local/status',{signal});if(own!==generation)return;
-   for(const provider of providers.filter(p=>p.configured)){
-    if(provider.locked){locked++;const link=document.createElement('a');link.className='file-link';link.href='/activar?return='+encodeURIComponent(location.pathname+location.search);link.textContent='🔒 Activar Latinobrid en este dispositivo · Acceso de 30 días';results.append(link);continue;}
+   await Promise.all(providers.filter(p=>p.configured).map(async provider=>{
+    if(provider.locked){locked++;const link=document.createElement('a');link.className='file-link';link.href='/activar?return='+encodeURIComponent(location.pathname+location.search);link.textContent='🔒 Activar Latinobrid en este dispositivo · Acceso de 30 días';results.append(link);return;}
     try{const data=await json('/api/addons-local/links?'+new URLSearchParams({...context,provider:provider.id}),{signal});if(own!==generation)return;
      for(const row of data.sources){if(row.unsupported)continue;const card=addonCard(row,item,provider,selected);if(card.quality==='4K')continue;
       const link=document.createElement('a');link.className='file-link';const icon=document.createElement('span');icon.className='play-icon';icon.textContent='▶';const description=document.createElement('span'),title=document.createElement('strong'),note=document.createElement('small');title.textContent=card.title;note.textContent=card.note;description.append(title,note);link.append(icon,description);
-      link.href='/reproductor?'+new URLSearchParams({...context,addon:provider.id,index:row.index,from:'ficha',clb:JSON.stringify(item),...(selected?{detailSeason:selected.season,detailEpisode:selected.episode}:{})});results.append(link);count++;
+      link.href='/reproductor?'+new URLSearchParams({...context,addon:provider.id,index:row.index,...(row.key?{variant:row.key}:{}),from:'ficha',clb:JSON.stringify(item),...(selected?{detailSeason:selected.season,detailEpisode:selected.episode}:{})});results.append(link);count++;
      }
     }catch(e){if(own!==generation||e.name==='AbortError')return;failed++;}
-   }
+   }));
    if(own===generation)status.textContent=count?count+' archivo(s) encontrados. Selecciona uno para reproducir.'+(failed?' Alguna fuente no respondió.':''):locked?'Activa Latinobrid para ver sus archivos en este dispositivo.':failed?'No se pudieron consultar las fuentes de archivos. Puedes usar los otros reproductores.':'Sin archivos anunciados hasta 1080p para este título o episodio. Puedes usar los otros reproductores.';
   }catch(e){if(own===generation&&e.name!=='AbortError')status.textContent='No se pudieron consultar los archivos. Puedes usar los otros reproductores.';}
  }
