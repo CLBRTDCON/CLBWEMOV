@@ -1,7 +1,7 @@
 import {randomBytes,randomUUID,createHash,scrypt as scryptCallback,timingSafeEqual} from 'node:crypto';
 import {promisify} from 'node:util';
 import {fileAccessStore,redisAccessStore} from './access-store.mjs';
-const scrypt=promisify(scryptCallback),DAY=86400000;
+const scrypt=promisify(scryptCallback),DAY=86400000,ACTIVATION_WINDOW=3*3600000;
 const hash=s=>createHash('sha256').update(s).digest('hex');
 export async function passwordHash(password){const salt=randomBytes(16).toString('hex');return salt+':'+Buffer.from(await scrypt(password,salt,64)).toString('hex');}
 async function validPassword(password,encoded){if(!/^[a-f0-9]{32}:[a-f0-9]{128}$/.test(encoded||''))return false;const [salt,expected]=encoded.split(':');return timingSafeEqual(Buffer.from(await scrypt(password,salt,64)),Buffer.from(expected,'hex'));}
@@ -60,7 +60,7 @@ export function createAccessApi({env=process.env,now=Date.now,store}={}){
     else{
      if(!await authorize(req,res,'admin'))return;
      if(action==='create'){
-      const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',code=Array.from(randomBytes(10),b=>alphabet[b%32]).join(''),id=randomUUID(),expires=now()+10*60000;
+      const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',code=Array.from(randomBytes(10),b=>alphabet[b%32]).join(''),id=randomUUID(),expires=now()+ACTIVATION_WINDOW;
       const label=String(input.label||'Mi cuenta').trim().slice(0,60),maxDevices=input.maxDevices===undefined?1:Number(input.maxDevices);
       if(!Number.isInteger(maxDevices)||maxDevices<1||maxDevices>10){status=400;throw Error('devices');}
       if(input.accountId&&!/^[a-f0-9-]{36}$/i.test(input.accountId)){status=400;throw Error('account');}const accountId=input.accountId||randomUUID();

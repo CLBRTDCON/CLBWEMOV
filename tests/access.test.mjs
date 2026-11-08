@@ -15,7 +15,7 @@ test('one-use codes grant exactly 30 days, survive restart and support revocatio
  assert.equal((await call(access,'setup',{data:{password:'a valid test password'},origin:'https://evil.example'})).status,403);
  const admin=await call(access,'setup',{data:{password:'a valid test password'}});assert.equal(admin.status,200);assert.match(admin.headers['Set-Cookie'],/HttpOnly; SameSite=Strict/);
  assert.equal((await call(access,'create',{data:{label:'TV'}})).status,401);
- const code=await call(access,'create',{data:{label:'TV'},token:admin.token});assert.equal(code.status,200);assert.equal(code.body.expires,time+600000);
+ const code=await call(access,'create',{data:{label:'TV'},token:admin.token});assert.equal(code.status,200);assert.equal(code.body.expires,time+3*3600000);
  const redeemed=await Promise.all([call(access,'redeem',{data:{label:'TV',code:code.body.code}}),call(access,'redeem',{data:{label:'Laptop',code:code.body.code}})]);assert.deepEqual(redeemed.map(r=>r.status).sort(),[200,400]);const viewer=redeemed.find(r=>r.status===200);assert.equal(viewer.body.expires,time+30*86400000);
  const disk=await readFile(file,'utf8');assert.equal(disk.includes(code.body.code.replace('-','')),false);assert.equal(disk.includes('a valid test password'),false);assert.equal(disk.includes(viewer.token.split('=')[1]),false);
  access=build();assert.equal((await call(access,'status',{token:viewer.token})).body.authorized,true);
@@ -24,7 +24,7 @@ test('one-use codes grant exactly 30 days, survive restart and support revocatio
  const next=await call(access,'create',{data:{label:'Phone'},token:admin.token});const activated=await call(access,'redeem',{data:{code:next.body.code,label:'Phone'}});time+=30*86400000;assert.equal((await call(access,'status',{token:activated.token})).body.authorized,false);
 });
 test('expired activation and excessive attempts are rejected; Vercel fails closed without persistent storage',async()=>{
- let data={codes:{},sessions:{},attempts:{}},time=0;const store={async update(fn){return fn(data);}};const a=createAccessApi({env:{},store,now:()=>time});const admin=await call(a,'setup',{data:{password:'another test password'}});const code=await call(a,'create',{data:{label:'TV'},token:admin.token});time+=600001;assert.equal((await call(a,'redeem',{data:{code:code.body.code,label:'TV'}})).status,400);
+ let data={codes:{},sessions:{},attempts:{}},time=0;const store={async update(fn){return fn(data);}};const a=createAccessApi({env:{},store,now:()=>time});const admin=await call(a,'setup',{data:{password:'another test password'}});const code=await call(a,'create',{data:{label:'TV'},token:admin.token});time+=3*3600000;assert.equal((await call(a,'redeem',{data:{code:code.body.code,label:'TV'}})).status,400);
  for(let i=0;i<30;i++)await call(a,'redeem',{data:{code:'invalid',label:'TV'}});assert.equal((await call(a,'redeem',{data:{code:'invalid',label:'TV'}})).status,429);
  assert.equal((await call(createAccessApi({env:{VERCEL:'1'}}),'status')).status,503);
 });
@@ -36,4 +36,16 @@ test('Latinobrid listing, resolution and config cannot bypass authorization',asy
 test('Redis CAS retries conflicts instead of losing updates',async()=>{
  let value=null,conflict=true;const store=redisAccessStore({url:'https://example.com',token:'test',fetcher:async(_url,opts)=>{const args=JSON.parse(opts.body);if(args[0]==='GET')return {ok:true,json:async()=>({result:value})};if(conflict){conflict=false;value=JSON.stringify({codes:{},sessions:{},attempts:{},other:true});return {ok:true,json:async()=>({result:0})};}value=args[5];return {ok:true,json:async()=>({result:1})};}});
  await store.update(d=>{d.saved=true;});assert.equal(JSON.parse(value).other,true);assert.equal(JSON.parse(value).saved,true);
+});
+
+
+test('activation lasts three hours, single-device code is consumed, access lasts thirty days',async()=>{
+ let data={codes:{},sessions:{},attempts:{}},time=100000;const store={async update(fn){return fn(data);}};
+ const access=createAccessApi({env:{},store,now:()=>time});const admin=await call(access,'setup',{data:{password:'three hour test password'}});
+ const fresh=await call(access,'create',{data:{label:'Celular',maxDevices:1},token:admin.token});assert.equal(fresh.body.expires,time+3*3600000);
+ time+=3*3600000-1;const active=await call(access,'redeem',{data:{code:fresh.body.code,label:'Celular'}});assert.equal(active.status,200);assert.equal(active.body.expires,time+30*86400000);
+ assert.equal((await call(access,'redeem',{data:{code:fresh.body.code,label:'Otro dispositivo'}})).status,400);
+ const atLimit=await call(access,'create',{data:{label:'Otro código'},token:admin.token});time=atLimit.body.expires;
+ assert.equal((await call(access,'redeem',{data:{code:atLimit.body.code,label:'TV'}})).status,400);
+ assert.equal((await call(access,'status',{token:active.token})).body.authorized,true);
 });
