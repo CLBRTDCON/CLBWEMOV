@@ -15,7 +15,7 @@ import {createAvailabilityApi} from './availability-api.mjs';
 import {invoke as invokeAvailability} from './kids-api.mjs';
 const deviceAccess=createAccessApi();
 const libraryApi=createLibraryApi({access:deviceAccess});
-const addonsLocalApi=createAddonsLocalApi({access:deviceAccess,deployed,...(deployed?{load:async()=>({latinobrid:process.env.CLB_LATINOBRID_MANIFEST})}:{})});
+const addonsLocalApi=createAddonsLocalApi({access:deviceAccess,deployed,...(deployed?{load:async()=>({latinobrid:process.env.CLB_LATINOBRID_MANIFEST,latadd:process.env.CLB_LATADD_MANIFEST})}:{})});
 const availabilityApi=createAvailabilityApi({deployed,store:availabilityStore,namespace:()=>addonsLocalApi.cacheNamespace(),background:task=>deployed?waitUntil(task):void task,onError:()=>console.warn('No se pudo actualizar la caché compartida de disponibilidad.'),inspect:identity=>addonsLocalApi.inspect(identity),animeDetail:id=>invokeAvailability(animeApi,'/api/anime/detail?'+new URLSearchParams({id}),cinemeta)});
 if(!deployed)availabilityApi.start();
 import {withWebHeader} from './web-header.mjs';

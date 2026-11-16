@@ -173,3 +173,10 @@ Mi lista y progreso se guardan por UUID de cuenta, en claves Redis distintas del
 Favoritos se envían con una espera breve; el progreso se agrupa aproximadamente cada 15 segundos; las pantallas visibles consultan cambios cada 20 segundos o al volver al primer plano. Las consultas sin cambios no descargan la lista completa. Solo se sincronizan metadatos y progreso de fuentes que realmente informan posición; no se guardan enlaces de vídeo ni credenciales en la biblioteca.
 
 Clientes: web de escritorio y web móvil comparten el módulo mobile/library-sync.mjs. Las APK TV0.58 y Android0.93 de prueba incluyen la integración nativa/transportes autenticados; las APK anteriores necesitan actualizarse. La compilación y las firmas no sustituyen una prueba de uso en la TV o teléfono reales.
+
+
+## LAT-ADD y acceso compartido
+
+`CLB_LATADD_MANIFEST` se configura solo como secreto de Production en Vercel. La misma sesión `clb_access` autoriza Latinobrid y LAT-ADD; no se regeneran cuentas ni códigos. Ambas consultas de enlaces y resolución requieren sesión vigente. Las APK no contienen el manifest.
+
+LAT-ADD nativo recibe enlaces HTTPS de sus dominios `.lat-add.com`. En web, esos hosts no ofrecen CORS y se leen mediante `/api/addons-local/latadd-media`: tickets AES-GCM con expiración ligados a la sesión, autorización en cada lectura y respuestas de hasta 3 MiB. Esto utiliza transferencia e invocaciones de Vercel. AVPlayer mantiene su licencia y motor; su precarga HTTP se redujo de 5 MiB a 2 MiB para respetar el límite de lectura, documentado en su MANIFEST junto al hash original.

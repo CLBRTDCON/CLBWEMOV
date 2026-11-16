@@ -82,3 +82,10 @@ test('renewed addon lists retain file keys across signed URL changes and reject 
  assert.equal((await call(api,'resolve?'+movie+'&index=0&variant='+key)).status,409);
  assert.equal((await call(api,'resolve?'+movie+'&index=1&variant='+key)).status,200);
 });
+
+
+test('configured LAT-ADD participates in local availability without exposing its manifest',async()=>{
+ const queried=[];const api=createAddonsLocalApi({load:async()=>({latadd:'https://example.com/private-access/manifest.json'}),request:async url=>{queried.push(String(url));return {response:response({streams:[{name:'1080p Latino',url:'https://media.example.com/film.mp4'}]})};}});
+ assert.deepEqual(await api.inspect({kind:'movie',id:'tt1375666'}),{state:'available',provider:'latadd'});
+ assert.equal(queried.length,1);const status=await call(api,'status');assert.equal(status.body.providers.find(p=>p.id==='latadd').configured,true);assert.equal(JSON.stringify(status.body).includes('private-access'),false);
+});
