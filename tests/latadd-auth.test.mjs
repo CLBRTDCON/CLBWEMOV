@@ -18,3 +18,11 @@ test('existing account session unlocks both providers, no new code and revoked s
  assert.equal((await call(api,path,{cookie:'existing-valid',range:'bytes=0-9999999'})).status,416);
  valid=false;assert.equal((await call(api,path,{cookie:'existing-valid',range:'bytes=0-3'})).status,401);
 });
+
+
+test('production availability finds a title exclusive to LAT-ADD after Latinobrid returns empty',async()=>{
+ const queried=[];
+ const api=createAddonsLocalApi({deployed:true,load:async()=>({latinobrid:'https://example.com/latin/manifest.json',latadd:manifest}),request:async url=>{queried.push(String(url).includes('private-latadd')?'latadd':'latinobrid');return {response:response({streams:String(url).includes('private-latadd')?[{name:'1080p Latino',url:video}]:[]})};}});
+ assert.deepEqual(await api.inspect({kind:'movie',id:'tt34890576'}),{state:'available',provider:'latadd'});
+ assert.deepEqual(queried,['latinobrid','latadd']);
+});
