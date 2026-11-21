@@ -19,3 +19,14 @@ export function audioChoices(streams,transport=[]){
  const languages={spa:'Español',es:'Español',jpn:'Japonés',ja:'Japonés',eng:'Inglés',en:'Inglés',por:'Portugués',pt:'Portugués',fra:'Francés',fr:'Francés',deu:'Alemán',de:'Alemán'};
  return audio.map((s,i)=>{const language=String(s.metadata?.language||(audio.length===transport.length?transport[i]?.language:'')||'').toLowerCase();const name=languages[language]||languages[language.split(/[-_]/)[0]];return {id:s.id,language,label:name||'Pista '+(i+1)};});
 }
+
+// AVPlayer creates selectedAudioStream in play(), so selectAudio() after load() is too early.
+// Intercept only its initial audio choice; other stream selection keeps the vendor policy.
+export function preferAudioOnStart(engine,id){
+ if(id===undefined||id===null||typeof engine.findBestStream!=='function')return ()=>{};
+ const original=engine.findBestStream;
+ function picker(streams,type,...args){if(type===1){const preferred=streams.find(s=>String(s.id)===String(id));if(preferred)return preferred;}return original.call(this,streams,type,...args);}
+ engine.findBestStream=picker;
+ return ()=>{if(engine.findBestStream===picker)engine.findBestStream=original;};
+}
+export function selectedAudioValue(choices,activeId,fallbackId){return String((choices.find(c=>String(c.id)===String(activeId))||choices.find(c=>String(c.id)===String(fallbackId))||choices[0])?.id??'');}

@@ -3,7 +3,7 @@ import {preparePlayerLanguage,localizePlayer} from './player-es.mjs';
 import {installWebPlayerControls} from './web-player-controls.mjs';
 import {createLibrary} from '/mobile/library.mjs';
 import {detailItem,detailURL} from './ficha-core.mjs';
-import {exactVariant,recoverablePlayback,within1080,supportedDimensions,wasmResource,spanishTrack,playbackFailure,audioChoices} from './audio-1080-core.mjs';
+import {exactVariant,recoverablePlayback,within1080,supportedDimensions,wasmResource,spanishTrack,playbackFailure,audioChoices,preferAudioOnStart,selectedAudioValue} from './audio-1080-core.mjs';
 const $=id=>document.getElementById(id);let player=null,generation=0,request=null,queue=Promise.resolve(),blockedPolicy=false,activeRecord=null,lastProgressSave=0,lastEngineError='';
 let recoverAction=null,recoveries=0,recoveryTimer=null,paused=false;
 function requestRecovery(error){if(!recoverAction||paused||recoveries>=1||blockedPolicy||!recoverablePlayback(error))return false;recoveries++;clearTimeout(recoveryTimer);$('audio-status').textContent='Renovando el enlace y recuperando la posición…';recoveryTimer=setTimeout(()=>{recoveryTimer=null;recoverAction(true);},1500);return true;}
@@ -51,11 +51,21 @@ async function open(source,title,id,signal,record=null,format,transportTracks=[]
  void AVPlayer.audioContext?.resume()?.catch(()=>{});let timeout;try{await Promise.race([engine.load(mediaURL.href,{ext,http:{referrerPolicy:'no-referrer'}}),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('CLB:La fuente tardó más de 35 segundos en abrir. Vuelve a seleccionar una opción.')),35000);})]);}finally{clearTimeout(timeout);}if(id!==generation||signal.aborted)return;
  const streams=engine.getStreams();if(!supportedDimensions(streams))throw Error('CLB:El vídeo supera 1920×1080 o no se pudo comprobar su resolución. No se inicia en esta prueba.');
  const choices=audioChoices(streams,transportTracks),spanish=choices.find(t=>/^(es|spa)(?:$|[-_])/.test(t.language))||spanishTrack(streams);
- if(spanish)await engine.selectAudio(spanish.id);
- const audioSelect=$('player-audio'),audioLabel=$('player-audio-label');
+ let restoreAudioPicker=preferAudioOnStart(engine,spanish?.id);
+ const audioSelect=$('player-audio'),audioLabel=$('player-audio-label');let manualAudio=false,firstAudioPlayback=true;
+ const activeAudio=()=>{try{return engine.getSelectedAudioStreamId?.();}catch{return undefined;}};
+ const syncAudio=(fallback=spanish?.id)=>{if(id===generation&&audioSelect)audioSelect.value=selectedAudioValue(choices,activeAudio(),fallback);};
  if(audioLabel)audioLabel.hidden=choices.length<2;
- if(audioSelect&&audioLabel&&choices.length>1){audioSelect.disabled=false;audioSelect.replaceChildren();for(const choice of choices){const option=document.createElement('option');option.value=String(choice.id);option.textContent=choice.label;audioSelect.append(option);}audioSelect.value=String(engine.getSelectedAudioStreamId());audioLabel.hidden=choices.length<2;
- audioSelect.onchange=async()=>{const selected=choices.find(c=>String(c.id)===audioSelect.value);if(!selected||id!==generation)return;audioSelect.disabled=true;try{await engine.selectAudio(selected.id);}catch{if(id===generation)$('audio-status').textContent='No se pudo cambiar la pista de audio.';}finally{if(id===generation){audioSelect.value=String(engine.getSelectedAudioStreamId());audioSelect.disabled=false;}}};}
+ if(audioSelect&&audioLabel&&choices.length>1){
+  audioSelect.disabled=false;audioSelect.replaceChildren();for(const choice of choices){const option=document.createElement('option');option.value=String(choice.id);option.textContent=choice.label;audioSelect.append(option);}syncAudio();
+  audioSelect.onchange=async()=>{const selected=choices.find(c=>String(c.id)===audioSelect.value);if(!selected||id!==generation)return;manualAudio=true;const before=activeAudio();let chosen=before;if(firstAudioPlayback){restoreAudioPicker();restoreAudioPicker=preferAudioOnStart(engine,selected.id);}audioSelect.disabled=true;try{await engine.selectAudio(selected.id);chosen=selected.id;}catch{if(id===generation)$('audio-status').textContent='No se pudo cambiar la pista de audio.';}finally{if(id===generation){syncAudio(chosen);audioSelect.disabled=false;}}};
+ }
+ engine.on('changed',()=>syncAudio());
+ engine.on('played',async()=>{
+  if(id!==generation)return;
+  if(firstAudioPlayback){firstAudioPlayback=false;restoreAudioPicker();if(spanish&&!manualAudio&&String(activeAudio())!==String(spanish.id))try{await engine.selectAudio(spanish.id);}catch{if(id===generation)$('audio-status').textContent='No se pudo seleccionar español automáticamente. Puedes elegirlo en Audio.';}}
+  syncAudio();
+ });
 
  if(record){const saved=library.find(record.item);activeRecord=record;library.remember(record.item,{episode:record.episode,provider:record.provider||'catalognet',variantKey:record.variantKey||'',streamIndex:record.index});const duration=Number(engine.getDuration())/1000;if(saved?.provider===(record.provider||'catalognet')&&!saved.completed&&((record.variantKey?saved.variantKey===record.variantKey:saved.streamIndex===record.index)||saved.evidence&&Math.abs(saved.duration-duration)<=30)&&JSON.stringify(saved.episode)===JSON.stringify(record.episode)&&saved.position>0&&saved.position<duration-3){record.restoring=true;let pending=true;engine.on('played',()=>{if(!pending||id!==generation)return;pending=false;Promise.resolve().then(()=>engine.seek(BigInt(Math.floor(saved.position*1000)))).catch(()=>{if(id===generation)$('audio-status').textContent='No se pudo recuperar la posición guardada; puedes avanzar con la barra.';}).finally(()=>{if(activeRecord===record)record.restoring=false;});});}}
 
