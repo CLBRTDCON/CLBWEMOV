@@ -180,3 +180,12 @@ Clientes: web de escritorio y web móvil comparten el módulo mobile/library-syn
 `CLB_LATADD_MANIFEST` se configura solo como secreto de Production en Vercel. La misma sesión `clb_access` autoriza Latinobrid y LAT-ADD; no se regeneran cuentas ni códigos. Ambas consultas de enlaces y resolución requieren sesión vigente. Las APK no contienen el manifest.
 
 LAT-ADD nativo recibe enlaces HTTPS de sus dominios `.lat-add.com`. En web, esos hosts no ofrecen CORS y se leen mediante `/api/addons-local/latadd-media`: tickets AES-GCM con expiración ligados a la sesión, autorización en cada lectura y respuestas de hasta 3 MiB. Esto utiliza transferencia e invocaciones de Vercel. AVPlayer mantiene su licencia y motor; su precarga HTTP se redujo de 5 MiB a 2 MiB para respetar el límite de lectura, documentado en su MANIFEST junto al hash original.
+
+
+## DeepFlix: prueba web en Vercel
+
+DeepFlix está habilitado en el despliegue web con la misma sesión de cuenta vigente. Las APK aún no incluyen esta ruta. Los resultados se consultan automáticamente y participan en la disponibilidad compartida; la caché usa un namespace nuevo para renovar resultados negativos anteriores.
+
+El origen observado entrega MPEG-TS por HTTP desde subdominios de `swzablvpm.com`; su HTTPS presenta un certificado no válido. No se desactiva TLS. La web accede por HTTPS a `/api/addons-local/deepflix-media`, que verifica la sesión en cada lectura y solo admite GET/HEAD y rangos acotados de hasta 3 MiB. Los tickets AES-GCM están ligados al dispositivo, expiran en tres horas y usan un secreto separado derivado del manifest privado ya configurado de Latinobrid. Ni el manifest ni las URLs del origen aparecen en el listado público.
+
+El tramo servidor-origen de DeepFlix permanece en HTTP; las lecturas consumen transferencia e invocaciones de Vercel. La prueba no acredita autorización de redistribución ni audio latino: cuando se detectan pistas de transporte se muestra su idioma declarado; las banderas ambiguas del addon no se convierten en una promesa de doblaje latino.

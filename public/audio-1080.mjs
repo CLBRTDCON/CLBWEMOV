@@ -79,7 +79,7 @@ if(params.get('from')==='ficha'){
    if(!row||(!addon&&!within1080(row.quality)))throw Error('CLB:El archivo seleccionado ya no figura o cambió. Vuelve a la ficha.');
    if(addon){variant=row.key||variant;if(variant)query.set('variant',variant);}query.delete('renew');query.set('index',String(row.index));
    const result=await json(endpoint('resolve',query),signal);
-   if(id===generation)await open(result.url,addon?addonCard(row,original||{name:title},{id:addon},null).title:title+' · '+(row.quality||'Archivo'),id,signal,original?{item:original,index:row.index,provider:addon||'catalognet',variantKey:variant||'',episode:params.has('detailSeason')?{season:Number(params.get('detailSeason')),episode:Number(params.get('detailEpisode'))}:null}:null,result.ext,result.audioTracks);
+   if(id===generation)await open(result.url,addon?addonCard({...row,...(result.language?{language:result.language}:{})},original||{name:title},{id:addon},null).title:title+' · '+(row.quality||'Archivo'),id,signal,original?{item:original,index:row.index,provider:addon||'catalognet',variantKey:variant||'',episode:params.has('detailSeason')?{season:Number(params.get('detailSeason')),episode:Number(params.get('detailEpisode'))}:null}:null,result.ext,result.audioTracks);
   });
   recoverAction=addon?playSelected:null;playSelected();
  }

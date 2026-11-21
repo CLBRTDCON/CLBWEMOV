@@ -6,7 +6,7 @@ export function addonCard(row,item,provider,episode){
  const audio=row.title?.match(/🌐\s*([^📁💾📦✨🎬🔗\n]+)/u)?.[1]?.trim();
  const audioText=audio||label;
  const languages=[[/\blatino\b|(?:^|[\s._/-])lat(?:$|[\s._/-])/i,'Latino'],[/\bcastellano\b|español de españa/i,'Castellano'],[/\bingl[eé]s\b|\benglish\b/i,'Inglés'],[/\bsueco\b/i,'Sueco'],[/\bjapon[eé]s\b/i,'Japonés']].filter(([pattern])=>pattern.test(audioText)).map(([,name])=>name);
- const language=row.language||audio||((provider.id==='deepflix'&&/🇲🇽(?!\?)/u.test(label))?'Latino':'')||languages.join(' / ')||(/\bespa[nñ]ol\b|\bspa\b/i.test(label)?'Español':'Idioma sin especificar');
+ const language=row.language||audio||languages.join(' / ')||(/\bespa[nñ]ol\b|\bspa\b/i.test(label)?'Español':'Idioma sin especificar');
  const size=label.match(/\b\d+(?:[.,]\d+)?\s*(?:GB|MB|TB)\b/i)?.[0];
  return {quality,title:[quality,item.name||'Título',language.replace(/\s*\/\s*/g,' / ')].join(' · '),note:[episode?`T${episode.season} · E${episode.episode}`:null,size,'Idioma anunciado por la fuente'].filter(Boolean).join(' · ')};
 }
