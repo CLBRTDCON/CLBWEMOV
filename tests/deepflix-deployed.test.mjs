@@ -9,6 +9,7 @@ test('DeepFlix web deployment shares existing session, relays only bounded video
  const query='provider=deepflix&kind=series&id=tt0875778&season=1&episode=1';assert.equal((await call(api,'links?'+query,{cookie:''})).status,401);assert.equal(network,0);
  const links=await call(api,'links?'+query);assert.equal(links.body.sources.length,1);assert.ok(!JSON.stringify(links).includes('private=link'));
  const result=await call(api,'resolve?'+query+'&index=0');assert.equal(result.status,200);assert.equal(result.body.ext,'ts');assert.ok(result.body.url.startsWith('/api/addons-local/deepflix-media?token='));assert.ok(!result.body.url.includes('private=link'));
+ const native=await call(api,'resolve?'+query+'&index=0&native=1');assert.equal(native.status,200);assert.equal(native.body.localRelay,false);assert.ok(deepflixHost(native.body.url));assert.equal(native.body.ext,'ts');assert.equal((await call(api,'resolve?'+query+'&index=0&native=1',{cookie:''})).status,401);
  const media=result.body.url.split('/api/addons-local/')[1];assert.equal((await call(api,media,{range:'bytes=0-3'})).status,206);assert.equal((await call(api,media,{range:'bytes=0-9999999'})).status,416);assert.equal((await call(api,media,{method:'HEAD'})).status,206);
  owner='other-device';assert.equal((await call(api,media,{range:'bytes=0-3'})).status,410);owner='existing-device';valid=false;assert.equal((await call(api,media,{range:'bytes=0-3'})).status,401);valid=true;foreign=true;assert.equal((await call(api,'resolve?'+query+'&index=0')).status,502);
 });

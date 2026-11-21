@@ -184,8 +184,11 @@ LAT-ADD nativo recibe enlaces HTTPS de sus dominios `.lat-add.com`. En web, esos
 
 ## DeepFlix: prueba web en Vercel
 
-DeepFlix está habilitado en el despliegue web con la misma sesión de cuenta vigente. Las APK aún no incluyen esta ruta. Los resultados se consultan automáticamente y participan en la disponibilidad compartida; la caché usa un namespace nuevo para renovar resultados negativos anteriores.
+DeepFlix está habilitado en el despliegue web con la misma sesión de cuenta vigente. Las APK móvil 1.01 y TV 0.62 incluyen esta fuente mediante el reproductor integrado. Los resultados se consultan automáticamente y participan en la disponibilidad compartida; la caché usa un namespace nuevo para renovar resultados negativos anteriores.
 
 El origen observado entrega MPEG-TS por HTTP desde subdominios de `swzablvpm.com`; su HTTPS presenta un certificado no válido. No se desactiva TLS. La web accede por HTTPS a `/api/addons-local/deepflix-media`, que verifica la sesión en cada lectura y solo admite GET/HEAD y rangos acotados de hasta 3 MiB. Los tickets AES-GCM están ligados al dispositivo, expiran en tres horas y usan un secreto separado derivado del manifest privado ya configurado de Latinobrid. Ni el manifest ni las URLs del origen aparecen en el listado público.
 
 El tramo servidor-origen de DeepFlix permanece en HTTP; las lecturas consumen transferencia e invocaciones de Vercel. La prueba no acredita autorización de redistribución ni audio latino: cuando se detectan pistas de transporte se muestra su idioma declarado; las banderas ambiguas del addon no se convierten en una promesa de doblaje latino.
+
+
+Las APK consultan `resolve` con `native=1` después de validar la sesión y reciben el archivo directo, sin tickets del relay web ni cookies del backend en el CDN. Para DeepFlix se admite HTTP únicamente en subdominios del dominio de vídeo verificado `swzablvpm.com`, también restringido mediante Network Security Configuration; se conserva HTTPS obligatorio para TorBox y LAT-ADD. Las credenciales siguen viajando solo a CLB por HTTPS. La pista española se selecciona por metadatos del archivo y el título usa calidad, nombre e idioma, sin marca del proveedor.
