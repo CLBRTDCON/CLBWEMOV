@@ -1,5 +1,5 @@
 (()=>{
- const states=new Map(),waiting=new Map(),subscribers=new Map(),diskKey='clb.availability.v5';let running=0,saveTimer;
+ const states=new Map(),waiting=new Map(),subscribers=new Map(),diskKey='clb.availability.v6';let running=0,saveTimer;
  function identity(item){const section=item.section||location.pathname.slice(1);const kind=['movie','series','anime'].includes(item.kind)?item.kind:section==='anime'?'anime':section==='series'||section==='documentales'?'series':'movie';return {id:String(item.imdbId&&kind!=='anime'?item.imdbId:item.id||''),kind,...(item.imdbId?{imdbId:item.imdbId}:{})};}
  const key=item=>JSON.stringify(identity(item));
  const state=id=>{const row=states.get(id);return row&&row.expires>Date.now()?row.value:undefined;};
