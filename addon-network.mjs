@@ -30,3 +30,9 @@ export async function publicRequest(value,{method='GET',headers={},signal,httpsO
  throw Error('Demasiadas redirecciones del proveedor.');
 }
 export async function readLimited(response,limit=2_000_000){let size=0;const chunks=[];try{for await(const part of response){size+=part.length;if(size>limit)throw Error('Respuesta del proveedor demasiado grande.');chunks.push(part);}return Buffer.concat(chunks);}catch(error){response.destroy();throw error;}}
+
+// TorBox-published CDN domains. Keep suffix boundaries strict; lookalikes are not media servers.
+// https://support.torbox.app/en/articles/12667085-torbox-is-being-blocked-by-my-anti-virus-software
+export const torboxCdnDomains=Object.freeze(['tb-cdn.cx','tb-cdn.io','tb-cdn.pw','tb-cdn.sh','tb-cdn.st','tb-cdn.to','tb-cdn.earth']);
+export function torboxMediaURL(value){try{const u=remoteURL(value,{httpsOnly:true});return torboxCdnDomains.some(domain=>u.hostname.endsWith('.'+domain));}catch{return false;}}
+export const torboxConnectSources=torboxCdnDomains.map(domain=>'https://*.'+domain).join(' ');

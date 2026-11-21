@@ -4,7 +4,7 @@ import http from 'node:http';
 import vm from 'node:vm';
 import {readFile} from 'node:fs/promises';
 import {Readable} from 'node:stream';
-import {publicAddress,remoteURL,publicRequest} from '../addon-network.mjs';
+import {publicAddress,remoteURL,publicRequest,torboxCdnDomains,torboxMediaURL,torboxConnectSources} from '../addon-network.mjs';
 import {createAddonsLocalApi,addonIdentity,streamPath,manifestBase,rewritePlaylist} from '../addons-local-api.mjs';
 import {addonContext,installLocalAddons} from '../public/addons-local.mjs';
 import {detailItem,detailURL} from '../public/ficha-core.mjs';
@@ -88,4 +88,18 @@ test('configured LAT-ADD participates in local availability without exposing its
  const queried=[];const api=createAddonsLocalApi({load:async()=>({latadd:'https://example.com/private-access/manifest.json'}),request:async url=>{queried.push(String(url));return {response:response({streams:[{name:'1080p Latino',url:'https://media.example.com/film.mp4'}]})};}});
  assert.deepEqual(await api.inspect({kind:'movie',id:'tt1375666'}),{state:'available',provider:'latadd'});
  assert.equal(queried.length,1);const status=await call(api,'status');assert.equal(status.body.providers.find(p=>p.id==='latadd').configured,true);assert.equal(JSON.stringify(status.body).includes('private-access'),false);
+});
+
+
+test('TorBox CDN rotation resolves on every documented domain and browser policy permits those domains',async()=>{
+ const access={session:async()=>({id:'viewer'}),authorize:async req=>(req.clbAccess={id:'viewer'})};
+ for(const domain of torboxCdnDomains){
+  const direct='https://nexus-144.enam.'+domain+'/file?token=signed';
+  assert.equal(torboxMediaURL(direct),true);assert.ok(torboxConnectSources.includes('https://*.'+domain));
+  const api=createAddonsLocalApi({access,deployed:true,load:async()=>({latinobrid:'https://example.com/private/manifest.json'}),request:async url=>String(url).includes('/stream/')?{response:response({streams:[{name:'1080p',url:'https://example.com/play'}]})}:{url:new URL(direct),response:Object.assign(Readable.from([Buffer.from([0x1a,0x45,0xdf,0xa3])]),{statusCode:206,headers:{'access-control-allow-origin':'https://clbwemov.vercel.app'}})}});
+  const resolved=await call(api,'resolve?provider=latinobrid&kind=movie&id=tt1375666&index=0',{headers:{host:'clbwemov.vercel.app'}});
+  assert.equal(resolved.status,200,domain);assert.equal(resolved.body.ext,'mkv');assert.equal(resolved.body.url,direct);
+ }
+ for(const url of ['https://tb-cdn.io.evil.test/file','https://not-tb-cdn.io/file','http://nexus.tb-cdn.io/file','https://u:p@nexus.tb-cdn.io/file','https://nexus.tb-cdn.io:444/file','https://nexus.tb-cdn.io/file#x'])assert.equal(torboxMediaURL(url),false,url);
+ const server=await readFile(new URL('../server.mjs',import.meta.url),'utf8');assert.ok(server.includes('"+torboxConnectSources+"'));
 });

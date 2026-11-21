@@ -2,7 +2,7 @@ import {lataddHost,sealLatadd,createLataddRelay} from './latadd-media.mjs';
 import {readFile,mkdir,writeFile,rename} from 'node:fs/promises';
 import {randomUUID,createHash} from 'node:crypto';
 import {pipeline} from 'node:stream/promises';
-import {publicRequest,readLimited,remoteURL} from './addon-network.mjs';
+import {publicRequest,readLimited,remoteURL,torboxMediaURL} from './addon-network.mjs';
 import {transportAudioTracks} from './mpegts-audio.mjs';
 
 const classicIds=new Set(JSON.parse(await readFile(new URL('./lacartoons-ids.json',import.meta.url),'utf8')).ids);
@@ -65,7 +65,7 @@ export function createAddonsLocalApi({access,deployed=false,request=publicReques
     }else if(deployed){
      const expectedOrigin='https://'+req.headers.host;
      const {response:up,url:direct}=await request(options[index].url,{headers:{Range:'bytes=0-1023',Origin:expectedOrigin},signal:AbortSignal.timeout(20000)});
-     try{if(![200,206].includes(up.statusCode)||!direct.hostname.endsWith('.tb-cdn.st')||!['*',expectedOrigin].includes(up.headers['access-control-allow-origin']))throw Error('La fuente no ofrece un enlace directo compatible.');const chunk=await up[Symbol.asyncIterator]().next(),b=chunk.value||Buffer.alloc(0);const ext=b[0]===0x1a&&b[1]===0x45&&b[2]===0xdf&&b[3]===0xa3?'mkv':b.subarray(4,8).toString()==='ftyp'?'mp4':b[0]===0x47?'ts':undefined;body={url:direct.href,ext,title:options[index].title,localRelay:false};}finally{up.destroy();}
+     try{if(![200,206].includes(up.statusCode))throw Error('El servidor de vídeo respondió HTTP '+up.statusCode+'. Vuelve a seleccionar el archivo.');if(!torboxMediaURL(direct.href))throw Error('El servidor de vídeo no pertenece a los dominios de TorBox admitidos.');if(p.get('native')!=='1'&&!['*',expectedOrigin].includes(up.headers['access-control-allow-origin']))throw Error('El servidor de vídeo no permite reproducir desde esta web (CORS).');const chunk=await up[Symbol.asyncIterator]().next(),b=chunk.value||Buffer.alloc(0);const ext=b[0]===0x1a&&b[1]===0x45&&b[2]===0xdf&&b[3]===0xa3?'mkv':b.subarray(4,8).toString()==='ftyp'?'mp4':b[0]===0x47?'ts':undefined;body={url:direct.href,ext,title:options[index].title,localRelay:false};}finally{up.destroy();}
     }else body={url:ticket(options[index].url,['latinobrid','latadd'].includes(provider)&&access?req.clbAccess.id:null),title:options[index].title,localRelay:true,...(provider==='deepflix'?{audioTracks:await probeAudio(options[index].url)}:{})};}
    }else{status=404;throw Error('Ruta desconocida.');}
   }catch(error){if(status===200)status=502;body={error:action==='config'?'No se pudo guardar: comprueba que sea tu manifest HTTPS válido, accesible y con recurso stream.':action==='links'||action==='resolve'?clean(error.message):'No se pudo consultar la configuración local.'};}
