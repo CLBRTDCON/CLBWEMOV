@@ -6,7 +6,7 @@ import {readFile} from 'node:fs/promises';
 import {Readable} from 'node:stream';
 import {publicAddress,remoteURL,publicRequest,torboxCdnDomains,torboxMediaURL,torboxConnectSources} from '../addon-network.mjs';
 import {createAddonsLocalApi,addonIdentity,streamPath,manifestBase,rewritePlaylist} from '../addons-local-api.mjs';
-import {addonContext,installLocalAddons} from '../public/addons-local.mjs';
+import {addonContext,addonCard,installLocalAddons} from '../public/addons-local.mjs';
 import {detailItem,detailURL} from '../public/ficha-core.mjs';
 import {exactVariant,recoverablePlayback,within1080,supportedDimensions,wasmResource,spanishTrack,playbackFailure,audioChoices} from '../public/audio-1080-core.mjs';
 
@@ -51,7 +51,7 @@ test('AVPlayer uses addon endpoint, same-origin ticket and Spanish audio with se
  const document={getElementById:id=>ids.get(id),querySelector:()=>({}),addEventListener(){}};let engine;const calls=[];
  class Player{constructor(){engine=this;}on(){}async destroy(){}async load(source,options){this.source=source;this.options=options;}getStreams(){return[{id:0,codecparProxy:{codecType:0,width:1280,height:720}},{id:1,codecparProxy:{codecType:1},metadata:{language:'spa'}}];}async selectAudio(id){this.audio=id;}getDuration(){return 120000n;}async play(){this.playing=true;}}
  const item={id:'tt1375666',kind:'movie',section:'movie',name:'Origen'},query=new URLSearchParams({from:'ficha',addon:'deepflix',kind:'movie',id:'tt1375666',index:0,clb:JSON.stringify(item)});
- const context={document,URL,URLSearchParams,AbortController,AbortSignal,DOMException,Date,BigInt,Intl,setTimeout,clearTimeout,isSecureContext:true,AudioWorkletNode:function(){},AVPlayer:Player,preparePlayerLanguage(){},localizePlayer(){},installWebPlayerControls(){},createLibrary:()=>({find:()=>null,remember(_item,record){assert.equal(record.provider,'deepflix');},progress(){}}),detailItem,detailURL,exactVariant,recoverablePlayback,within1080,supportedDimensions,wasmResource,spanishTrack,playbackFailure,audioChoices,location:{href:'http://127.0.0.1:4173/reproductor?'+query},addEventListener(){},fetch:async (path,options)=>{calls.push(path);if(options?.method==='HEAD')return {ok:true,headers:{get:()=> 'application/octet-stream'}};if(options?.headers?.Range)return {ok:true,body:new ReadableStream({start(c){c.enqueue(new Uint8Array([0x1a,0x45,0xdf,0xa3,0,0,0,0,0,0,0,0]));c.close();}})};return{ok:true,json:async()=>path.includes('/links?')?{sources:[{index:0,name:'DeepFlix',unsupported:false}]}:{url:'/api/addons-local/media?ticket=test'}};}};context.window=context;vm.createContext(context);
+ const context={document,URL,URLSearchParams,AbortController,AbortSignal,DOMException,Date,BigInt,Intl,setTimeout,clearTimeout,isSecureContext:true,AudioWorkletNode:function(){},AVPlayer:Player,preparePlayerLanguage(){},localizePlayer(){},installWebPlayerControls(){},createLibrary:()=>({find:()=>null,remember(_item,record){assert.equal(record.provider,'deepflix');},progress(){}}),detailItem,detailURL,addonCard,exactVariant,recoverablePlayback,within1080,supportedDimensions,wasmResource,spanishTrack,playbackFailure,audioChoices,location:{href:'http://127.0.0.1:4173/reproductor?'+query},addEventListener(){},fetch:async (path,options)=>{calls.push(path);if(options?.method==='HEAD')return {ok:true,headers:{get:()=> 'application/octet-stream'}};if(options?.headers?.Range)return {ok:true,body:new ReadableStream({start(c){c.enqueue(new Uint8Array([0x1a,0x45,0xdf,0xa3,0,0,0,0,0,0,0,0]));c.close();}})};return{ok:true,json:async()=>path.includes('/links?')?{sources:[{index:0,name:'DeepFlix',unsupported:false}]}:{url:'/api/addons-local/media?ticket=test'}};}};context.window=context;vm.createContext(context);
  vm.runInContext((await readFile(new URL('../public/audio-1080.mjs',import.meta.url),'utf8')).replace(/^import .*;\r?\n/gm,''),context);await new Promise(setImmediate);
  assert.equal(calls.length,4);assert.ok(calls.slice(0,2).every(p=>p.startsWith('/api/addons-local/')&&p.includes('provider=deepflix')&&p.includes('id=tt1375666')));assert.equal(engine.source,'http://127.0.0.1:4173/api/addons-local/media?ticket=test');assert.equal(engine.options.ext,'mkv');assert.equal(engine.audio,1);assert.equal(engine.playing,true);assert.doesNotMatch(ids.get('audio-title').textContent,/undefined/);
 });
@@ -102,4 +102,10 @@ test('TorBox CDN rotation resolves on every documented domain and browser policy
  }
  for(const url of ['https://tb-cdn.io.evil.test/file','https://not-tb-cdn.io/file','http://nexus.tb-cdn.io/file','https://u:p@nexus.tb-cdn.io/file','https://nexus.tb-cdn.io:444/file','https://nexus.tb-cdn.io/file#x'])assert.equal(torboxMediaURL(url),false,url);
  const server=await readFile(new URL('../server.mjs',import.meta.url),'utf8');assert.ok(server.includes('"+torboxConnectSources+"'));
+});
+
+
+test('playback labels show quality, title and language without source branding',()=>{
+ const card=addonCard({name:'[TB ⚡] Latinobrid 1080p',title:'🌐 Latino 📁 Dragon.Ball.Super.1080p 💾 2.4 GB'},{name:'Dragon Ball Super: Beerus'},{id:'latinobrid',name:'Latinobrid · TorBox'},null);
+ assert.equal(card.title,'1080p · Dragon Ball Super: Beerus · Latino');assert.doesNotMatch(card.title+' '+card.note,/Latinobrid|TorBox|\[TB|⚡/);
 });
