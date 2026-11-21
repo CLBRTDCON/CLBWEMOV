@@ -27,15 +27,16 @@ export function createAddonsLocalApi({access,deployed=false,request=publicReques
   if(audioCache.size>=50)audioCache.delete(audioCache.keys().next().value);audioCache.set(url,{tracks,expires:now()+90000});return tracks;
  }
  async function deepflixVideo(value,limit=65536){
-  let up;try{
-   const result=await request(value,{headers:{Range:'bytes=0-'+(limit-1)},signal:AbortSignal.timeout(20000)});up=result.response;
+  const deadline=Date.now()+20000;
+  for(let attempt=0;attempt<2;attempt++){let up;try{
+   const result=await request(value,{headers:{Range:'bytes=0-'+(limit-1)},signal:AbortSignal.timeout(Math.max(1,deadline-Date.now()))});up=result.response;
    if(!deepflixHost(result.url.href))throw Error('DeepFlix devolvió un servidor de vídeo no admitido.');
    if(up.statusCode!==206){console.warn('CLB DeepFlix probe failed','HTTP',up.statusCode,'host',result.url.hostname,'type',String(up.headers['content-type']||'').slice(0,80));throw Error('DeepFlix respondió HTTP '+up.statusCode+' al solicitar el fragmento de vídeo.');}
    if(! /^(video\/|audio\/|application\/(octet-stream|binary|mp4))/i.test(up.headers['content-type']||''))throw Error('DeepFlix devolvió una respuesta que no es vídeo.');
    const bytes=await readLimited(up,limit),ext=bytes[0]===0x47?'ts':bytes[0]===0x1a&&bytes[1]===0x45?'mkv':bytes.subarray(4,8).toString()==='ftyp'?'mp4':null;
    if(!ext)throw Error('DeepFlix no entregó un formato de vídeo compatible.');
    return {url:result.url.href,ext,tracks:ext==='ts'?transportAudioTracks(bytes):[]};
-  }finally{up?.destroy();}
+  }catch(error){const transient=[500,502,503,504].includes(up?.statusCode)||['ECONNRESET','ECONNREFUSED','EPIPE','ETIMEDOUT','ERR_STREAM_PREMATURE_CLOSE'].includes(error.code);if(attempt===0&&transient&&deadline-Date.now()>500){up?.destroy();await new Promise(resolve=>setTimeout(resolve,250));continue;}throw error;}finally{up?.destroy();}}
  }
  async function configuration(){const data=await load();return data&&typeof data==='object'?data:{};}
  async function base(provider){if(deployed&&!['latinobrid','latadd','deepflix'].includes(provider))throw Error('Fuente no habilitada.');if(!Object.hasOwn(addonProviders,provider))throw Error('Complemento desconocido.');const value=addonProviders[provider].manifest||(await configuration())[provider];if(!value)throw Error('Primero guarda tu enlace personal en Configurar complementos.');return manifestBase(value);}
