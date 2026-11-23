@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {tsDurationMs} from '../mpegts-duration.mjs';
+function sample(pts,offset=0,stream=224){const b=Buffer.alloc(offset+188*3,255);for(let n=0;n<3;n++){const p=offset+n*188;b.set([71,64,100,16,0,0,1,stream,0,0,128,128,5],p);const v=BigInt(pts);b.set([Number((v>>29n)&14n)|33,Number((v>>22n)&255n),Number((v>>14n)&254n)|1,Number((v>>7n)&255n),Number((v<<1n)&254n)|1],p+13);}return b;}
+test('TS duration is measured from matching video PTS samples including unaligned tail packets',()=>{assert.equal(tsDurationMs(sample(900000),sample(900000+1375000*90,77)),1375000);});
+test('TS duration handles 33-bit timestamp wrap without inventing time for missing data',()=>{assert.equal(tsDurationMs(sample(8589934592-90000),sample(90000)),2000);assert.equal(tsDurationMs(Buffer.alloc(100),sample(90000)),0);assert.equal(tsDurationMs(sample(0,0,192),sample(90000,0,192)),0);});
